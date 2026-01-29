@@ -111,14 +111,14 @@
                       - muted: no sound (required for autoplay)
                       - playsinline: prevents fullscreen on mobile
                     -->
-                    <video src="./assets/videos/crew-1.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-1.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4>Treb</h4>
             </div>
 
             <div class="crew-member">
                 <div class="crew-avatar">
-                    <video src="./assets/videos/crew-2.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-2.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <!-- The <span class="tooltip"> creates a hover tooltip -->
                 <h4>Marc<span class="tooltip">Heeft een erg lange lull</span></h4>
@@ -126,35 +126,35 @@
 
             <div class="crew-member">
                 <div class="crew-avatar">
-                    <video src="./assets/videos/crew-3.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-3.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4>Derk</h4>
             </div>
 
             <div class="crew-member">
                 <div class="crew-avatar">
-                    <video src="./assets/videos/crew-4.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-4.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4>Samuel<span class="tooltip">Maakt tijd vrij van werk voor vrienden</span></h4>
             </div>
 
             <div class="crew-member">
                 <div class="crew-avatar">
-                    <video src="./assets/videos/crew-5.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-5.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4>David<span class="tooltip">Gaat een andere keer naar New York</span></h4>
             </div>
 
             <div class="crew-member">
                 <div class="crew-avatar">
-                    <video src="./assets/videos/crew-6.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-6.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4>Peeg</h4>
             </div>
 
             <div class="crew-member">
                 <div class="crew-avatar">
-                    <video src="./assets/videos/crew-7.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-7.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4>Bram</h4>
             </div>
@@ -166,7 +166,7 @@
             <div class="crew-member thuisblijver">
                 <!-- Inline styles for the greyed-out effect -->
                 <div class="crew-avatar" style="border-color: #666; opacity: 0.7; filter: grayscale(50%);">
-                    <video src="./assets/videos/crew-8.mp4" autoplay loop muted playsinline></video>
+                    <video src="./assets/videos/crew-8.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
                 </div>
                 <h4 style="color: #888;">Jaap 😢<span class="tooltip">Wil eigenlijk ook gewoon mee</span></h4>
             </div>
@@ -394,24 +394,24 @@
                   The #t=6,11 in the src is a hint, but actual looping is done in JS
                   id="epicNightVideo" lets JavaScript target this specific video
                 -->
-                <video id="epicNightVideo" src="./assets/videos/night-video.mov#t=6,11" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                <video id="epicNightVideo" class="lazy-video" data-src="./assets/videos/night-video.mov" autoplay muted loop playsinline webkit-playsinline preload="none" style="width:100%; height:100%; object-fit:cover;"></video>
                 <div class="overlay">
                     <h4>Epic Night</h4>
                 </div>
             </div>
 
             <div class="gallery-item">
-                <video id="golfVideo" src="./assets/videos/golf-video.mov" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;"></video>
+                <video id="golfVideo" class="lazy-video" data-src="./assets/videos/golf-video.mov" autoplay muted loop playsinline webkit-playsinline preload="none" style="width:100%; height:100%; object-fit:cover;"></video>
                 <div class="overlay">
                     <h4>Golf</h4>
                 </div>
             </div>
 
             <div class="gallery-item">
-                <video id="epicNightsVideo" autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover;">
+                <video id="epicNightsVideo" class="lazy-video" autoplay muted loop playsinline webkit-playsinline preload="none" style="width:100%; height:100%; object-fit:cover;">
                     <!-- Download een nachtclub video en sla op als nightclub-crowd.mp4 -->
-                    <source src="./assets/videos/nightclub-crowd.mp4" type="video/mp4">
-                    <source src="./assets/videos/night-video.mov" type="video/quicktime">
+                    <source data-src="./assets/videos/nightclub-crowd.mp4" type="video/mp4">
+                    <source data-src="./assets/videos/night-video.mov" type="video/quicktime">
                 </video>
                 <div class="overlay">
                     <h4>Epic Nights</h4>
@@ -455,7 +455,7 @@
 
             <!-- Beach highlight card with video on hover -->
             <div class="highlight-card" style="position:relative; overflow:hidden;">
-                <video class="highlight-video" muted loop playsinline autoplay style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.4s ease; z-index:1; border-radius:inherit;">
+                <video class="highlight-video" muted loop playsinline webkit-playsinline autoplay preload="none" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.4s ease; z-index:1; border-radius:inherit;">
                     <source src="./assets/videos/hover-1.mp4" type="video/mp4">
                 </video>
                 <div style="position:relative; z-index:2;">
@@ -904,7 +904,7 @@
         <div class="venues-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; max-width: 1400px; margin: 0 auto;">
             <!-- Beach club card with video hover effect -->
             <div class="venue-card" style="position:relative; overflow:hidden; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease, border-color 0.3s ease;">
-                <video class="venue-hover-video" muted loop playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.4s ease; z-index:0; border-radius:inherit;">
+                <video class="venue-hover-video" muted loop playsinline webkit-playsinline preload="none" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.4s ease; z-index:0; border-radius:inherit;">
                     <source src="./assets/videos/hover-2.mp4" type="video/mp4">
                 </video>
                 <div style="position:relative; z-index:1;">
@@ -1082,21 +1082,21 @@
             </svg>
         </div>
 
-        <!-- Golf party videos - square format for better visibility -->
+        <!-- Golf party videos - square format for better visibility (lazy loaded for iPhone!) -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1000px; margin: 0 auto;">
-            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); aspect-ratio: 1;">
-                <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
-                    <source src="./assets/videos/golf-1.mp4" type="video/mp4">
+            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); aspect-ratio: 1; background: #1a1a1a;">
+                <video class="lazy-video" autoplay muted loop playsinline webkit-playsinline preload="none" style="width: 100%; height: 100%; object-fit: cover;">
+                    <source data-src="./assets/videos/golf-1.mp4" type="video/mp4">
                 </video>
             </div>
-            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); aspect-ratio: 1;">
-                <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
-                    <source src="./assets/videos/golf-2.mp4" type="video/mp4">
+            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); aspect-ratio: 1; background: #1a1a1a;">
+                <video class="lazy-video" autoplay muted loop playsinline webkit-playsinline preload="none" style="width: 100%; height: 100%; object-fit: cover;">
+                    <source data-src="./assets/videos/golf-2.mp4" type="video/mp4">
                 </video>
             </div>
-            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); aspect-ratio: 1;">
-                <video autoplay muted loop playsinline style="width: 100%; height: 100%; object-fit: cover;">
-                    <source src="./assets/videos/golf-3.mp4" type="video/mp4">
+            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.4); aspect-ratio: 1; background: #1a1a1a;">
+                <video class="lazy-video" autoplay muted loop playsinline webkit-playsinline preload="none" style="width: 100%; height: 100%; object-fit: cover;">
+                    <source data-src="./assets/videos/golf-3.mp4" type="video/mp4">
                 </video>
             </div>
         </div>

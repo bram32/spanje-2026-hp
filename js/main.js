@@ -594,7 +594,90 @@ function toggleMusic() {
 
 
 /* =============================================================================
-   8. INITIALIZATION
+   8. LAZY VIDEO LOADING (for iPhone performance!)
+   =============================================================================
+
+   Uses Intersection Observer to only load videos when they come into view.
+   This dramatically improves page load time on mobile devices.
+*/
+
+/**
+ * Sets up lazy loading for videos using Intersection Observer
+ * Videos with class 'lazy-video' and data-src attribute will be loaded on scroll
+ */
+function setupLazyVideoLoading() {
+    // Check if Intersection Observer is supported
+    if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    const video = entry.target;
+
+                    // Load video source
+                    if (video.dataset.src) {
+                        video.src = video.dataset.src;
+                    }
+
+                    // Also check for source elements inside
+                    const sources = video.querySelectorAll('source[data-src]');
+                    sources.forEach(function(source) {
+                        source.src = source.dataset.src;
+                    });
+
+                    // Load and try to play
+                    video.load();
+
+                    // Try to play (may fail on iOS without user interaction)
+                    var playPromise = video.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(function(error) {
+                            // Auto-play was prevented, add click to play
+                            video.addEventListener('click', function() {
+                                video.play();
+                            }, { once: true });
+                        });
+                    }
+
+                    // Stop observing this video
+                    observer.unobserve(video);
+                }
+            });
+        }, {
+            rootMargin: '100px',  // Load videos 100px before they come into view
+            threshold: 0.1
+        });
+
+        // Observe all lazy videos
+        document.querySelectorAll('video.lazy-video').forEach(function(video) {
+            videoObserver.observe(video);
+        });
+    } else {
+        // Fallback for browsers without Intersection Observer
+        document.querySelectorAll('video.lazy-video').forEach(function(video) {
+            if (video.dataset.src) {
+                video.src = video.dataset.src;
+            }
+            const sources = video.querySelectorAll('source[data-src]');
+            sources.forEach(function(source) {
+                source.src = source.dataset.src;
+            });
+            video.load();
+        });
+    }
+
+    // iOS specific: Try to play all videos on first user touch
+    document.addEventListener('touchstart', function() {
+        document.querySelectorAll('video').forEach(function(video) {
+            if (video.paused && video.autoplay) {
+                video.play().catch(function() {});
+            }
+        });
+    }, { once: true });
+}
+
+
+/* =============================================================================
+   9. INITIALIZATION
    =============================================================================
 
    This code runs when the page finishes loading.
@@ -607,7 +690,11 @@ function toggleMusic() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🌴 Marbella Trip 2026 website loaded!');
 
+    // --- Set up lazy loading for videos (improves iPhone performance!) ---
+    setupLazyVideoLoading();
+
     // --- Set up video loops for gallery videos ---
+    // Note: These will be set up after lazy loading loads the videos
     setupVideoLoop('epicNightVideo', 6, 11);
     setupVideoLoop('golfVideo', 19, 27);  // Shortened by 1/3 (was 19-31, now 19-27)
 

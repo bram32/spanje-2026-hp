@@ -1287,3 +1287,71 @@ footer p {
         padding-bottom: max(40px, env(safe-area-inset-bottom));
     }
 }
+
+
+/* =============================================================================
+   15. MOBILE VIDEO PERFORMANCE OPTIMIZATIONS
+   =============================================================================
+
+   These styles improve video loading and playback on iPhones and other mobile devices.
+*/
+
+/* Lazy video placeholder - shows dark background until video loads */
+video.lazy-video {
+    background-color: #1a1a1a;
+}
+
+/* Hardware acceleration for smoother scrolling and animations */
+.gallery-item,
+.highlight-card,
+.venue-card,
+.crew-avatar,
+video {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Prevent layout shifts while videos load */
+video {
+    display: block;
+}
+
+/* Touch optimization for mobile games */
+.game-container,
+#parachuteArea,
+#hakkenArea,
+#grillArea {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Mobile button touch states */
+.hakken-btn,
+#parachuteLeftBtn,
+#parachuteRightBtn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Golf videos on mobile - stack in single column */
+@media (max-width: 600px) {
+    /* Golf videos grid becomes single column on small screens */
+    .venues-section > div[style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+}
