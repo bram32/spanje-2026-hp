@@ -55,6 +55,15 @@ body {
     background: #0a0a0a;
     color: #fff;
     line-height: 1.6;
+    min-width: 320px;                     /* Prevent shrinking below minimum width */
+    overflow-x: hidden;                   /* Prevent horizontal scrolling */
+}
+
+/* Prevent content from causing horizontal overflow */
+html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;       /* Prevent font size adjustment on orientation change */
+    touch-action: pan-y;                  /* Allow vertical scrolling, prevent zoom gestures */
 }
 
 
