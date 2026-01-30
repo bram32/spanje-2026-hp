@@ -1775,3 +1775,91 @@ button:active {
         font-size: 0.7rem !important;
     }
 }
+
+
+/* =============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================= */
+
+/* GPU acceleration for animated elements */
+.crew-avatar,
+.highlight-card,
+.venue-card,
+.gallery-item,
+.palantir-orb {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    video { animation: none !important; }
+}
+
+/* Class-based reduce motion (for low battery) */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* iPhone/iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Fix 100vh on iOS */
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+
+    /* Prevent rubber-banding effect */
+    body {
+        overscroll-behavior-y: none;
+    }
+
+    /* Better touch scrolling */
+    .crew-grid,
+    .gallery-grid {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* iPhone SE and small screens */
+@media (max-width: 375px) and (max-height: 667px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .crew-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .highlight-card {
+        padding: 15px;
+    }
+}
+
+/* Content visibility for off-screen content */
+section:not(.hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
+/* Optimize video rendering */
+video {
+    object-fit: cover;
+    will-change: auto;
+}
+
+/* Smooth scrolling only when not reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}

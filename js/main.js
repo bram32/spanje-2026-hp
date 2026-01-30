@@ -537,6 +537,7 @@ function switchGame(game) {
     const golfcarGame = document.getElementById('golfcarGame');
     const beerbuddyGame = document.getElementById('beerbuddyGame');
     const drivingrangeGame = document.getElementById('drivingrangeGame');
+    const kwalGame = document.getElementById('kwalGame');
 
     // Get all tab buttons
     const tabs = document.querySelectorAll('.game-tab');
@@ -547,6 +548,7 @@ function switchGame(game) {
     if (golfcarGame) golfcarGame.style.display = 'none';
     if (beerbuddyGame) beerbuddyGame.style.display = 'none';
     if (drivingrangeGame) drivingrangeGame.style.display = 'none';
+    if (kwalGame) kwalGame.style.display = 'none';
 
     // Remove 'active' class from all tabs
     tabs.forEach(function(tab) {
@@ -573,6 +575,9 @@ function switchGame(game) {
             break;
         case 'drivingrange':
             if (drivingrangeGame) drivingrangeGame.style.display = 'block';
+            break;
+        case 'kwal':
+            if (kwalGame) kwalGame.style.display = 'block';
             break;
     }
 
@@ -929,6 +934,35 @@ const hakkenMoves = {
     'd': { lane: 2, name: 'Armen Hoog', color: '#2ecc71' },
     'f': { lane: 3, name: 'Hoofd Bang', color: '#f39c12' }
 };
+
+// Speed presets for difficulty levels
+const hakkenSpeedPresets = {
+    1: { bpm: 100, noteSpeed: 1.0, label: 'Makkelijk (100 BPM)' },
+    2: { bpm: 130, noteSpeed: 1.3, label: 'Rustig (130 BPM)' },
+    3: { bpm: 160, noteSpeed: 1.5, label: 'Normaal (160 BPM)' },
+    4: { bpm: 190, noteSpeed: 2.0, label: 'Snel (190 BPM)' },
+    5: { bpm: 220, noteSpeed: 2.5, label: '🔥 HARDCORE (220 BPM)' }
+};
+
+/**
+ * Updates the hakken game speed based on slider value
+ * @param {number} level - Difficulty level 1-5
+ */
+function updateHakkenSpeed(level) {
+    const preset = hakkenSpeedPresets[level];
+    if (preset) {
+        hakken.bpm = preset.bpm;
+        hakken.noteSpeed = preset.noteSpeed;
+
+        // Update label
+        const label = document.getElementById('hakkenSpeedLabel');
+        if (label) label.textContent = preset.label;
+
+        // Update BPM display if visible
+        const bpmDisplay = document.getElementById('bpmDisplay');
+        if (bpmDisplay) bpmDisplay.textContent = preset.bpm;
+    }
+}
 
 /**
  * Starts or stops the hakken game
