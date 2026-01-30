@@ -522,12 +522,14 @@ function setupSuggestionForm() {
 
         try {
             // Send via EmailJS
-            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
                 from_name: name,
                 message: suggestion,
-                to_name: 'Bram'
+                to_name: 'Bram',
+                reply_to: 'noreply@marbella2026.com'
             });
 
+            console.log('EmailJS success:', response);
             statusEl.style.display = 'block';
             statusEl.style.color = '#1ec864';
             statusEl.textContent = '✅ Bedankt! Je suggestie is verzonden!';
@@ -537,7 +539,7 @@ function setupSuggestionForm() {
             console.error('EmailJS error:', error);
             statusEl.style.display = 'block';
             statusEl.style.color = '#ff6b6b';
-            statusEl.textContent = '❌ Er ging iets mis. Probeer het later opnieuw.';
+            statusEl.textContent = '❌ Fout: ' + (error.text || error.message || 'Onbekende fout');
         }
 
         // Reset button
