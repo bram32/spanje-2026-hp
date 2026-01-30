@@ -1,1 +1,1900 @@
-/* * ============================================================================= * MARBELLA TRIP 2026 - MAIN STYLESHEET * ============================================================================= * * This is the main CSS file for the Marbella Trip website. * CSS (Cascading Style Sheets) controls how HTML elements look on the page. * * TABLE OF CONTENTS: * ------------------ * 1. CSS Reset & Base Styles * 2. Typography (Fonts) * 3. Hero Section * 4. Crew/Team Section * 5. Photo Gallery * 6. Schedule/Timeline * 7. Villa Section * 8. Highlights Cards * 9. Venue Cards * 10. Footer & Countdown * 11. Music Player Button * 12. Animations * 13. Responsive Design (Mobile/Tablet) * * ============================================================================= *//* ============================================================================= 1. CSS RESET & BASE STYLES ============================================================================= A "CSS reset" removes default browser styling so your site looks the same across all browsers (Chrome,Firefox,Safari,etc.) The "*" selector means "apply to ALL elements"*/*{margin: 0;/* Remove default spacing outside elements */ padding: 0;/* Remove default spacing inside elements */ box-sizing: border-box;/* Makes width/height include padding and border */}/* Body styles - These apply to the entire page - font-family: Which font to use (with fallbacks if first choice unavailable) - background: Page background color (#0a0a0a is almost black) - color: Default text color (#fff is white) - line-height: Space between lines of text (1.6 = 160% of font size)*/body{font-family: 'Montserrat',sans-serif;background: #0a0a0a;color: #fff;line-height: 1.6;min-width: 320px;/* Prevent shrinking below minimum width */ overflow-x: hidden;/* Prevent horizontal scrolling */}/* Prevent content from causing horizontal overflow */html{overflow-x: hidden;-webkit-text-size-adjust: 100%;/* Prevent font size adjustment on orientation change */ touch-action: pan-y;/* Allow vertical scrolling,prevent zoom gestures */}/* ============================================================================= 2. TYPOGRAPHY (Section Titles) ============================================================================= These styles create consistent headings throughout the site. The golden underline effect uses the ::after pseudo-element.*/.section-title{font-family: 'Playfair Display',serif;/* Elegant serif font for headings */ font-size: 3rem;/* 3rem = 48px (if base is 16px) */ text-align: center;margin-bottom: 60px;position: relative;/* Needed for the ::after element */}/* ::after creates a "fake" element after the title This is the gold line you see under section titles*/.section-title::after{content: '';/* Required for ::after to work */ display: block;width: 100px;height: 3px;background: linear-gradient(90deg,#f4d03f,#e6b800);/* Gold gradient */ margin: 20px auto 0;/* Center the line */}/* ============================================================================= 3. HERO SECTION ============================================================================= The hero is the big intro section at the top of the page. It uses: - 100vh = 100% of viewport (screen) height - Flexbox to center content both horizontally and vertically - A background image with a dark overlay*/.hero{height: 100vh;/* Full screen height */ background: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.5)),/* Dark overlay */ url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80') center/cover;/* Chill Marbella beach vibe */ display: flex;/* Enable flexbox layout */ flex-direction: column;/* Stack children vertically */ justify-content: center;/* Center vertically */ align-items: center;/* Center horizontally */ text-align: center;position: relative;/* For the scroll indicator */}/* Main title in the hero */.hero-content h1{font-family: 'Playfair Display',serif;font-size: 5rem;/* Large title */ font-weight: 700;/* Bold */ letter-spacing: 8px;/* Space between letters */ text-transform: uppercase;/* ALL CAPS */ margin-bottom: 1rem;text-shadow: 2px 2px 20px rgba(0,0,0,0.5);/* Subtle shadow for depth */}/* Subtitle in gold */.hero-content .subtitle{font-size: 1.5rem;font-weight: 300;/* Light weight */ letter-spacing: 4px;margin-bottom: 2rem;color: #f4d03f;/* Gold color */}/* Date text */.hero-content .dates{font-size: 1.2rem;letter-spacing: 3px;opacity: 0.9;/* Slightly transparent */}/* The bouncing scroll indicator at the bottom */.scroll-indicator{position: absolute;bottom: 40px;animation: bounce 2s infinite;/* Uses the bounce animation */}.scroll-indicator span{display: block;width: 30px;height: 50px;border: 2px solid #fff;border-radius: 20px;/* Rounded corners make it pill-shaped */ position: relative;}/* The dot inside the scroll indicator */.scroll-indicator span::before{content: '';position: absolute;top: 10px;left: 50%;transform: translateX(-50%);/* Center horizontally */ width: 6px;height: 6px;background: #fff;border-radius: 50%;/* Makes it a circle */ animation: scroll 2s infinite;}/* ============================================================================= 4. CREW/TEAM SECTION ============================================================================= The section showing all the trip participants with their avatar videos.*/.crew-section{padding: 100px 5%;/* Top/bottom: 100px,Left/right: 5% */ background: linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);/* Diagonal gradient */}/* Grid container for crew members */.crew-grid{display: flex;/* Flexbox layout */ justify-content: center;/* Center items */ gap: 30px;/* Space between items */ flex-wrap: wrap;/* Wrap to new line if needed */ max-width: 1200px;margin: 0 auto;/* Center the grid */}/* Individual crew member card */.crew-member{text-align: center;transition: transform 0.3s ease;/* Smooth hover effect */}/* Lift up on hover */.crew-member:hover{transform: translateY(-10px);}/* The circular avatar container */.crew-avatar{width: 120px;height: 120px;border-radius: 50%;/* Makes it circular */ background: linear-gradient(135deg,#f4d03f,#e6b800);/* Gold gradient */ display: flex;align-items: center;justify-content: center;font-size: 2.5rem;margin-bottom: 15px;box-shadow: 0 10px 30px rgba(244,208,63,0.3);/* Gold glow effect */ overflow: hidden;/* Clip content to circle */ border: 3px solid #f4d03f;}/* Make videos/images fill the avatar circle */.crew-avatar img,.crew-avatar video{width: 100%;height: 100%;object-fit: cover;/* Cover the area,crop if needed */ object-position: center center;}/* Individual crew member photo positioning adjustments */.crew-avatar img[alt="Peeg"]{transform: scale(1.3);/* Zoom in slightly */ object-position: center 0%;}.crew-avatar img[alt="Marc"]{transform: scale(1.3);object-position: 0% 20%;}.crew-avatar img[alt="Derk"]{transform: scale(1.3);object-position: center center;}/* Crew member name */.crew-member h4{font-size: 1.1rem;font-weight: 600;position: relative;cursor: default;}/* Tooltip styling (the popup that shows on hover) */.crew-member h4 .tooltip{visibility: hidden;opacity: 0;position: absolute;top: 100%;left: 50%;transform: translateX(-50%);background: rgba(244,208,63,0.95);/* Gold background */ color: #1a1a2e;/* Dark text */ padding: 8px 12px;border-radius: 8px;font-size: 0.85rem;font-weight: 500;white-space: nowrap;/* Keep on one line */ transition: opacity 0.3s ease,visibility 0.3s ease;margin-top: 8px;z-index: 100;}/* The little triangle arrow on the tooltip */.crew-member h4 .tooltip::after{content: '';position: absolute;bottom: 100%;left: 50%;transform: translateX(-50%);border: 6px solid transparent;border-bottom-color: rgba(244,208,63,0.95);/* Matches tooltip background */}/* Show tooltip on hover */.crew-member h4:hover .tooltip{visibility: visible;opacity: 1;}/* ============================================================================= 5. PHOTO GALLERY ============================================================================= A CSS Grid layout that creates an interesting asymmetric gallery. The first item spans 2 columns and 2 rows to be larger.*/.gallery-section{padding: 50px 5%;background: #0f0f0f;}.gallery-grid{display: grid;/* CSS Grid layout */ grid-template-columns: repeat(4,1fr);/* 4 equal columns */ grid-template-rows: repeat(2,180px);/* 2 rows of 180px height */ gap: 10px;/* Space between items */ max-width: 1200px;margin: 0 auto;}.gallery-item{overflow: hidden;/* Hide parts of zoomed images */ border-radius: 10px;position: relative;/* For the overlay */}/* First gallery item is larger */.gallery-item:nth-child(1){grid-column: span 2;/* Span 2 columns */ grid-row: span 2;/* Span 2 rows */}/* Gallery images */.gallery-item img{width: 100%;height: 100%;object-fit: cover;transition: transform 0.5s ease;/* Smooth zoom effect */}/* Zoom in on hover */.gallery-item:hover img{transform: scale(1.1);}/* Dark overlay that appears on hover */.gallery-item .overlay{position: absolute;bottom: 0;left: 0;right: 0;padding: 20px;background: linear-gradient(transparent,rgba(0,0,0,0.8));opacity: 0;/* Hidden by default */ transition: opacity 0.3s ease;}/* Show overlay on hover */.gallery-item:hover .overlay{opacity: 1;}/* ============================================================================= 6. SCHEDULE/TIMELINE SECTION ============================================================================= A vertical timeline showing the schedule for each day.*/.schedule-section{padding: 100px 5%;background: linear-gradient(180deg,#0f0f0f 0%,#1a1a1a 100%);}.days-container{max-width: 1200px;margin: 0 auto;}/* Card for each day */.day-card{background: linear-gradient(135deg,rgba(255,255,255,0.05) 0%,rgba(255,255,255,0.02) 100%);border-radius: 20px;margin-bottom: 40px;overflow: hidden;border: 1px solid rgba(255,255,255,0.1);/* Subtle border */}.day-header{display: flex;align-items: center;gap: 30px;padding: 0;}.day-image{width: 400px;height: 300px;object-fit: cover;}.day-title-container{padding: 30px;}.day-number{font-size: 4rem;font-family: 'Playfair Display',serif;color: #f4d03f;line-height: 1;}.day-name{font-size: 2rem;font-weight: 600;margin-bottom: 10px;}.day-date{color: #888;font-size: 1.1rem;}.day-content{padding: 40px;}/* The vertical timeline line */.timeline{position: relative;padding-left: 40px;}.timeline::before{content: '';position: absolute;left: 8px;top: 0;bottom: 0;width: 2px;background: linear-gradient(180deg,#f4d03f,#e6b800);/* Gold line */}/* Individual timeline event */.timeline-item{position: relative;padding-bottom: 25px;display: flex;gap: 20px;align-items: flex-start;}/* The dot on the timeline */.timeline-item::before{content: '';position: absolute;left: -40px;top: 5px;width: 18px;height: 18px;background: #f4d03f;/* Gold dot */ border-radius: 50%;border: 3px solid #0f0f0f;}.timeline-time{font-weight: 600;color: #f4d03f;min-width: 80px;font-size: 1.1rem;}.timeline-event{flex: 1;/* Take remaining space */}.timeline-event h4{font-size: 1.2rem;margin-bottom: 5px;}.timeline-event p{color: #888;font-size: 0.95rem;}/* Special highlighted note box */.special-note{background: rgba(244,208,63,0.1);border-left: 3px solid #f4d03f;padding: 15px 20px;margin: 10px 0;border-radius: 0 8px 8px 0;font-style: italic;}/* ============================================================================= 7. VILLA SECTION ============================================================================= Two-column layout showing villa images and information.*/.villa-section{padding: 100px 5%;background: linear-gradient(135deg,#16213e 0%,#1a1a2e 100%);}.villa-container{display: grid;grid-template-columns: 1fr 1fr;/* Two equal columns */ gap: 60px;max-width: 1400px;margin: 0 auto;align-items: center;/* Vertically center items */}/* Grid of villa images */.villa-images{display: grid;grid-template-columns: 1fr 1fr;gap: 15px;}.villa-images img{width: 100%;height: 200px;object-fit: cover;border-radius: 15px;transition: transform 0.3s ease;}/* First image spans both columns and is taller */.villa-images img:first-child{grid-column: span 2;height: 300px;}.villa-images img:hover{transform: scale(1.02);}/* Villa info text */.villa-info h3{font-family: 'Playfair Display',serif;font-size: 2.5rem;margin-bottom: 20px;}.villa-info p{color: #aaa;margin-bottom: 30px;font-size: 1.1rem;}/* Villa features grid */.villa-features{display: grid;grid-template-columns: 1fr 1fr;gap: 20px;}.feature{display: flex;align-items: center;gap: 15px;padding: 15px;background: rgba(255,255,255,0.05);border-radius: 10px;}.feature-icon{width: 50px;height: 50px;background: linear-gradient(135deg,#f4d03f,#e6b800);border-radius: 10px;display: flex;align-items: center;justify-content: center;font-size: 1.5rem;}/* Villa booking button */.villa-btn{display: inline-block;margin-top: 30px;padding: 15px 40px;background: linear-gradient(135deg,#f4d03f,#e6b800);color: #000;text-decoration: none;border-radius: 30px;font-weight: 600;transition: transform 0.3s ease,box-shadow 0.3s ease;}.villa-btn:hover{transform: translateY(-3px);box-shadow: 0 10px 30px rgba(244,208,63,0.4);}/* ============================================================================= 8. HIGHLIGHTS CARDS ============================================================================= Four-column grid of highlight cards with hover effects.*/.highlights-section{padding: 100px 5%;background: #0a0a0a;}.highlights-grid{display: grid;grid-template-columns: repeat(4,1fr);/* 4 equal columns */ gap: 30px;max-width: 1400px;margin: 0 auto;}.highlight-card{background: linear-gradient(135deg,rgba(255,255,255,0.08) 0%,rgba(255,255,255,0.02) 100%);border-radius: 20px;padding: 40px 30px;text-align: center;border: 1px solid rgba(255,255,255,0.1);transition: transform 0.3s ease,border-color 0.3s ease;}.highlight-card:hover{transform: translateY(-10px);border-color: #f4d03f;/* Gold border on hover */}.highlight-icon{font-size: 3rem;margin-bottom: 20px;}.highlight-card h4{font-size: 1.3rem;margin-bottom: 10px;}.highlight-card p{color: #888;}/* ============================================================================= 9. VENUE CARDS (Beach Clubs,Nightclubs,etc.) ============================================================================= Reusable card style for venues with hover image effects.*//* Venue card hover effect - shows image on hover */.venue-card:hover .venue-hover-img{opacity: 1 !important;}/* ============================================================================= 10. FOOTER & COUNTDOWN ============================================================================= Footer with countdown timer to the trip date.*/footer{padding: 60px 5%;background: #050505;text-align: center;}footer h2{font-family: 'Playfair Display',serif;font-size: 2.5rem;margin-bottom: 20px;}footer p{color: #666;margin-bottom: 30px;}/* Countdown container */.countdown{display: flex;justify-content: center;gap: 40px;margin-top: 40px;}.countdown-item{text-align: center;}.countdown-item .number{font-size: 3rem;font-weight: 700;color: #f4d03f;display: block;}.countdown-item .label{color: #666;text-transform: uppercase;letter-spacing: 2px;font-size: 0.8rem;}/* ============================================================================= 11. MUSIC PLAYER BUTTON ============================================================================= Fixed button in bottom-right corner for music control.*/.music-btn{position: fixed;/* Stays in place when scrolling */ bottom: 30px;right: 30px;width: 60px;height: 60px;border-radius: 50%;background: linear-gradient(135deg,#f4d03f,#e6b800);border: none;cursor: pointer;z-index: 1000;/* On top of everything */ display: flex;align-items: center;justify-content: center;font-size: 1.5rem;box-shadow: 0 5px 20px rgba(244,208,63,0.4);transition: transform 0.3s ease,box-shadow 0.3s ease;}.music-btn:hover{transform: scale(1.1);box-shadow: 0 8px 30px rgba(244,208,63,0.6);}/* Pulsing effect when music is playing */.music-btn.playing{animation: pulse-music 1s infinite;}/* ============================================================================= 12. ANIMATIONS ============================================================================= @keyframes define animations that can be used with the 'animation' property. They specify what happens at different points (0%,50%,100%,etc.)*//* Bounce animation for scroll indicator */@keyframes bounce{0%,20%,50%,80%,100%{transform: translateY(0);}40%{transform: translateY(-10px);}60%{transform: translateY(-5px);}}/* Scroll animation for the dot inside scroll indicator */@keyframes scroll{0%{opacity: 1;top: 10px;}100%{opacity: 0;top: 30px;}}/* Pulsing glow for music button */@keyframes pulse-music{0%,100%{box-shadow: 0 5px 20px rgba(244,208,63,0.4);}50%{box-shadow: 0 5px 30px rgba(244,208,63,0.8);}}/* Flame flicker effect for steak game */@keyframes flicker{0%{transform: scaleY(1) scaleX(1);opacity: 0.8;}100%{transform: scaleY(1.2) scaleX(0.9);opacity: 1;}}/* Pulse animation */@keyframes pulse{0%,100%{transform: translateY(-50%) scale(1);}50%{transform: translateY(-50%) scale(1.2);}}/* Sizzle animation for steak game */@keyframes sizzle{0%,100%{transform: translate(-50%,-50%) rotate(0deg);}25%{transform: translate(-50%,-50%) rotate(1deg);}75%{transform: translate(-50%,-50%) rotate(-1deg);}}/* Hover effect for doneness buttons */.doneness-btn:hover{transform: scale(1.05);}.doneness-btn.selected{transform: scale(1.1);}/* ============================================================================= 13. MINIGAMES SECTION ============================================================================= Styles for the tabbed minigames area including: - Game tab selector - Parachute game - Hakken game*//* Game tab buttons */.game-tab{display: flex;flex-direction: column;align-items: center;gap: 5px;padding: 15px 25px;background: rgba(255,255,255,0.05);border: 2px solid rgba(255,255,255,0.2);border-radius: 15px;color: #888;cursor: pointer;transition: all 0.3s ease;min-width: 120px;}.game-tab:hover{background: rgba(255,255,255,0.1);border-color: rgba(255,255,255,0.3);color: #fff;transform: translateY(-3px);}.game-tab.active{background: linear-gradient(135deg,rgba(244,208,63,0.2) 0%,rgba(244,208,63,0.1) 100%);border-color: #f4d03f;color: #f4d03f;}.game-tab .tab-icon{font-size: 2rem;}.game-tab .tab-text{font-size: 0.85rem;font-weight: 600;}/* Game containers - show/hide based on selection */.game-container{display: none;}.game-container.active{display: block;}/* Cloud animation for parachute game */@keyframes cloudFloat{0%{transform: translateX(0);}100%{transform: translateX(-100vw);}}/* Parachute falling animation */@keyframes parachuteSway{0%,100%{transform: translateX(-50%) rotate(-3deg);}50%{transform: translateX(-50%) rotate(3deg);}}/* Club light animation for hakken game */@keyframes clubLight{0%,100%{opacity: 0.3;}50%{opacity: 0.8;}}/* Hakken dance moves */@keyframes hakkenJump{0%,100%{transform: translateY(0);}50%{transform: translateY(-30px);}}@keyframes hakkenArmPump{0%,100%{transform: rotate(0deg);}50%{transform: rotate(-45deg);}}@keyframes hakkenKick{0%,100%{transform: scaleY(1);}50%{transform: scaleY(0.7) translateY(10px);}}/* Hakken button active state */.hakken-btn:active,.hakken-btn.pressed{transform: scale(0.9);filter: brightness(1.5);}/* ============================================================================= BEER BUDDY GAME ANIMATIONS ============================================================================= *//* Friend waving animation */@keyframes friendWave{0%,100%{transform: translateY(0) rotate(0deg);}25%{transform: translateY(-3px) rotate(-5deg);}75%{transform: translateY(-3px) rotate(5deg);}}/* Floating score text */@keyframes floatUp{0%{opacity: 1;transform: translateX(-50%) translateY(0) scale(1);}100%{opacity: 0;transform: translateX(-50%) translateY(-60px) scale(1.3);}}/* Beer bounce on pickup */@keyframes beerBounce{0%{transform: scale(0) translateY(20px);}50%{transform: scale(1.3) translateY(-5px);}100%{transform: scale(1) translateY(0);}}/* Power-up bounce */@keyframes powerUpBounce{0%,100%{transform: translateY(0);}50%{transform: translateY(-10px);}}/* Power-up glow */@keyframes powerUpGlow{0%,100%{filter: drop-shadow(0 0 5px gold);}50%{filter: drop-shadow(0 0 20px gold) brightness(1.3);}}/* Combo pulse */@keyframes comboPulse{0%{transform: scale(1);}50%{transform: scale(1.2);}100%{transform: scale(1);}}/* Shake animation for spill */@keyframes shake{0%,100%{transform: translateX(-50%) rotate(0deg);}25%{transform: translateX(-50%) rotate(-5deg) translateX(-5px);}75%{transform: translateX(-50%) rotate(5deg) translateX(5px);}}/* Beer buddy combo display styling */#beerCombo{position: absolute;top: 55px;left: 15px;background: linear-gradient(135deg,#e74c3c,#c0392b);padding: 5px 12px;border-radius: 15px;color: #fff;font-size: 0.9rem;font-weight: bold;z-index: 50;box-shadow: 0 0 15px rgba(231,76,60,0.5);}/* Hit feedback animation */@keyframes hitPop{0%{transform: translate(-50%,-50%) scale(0.5);opacity: 0;}50%{transform: translate(-50%,-50%) scale(1.2);opacity: 1;}100%{transform: translate(-50%,-50%) scale(1);opacity: 0;}}.hit-feedback-show{animation: hitPop 0.4s ease-out forwards;}/* Pascal dancing animation */.pascal-dancing{animation: hakkenJump 0.25s ease-in-out infinite;}/* Specific tab colors when active */.game-tab[data-game="parachute"].active{border-color: #9b59b6;color: #9b59b6;background: linear-gradient(135deg,rgba(155,89,182,0.2) 0%,rgba(155,89,182,0.1) 100%);}.game-tab[data-game="hakken"].active{border-color: #e74c3c;color: #e74c3c;background: linear-gradient(135deg,rgba(231,76,60,0.2) 0%,rgba(231,76,60,0.1) 100%);}.game-tab[data-game="golfcar"].active{border-color: #2ecc71;color: #2ecc71;background: linear-gradient(135deg,rgba(46,204,113,0.2) 0%,rgba(46,204,113,0.1) 100%);}.game-tab[data-game="beerbuddy"].active{border-color: #f39c12;color: #f39c12;background: linear-gradient(135deg,rgba(243,156,18,0.2) 0%,rgba(243,156,18,0.1) 100%);}.game-tab[data-game="drivingrange"].active{border-color: #2ecc71;color: #2ecc71;background: linear-gradient(135deg,rgba(46,204,113,0.2) 0%,rgba(46,204,113,0.1) 100%);}/* ============================================================================= DRIVING RANGE GAME ANIMATIONS ============================================================================= *//* Target running animation */@keyframes targetRun{0%{transform: translateX(0);}100%{transform: translateX(-100%);}}/* Target hit burst effect */@keyframes hitBurst{0%{transform: scale(0.5);opacity: 1;}50%{transform: scale(1.5);opacity: 0.8;}100%{transform: scale(2);opacity: 0;}}/* Star burst animation for combo hits */@keyframes starBurst{0%{transform: translate(-50%,-50%) scale(0) rotate(0deg);opacity: 1;}50%{transform: translate(-50%,-50%) scale(1.2) rotate(180deg);opacity: 0.8;}100%{transform: translate(-50%,-50%) scale(0.5) rotate(360deg);opacity: 0;}}/* Golf ball flight animation */@keyframes ballFlight{0%{transform: translateY(0) scale(1);opacity: 1;}50%{transform: translateY(-100px) scale(0.7);opacity: 0.9;}100%{transform: translateY(0) scale(0.4);opacity: 0.7;}}/* Golfer swing animation */@keyframes golferSwing{0%{transform: rotate(0deg);}30%{transform: rotate(-30deg);}60%{transform: rotate(45deg);}100%{transform: rotate(0deg);}}/* Power bar pulse */@keyframes powerPulse{0%,100%{filter: brightness(1);}50%{filter: brightness(1.3);}}/* Target types specific animations */@keyframes zigzagMove{0%,100%{transform: translateY(0);}25%{transform: translateY(-20px);}75%{transform: translateY(20px);}}@keyframes bounceMove{0%,100%{transform: translateY(0);}50%{transform: translateY(-30px);}}/* Driving range touch optimization */#drivingrangeArea{touch-action: none;-webkit-user-select: none;user-select: none;-webkit-touch-callout: none;}/* Mobile optimizations for driving range */@media (max-width: 768px){#drivingrangeArea{height: 400px !important;}}/* ============================================================================= 14. RESPONSIVE DESIGN (Mobile/Tablet) ============================================================================= @media queries change styles based on screen size. This is how we make the site look good on phones and tablets. Common breakpoints: - 1024px: Tablets in landscape - 768px: Tablets in portrait - 480px: Large phones - 375px: Small phones (iPhone SE)*//* Tablets (1024px and below) */@media (max-width: 1024px){.hero-content h1{font-size: 3rem;/* Smaller title */}.gallery-grid{grid-template-columns: repeat(2,1fr);/* 2 columns instead of 4 */}.villa-container{grid-template-columns: 1fr;/* Single column */}.highlights-grid{grid-template-columns: repeat(2,1fr);/* 2 columns */}.day-header{flex-direction: column;/* Stack vertically */}.day-image{width: 100%;height: 200px;}}/* Tablets portrait (768px and below) */@media (max-width: 768px){.hero-content h1{font-size: 2.5rem;letter-spacing: 4px;}.section-title{font-size: 2rem;}.gallery-grid{grid-template-columns: 1fr;/* Single column */}/* First gallery item no longer spans multiple cells */ .gallery-item:nth-child(1){grid-column: span 1;grid-row: span 1;}.highlights-grid{grid-template-columns: 1fr;}/* On mobile/touch devices: show highlight videos/images by default (no hover) */ .highlight-card img,.highlight-card video,.highlight-card .highlight-video{opacity: 1 !important;}.villa-features{grid-template-columns: 1fr;}}/* Phones (480px and below) */@media (max-width: 480px){.hero-content h1{font-size: 2rem;letter-spacing: 2px;}.hero-content .subtitle{font-size: 1rem;letter-spacing: 2px;}.hero-content .dates{font-size: 0.9rem;letter-spacing: 1px;}.section-title{font-size: 1.5rem;padding: 0 10px;}.section-title::after{width: 60px;margin: 15px auto 0;}/* Crew section adjustments */ .crew-section{padding: 60px 3%;}.crew-grid{gap: 15px;}.crew-avatar{width: 80px;height: 80px;font-size: 1.8rem;}.crew-member h4{font-size: 0.9rem;}/* Flight section */ .flight-section{padding: 60px 3% !important;}.flight-section p{font-size: 0.9rem !important;margin-bottom: 20px !important;}.flight-section svg{max-height: 300px;}.flight-section svg text{font-size: 10px !important;}/* Flight info cards */ .flight-section > div > div:last-child{gap: 10px !important;margin-top: 20px !important;}.flight-section > div > div:last-child > div{padding: 12px 15px !important;min-width: 80px;}.flight-section > div > div:last-child > div > div:first-child{font-size: 1.2rem !important;}.flight-section > div > div:last-child > div > div:nth-child(2){font-size: 0.85rem !important;}.flight-section > div > div:last-child > div > div:nth-child(3){font-size: 0.75rem !important;}/* Gallery - compact */ .gallery-section{padding: 30px 3%;}.gallery-grid{grid-template-columns: repeat(2,1fr);grid-template-rows: repeat(3,120px);gap: 8px;}.gallery-item{border-radius: 6px;}.gallery-item:nth-child(1){grid-column: span 2;grid-row: span 1;}/* Highlights */ .highlights-section{padding: 60px 3%;}.highlight-card{padding: 25px 20px;border-radius: 15px;}.highlight-icon{font-size: 2rem;margin-bottom: 15px;}.highlight-card h4{font-size: 1.1rem;}.highlight-card p{font-size: 0.85rem;}/* Venues */ .venues-section{padding: 60px 3% !important;}.venues-grid{grid-template-columns: 1fr !important;gap: 15px !important;}.venue-card{padding: 20px !important;border-radius: 15px !important;}.venue-card h4{font-size: 1.1rem !important;}.venue-card p{font-size: 0.85rem !important;margin-bottom: 10px !important;}/* Villa */ .villa-section{padding: 60px 3%;}.villa-container{gap: 30px;}.villa-images{gap: 10px;}.villa-images img:first-child{height: 200px;}.villa-images img{height: 120px;border-radius: 10px;}.villa-info h3{font-size: 1.8rem;}.villa-info p{font-size: 0.95rem;}.villa-features{gap: 10px;}.feature{padding: 12px;border-radius: 8px;}.feature-icon{width: 40px;height: 40px;font-size: 1.2rem;}.villa-btn{padding: 12px 30px;font-size: 0.9rem;}/* Footer */ footer{padding: 40px 3%;}footer h2{font-size: 1.8rem;}footer p{font-size: 0.9rem;}.countdown{gap: 15px;flex-wrap: wrap;}.countdown-item .number{font-size: 2rem;}.countdown-item .label{font-size: 0.7rem;letter-spacing: 1px;}/* Music button */ .music-btn{width: 50px;height: 50px;bottom: 20px;right: 20px;font-size: 1.2rem;}}/* Very small phones (375px and below,e.g.,iPhone SE) */@media (max-width: 375px){.hero-content h1{font-size: 1.8rem;}.crew-avatar{width: 65px;height: 65px;}.crew-member h4{font-size: 0.8rem;}.section-title{font-size: 1.3rem;}.countdown{gap: 10px;}.countdown-item .number{font-size: 1.5rem;}}/* iPhone X and newer (notch support) */@supports (padding: max(0px)){body{padding-left: max(0px,env(safe-area-inset-left));padding-right: max(0px,env(safe-area-inset-right));}footer{padding-bottom: max(40px,env(safe-area-inset-bottom));}}/* ============================================================================= 15. MOBILE VIDEO PERFORMANCE OPTIMIZATIONS ============================================================================= These styles improve video loading and playback on iPhones and other mobile devices.*//* Lazy video placeholder - shows dark background until video loads */video.lazy-video{background-color: #1a1a1a;}/* Hardware acceleration for smoother scrolling and animations */.gallery-item,.highlight-card,.venue-card,.crew-avatar,video{-webkit-transform: translateZ(0);transform: translateZ(0);-webkit-backface-visibility: hidden;backface-visibility: hidden;}/* Prevent layout shifts while videos load */video{display: block;}/* Touch optimization for mobile games */.game-container,#parachuteArea,#hakkenArea,#golfcarArea,#beerbuddyArea{touch-action: none;-webkit-user-select: none;user-select: none;-webkit-touch-callout: none;}/* Mobile button touch states - all game controls */.hakken-btn,#parachuteLeftBtn,#parachuteRightBtn,#golfcarUpBtn,#golfcarDownBtn,#golfcarLeftBtn,#golfcarRightBtn,#beerLeftBtn,#beerRightBtn,#beerUpBtn,#beerDownBtn{-webkit-tap-highlight-color: transparent;touch-action: manipulation;-webkit-user-select: none;user-select: none;}/* Larger touch targets on mobile */@media (max-width: 768px){.hakken-btn{width: 70px !important;height: 70px !important;font-size: 1.8rem !important;}#parachuteLeftBtn,#parachuteRightBtn{width: 90px !important;height: 90px !important;font-size: 2.5rem !important;}#golfcarUpBtn,#golfcarDownBtn,#golfcarLeftBtn,#golfcarRightBtn,#beerLeftBtn,#beerRightBtn,#beerUpBtn,#beerDownBtn{width: 75px !important;height: 75px !important;font-size: 2rem !important;}}/* Active/pressed states for touch feedback */.hakken-btn:active,.hakken-btn.pressed{transform: scale(0.9);filter: brightness(1.5);}#parachuteLeftBtn:active,#parachuteRightBtn:active,#beerLeftBtn:active,#beerRightBtn:active,#beerUpBtn:active,#beerDownBtn:active,#golfcarUpBtn:active,#golfcarDownBtn:active,#golfcarLeftBtn:active,#golfcarRightBtn:active{transform: scale(0.9);filter: brightness(1.3);}/* Prevent text selection and callouts on game elements */.game-container *{-webkit-touch-callout: none;-webkit-user-select: none;user-select: none;}/* Steak game doneness buttons touch optimization */.doneness-btn{-webkit-tap-highlight-color: transparent;touch-action: manipulation;-webkit-user-select: none;user-select: none;}@media (max-width: 768px){.doneness-btn{padding: 12px 18px !important;font-size: 0.9rem !important;min-height: 44px;}}/* Reduce motion for users who prefer it */@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration: 0.01ms !important;animation-iteration-count: 1 !important;transition-duration: 0.01ms !important;}}/* Golf videos on mobile - stack in single column */@media (max-width: 600px){/* Golf videos grid becomes single column on small screens */ .venues-section > div[style*="grid-template-columns: repeat(3"]{grid-template-columns: 1fr !important;gap: 15px !important;}}/* Mobile game optimizations */@media (max-width: 480px){/* Ensure game areas fit on small screens */ #parachuteArea,#hakkenArea,#golfcarArea,#beerbuddyArea{height: 350px !important;max-height: 50vh !important;}/* Scale down Pascal in hakken game */ #pascal svg{width: 90px !important;height: 144px !important;}/* Reduce font sizes in game overlays */ .game-container h3{font-size: 1.2rem !important;}.game-container p{font-size: 0.85rem !important;margin-bottom: 15px !important;}/* Make sure mobile control buttons are visible and accessible */ .game-container > div[style*="display: flex"]{padding: 10px 5px !important;}}/* Prevent pull-to-refresh on game section */.games-section{overscroll-behavior: contain;}/* iOS specific: prevent rubber-banding effect during game play */@supports (-webkit-touch-callout: none){#parachuteArea,#hakkenArea,#golfcarArea,#beerbuddyArea{-webkit-overflow-scrolling: auto;overscroll-behavior: none;}/* Larger touch targets on iOS for better accessibility */ .hakken-btn,#parachuteLeftBtn,#parachuteRightBtn,#golfcarUpBtn,#golfcarDownBtn,#golfcarLeftBtn,#golfcarRightBtn,#beerLeftBtn,#beerRightBtn{min-width: 60px;min-height: 60px;}}/* iPhone specific media query */@media only screen and (max-device-width: 430px) and (-webkit-device-pixel-ratio: 3){/* Ensure games are properly sized on iPhone */ .game-container{padding: 10px !important;}/* Make control buttons easier to tap */ #parachuteLeftBtn,#parachuteRightBtn,#beerLeftBtn,#beerRightBtn{width: 85px !important;height: 85px !important;font-size: 2.2rem !important;}.hakken-btn{width: 65px !important;height: 65px !important;font-size: 1.6rem !important;}#golfcarUpBtn,#golfcarDownBtn,#golfcarLeftBtn,#golfcarRightBtn{width: 65px !important;height: 65px !important;font-size: 1.8rem !important;}/* Adjust game area heights */ #parachuteArea,#hakkenArea,#golfcarArea,#beerbuddyArea{height: 380px !important;}}/* Better button active states for touch feedback */button:active{opacity: 0.8;}/* Game control buttons - enhanced touch feedback */.hakken-btn:active,#parachuteLeftBtn:active,#parachuteRightBtn:active,#golfcarUpBtn:active,#golfcarDownBtn:active,#golfcarLeftBtn:active,#golfcarRightBtn:active,#beerLeftBtn:active,#beerRightBtn:active{transform: scale(0.92) !important;filter: brightness(1.4) !important;transition: transform 0.05s,filter 0.05s !important;}/* Ensure game tabs are easily tappable on mobile */.game-tab{-webkit-tap-highlight-color: rgba(244,208,63,0.3);touch-action: manipulation;user-select: none;-webkit-user-select: none;}.game-tabs{touch-action: pan-x pan-y;-webkit-overflow-scrolling: touch;}@media (max-width: 600px){.game-tab{min-height: 50px !important;padding: 10px 15px !important;}.game-tab .tab-icon{font-size: 1.3rem !important;}.game-tab .tab-text{font-size: 0.7rem !important;}}/* ============================================================================= PERFORMANCE OPTIMIZATIONS ============================================================================= *//* GPU acceleration for animated elements */.crew-avatar,.highlight-card,.venue-card,.gallery-item,.palantir-orb{transform: translateZ(0);backface-visibility: hidden;}/* Reduce motion for users who prefer it */@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration: 0.01ms !important;animation-iteration-count: 1 !important;transition-duration: 0.01ms !important;scroll-behavior: auto !important;}video{animation: none !important;}}/* Class-based reduce motion (for low battery) */.reduce-motion *,.reduce-motion *::before,.reduce-motion *::after{animation: none !important;transition: none !important;}/* iPhone/iOS specific fixes */@supports (-webkit-touch-callout: none){/* Fix 100vh on iOS */ .hero{min-height: -webkit-fill-available;}/* Prevent rubber-banding effect */ body{overscroll-behavior-y: none;}/* Better touch scrolling */ .crew-grid,.gallery-grid{-webkit-overflow-scrolling: touch;}}/* iPhone SE and small screens */@media (max-width: 375px) and (max-height: 667px){.section-title{font-size: 2rem;}.crew-avatar{width: 80px;height: 80px;}.highlight-card{padding: 15px;}}/* Content visibility for off-screen content */section:not(.hero){content-visibility: auto;contain-intrinsic-size: auto 500px;}/* Optimize video rendering */video{object-fit: cover;will-change: auto;}/* Smooth scrolling only when not reduced motion */@media (prefers-reduced-motion: no-preference){html{scroll-behavior: smooth;}}/* Game containers - allow scrolling when not playing */.game-container{touch-action: pan-y pinch-zoom;}/* When game is active,block touch for game control */.game-container.game-active{touch-action: none;}/* Ensure games section allows vertical scroll */.games-section{touch-action: pan-y;-webkit-overflow-scrolling: touch;}
+/*
+ * =============================================================================
+ * MARBELLA TRIP 2026 - MAIN STYLESHEET
+ * =============================================================================
+ *
+ * This is the main CSS file for the Marbella Trip website.
+ * CSS (Cascading Style Sheets) controls how HTML elements look on the page.
+ *
+ * TABLE OF CONTENTS:
+ * ------------------
+ * 1. CSS Reset & Base Styles
+ * 2. Typography (Fonts)
+ * 3. Hero Section
+ * 4. Crew/Team Section
+ * 5. Photo Gallery
+ * 6. Schedule/Timeline
+ * 7. Villa Section
+ * 8. Highlights Cards
+ * 9. Venue Cards
+ * 10. Footer & Countdown
+ * 11. Music Player Button
+ * 12. Animations
+ * 13. Responsive Design (Mobile/Tablet)
+ *
+ * =============================================================================
+ */
+
+
+/* =============================================================================
+   1. CSS RESET & BASE STYLES
+   =============================================================================
+
+   A "CSS reset" removes default browser styling so your site looks the same
+   across all browsers (Chrome, Firefox, Safari, etc.)
+
+   The "*" selector means "apply to ALL elements"
+*/
+
+* {
+    margin: 0;              /* Remove default spacing outside elements */
+    padding: 0;             /* Remove default spacing inside elements */
+    box-sizing: border-box; /* Makes width/height include padding and border */
+}
+
+/*
+   Body styles - These apply to the entire page
+
+   - font-family: Which font to use (with fallbacks if first choice unavailable)
+   - background: Page background color (#0a0a0a is almost black)
+   - color: Default text color (#fff is white)
+   - line-height: Space between lines of text (1.6 = 160% of font size)
+*/
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    line-height: 1.6;
+    min-width: 320px;                     /* Prevent shrinking below minimum width */
+    overflow-x: hidden;                   /* Prevent horizontal scrolling */
+}
+
+/* Prevent content from causing horizontal overflow */
+html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;       /* Prevent font size adjustment on orientation change */
+    touch-action: pan-y;                  /* Allow vertical scrolling, prevent zoom gestures */
+}
+
+
+/* =============================================================================
+   2. TYPOGRAPHY (Section Titles)
+   =============================================================================
+
+   These styles create consistent headings throughout the site.
+   The golden underline effect uses the ::after pseudo-element.
+*/
+
+.section-title {
+    font-family: 'Playfair Display', serif;  /* Elegant serif font for headings */
+    font-size: 3rem;                          /* 3rem = 48px (if base is 16px) */
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;                       /* Needed for the ::after element */
+}
+
+/*
+   ::after creates a "fake" element after the title
+   This is the gold line you see under section titles
+*/
+.section-title::after {
+    content: '';                              /* Required for ::after to work */
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #f4d03f, #e6b800);  /* Gold gradient */
+    margin: 20px auto 0;                      /* Center the line */
+}
+
+
+/* =============================================================================
+   3. HERO SECTION
+   =============================================================================
+
+   The hero is the big intro section at the top of the page.
+   It uses:
+   - 100vh = 100% of viewport (screen) height
+   - Flexbox to center content both horizontally and vertically
+   - A background image with a dark overlay
+*/
+
+.hero {
+    height: 100vh;                            /* Full screen height */
+    background:
+        linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)),  /* Dark overlay */
+        url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920&q=80') center/cover;  /* Chill Marbella beach vibe */
+    display: flex;                            /* Enable flexbox layout */
+    flex-direction: column;                   /* Stack children vertically */
+    justify-content: center;                  /* Center vertically */
+    align-items: center;                      /* Center horizontally */
+    text-align: center;
+    position: relative;                       /* For the scroll indicator */
+}
+
+/* Main title in the hero */
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;                          /* Large title */
+    font-weight: 700;                         /* Bold */
+    letter-spacing: 8px;                      /* Space between letters */
+    text-transform: uppercase;                /* ALL CAPS */
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 20px rgba(0,0,0,0.5);  /* Subtle shadow for depth */
+}
+
+/* Subtitle in gold */
+.hero-content .subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;                         /* Light weight */
+    letter-spacing: 4px;
+    margin-bottom: 2rem;
+    color: #f4d03f;                           /* Gold color */
+}
+
+/* Date text */
+.hero-content .dates {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    opacity: 0.9;                             /* Slightly transparent */
+}
+
+/* The bouncing scroll indicator at the bottom */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    animation: bounce 2s infinite;            /* Uses the bounce animation */
+}
+
+.scroll-indicator span {
+    display: block;
+    width: 30px;
+    height: 50px;
+    border: 2px solid #fff;
+    border-radius: 20px;                      /* Rounded corners make it pill-shaped */
+    position: relative;
+}
+
+/* The dot inside the scroll indicator */
+.scroll-indicator span::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);              /* Center horizontally */
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;                       /* Makes it a circle */
+    animation: scroll 2s infinite;
+}
+
+
+/* =============================================================================
+   4. CREW/TEAM SECTION
+   =============================================================================
+
+   The section showing all the trip participants with their avatar videos.
+*/
+
+.crew-section {
+    padding: 100px 5%;                        /* Top/bottom: 100px, Left/right: 5% */
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);  /* Diagonal gradient */
+}
+
+/* Grid container for crew members */
+.crew-grid {
+    display: flex;                            /* Flexbox layout */
+    justify-content: center;                  /* Center items */
+    gap: 30px;                                /* Space between items */
+    flex-wrap: wrap;                          /* Wrap to new line if needed */
+    max-width: 1200px;
+    margin: 0 auto;                           /* Center the grid */
+}
+
+/* Individual crew member card */
+.crew-member {
+    text-align: center;
+    transition: transform 0.3s ease;          /* Smooth hover effect */
+}
+
+/* Lift up on hover */
+.crew-member:hover {
+    transform: translateY(-10px);
+}
+
+/* The circular avatar container */
+.crew-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;                       /* Makes it circular */
+    background: linear-gradient(135deg, #f4d03f, #e6b800);  /* Gold gradient */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 30px rgba(244, 208, 63, 0.3);  /* Gold glow effect */
+    overflow: hidden;                         /* Clip content to circle */
+    border: 3px solid #f4d03f;
+}
+
+/* Make videos/images fill the avatar circle */
+.crew-avatar img,
+.crew-avatar video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;                        /* Cover the area, crop if needed */
+    object-position: center center;
+}
+
+/* Individual crew member photo positioning adjustments */
+.crew-avatar img[alt="Peeg"] {
+    transform: scale(1.3);                    /* Zoom in slightly */
+    object-position: center 0%;
+}
+
+.crew-avatar img[alt="Marc"] {
+    transform: scale(1.3);
+    object-position: 0% 20%;
+}
+
+.crew-avatar img[alt="Derk"] {
+    transform: scale(1.3);
+    object-position: center center;
+}
+
+/* Crew member name */
+.crew-member h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    position: relative;
+    cursor: default;
+}
+
+/* Tooltip styling (the popup that shows on hover) */
+.crew-member h4 .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(244,208,63,0.95);        /* Gold background */
+    color: #1a1a2e;                           /* Dark text */
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;                      /* Keep on one line */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-top: 8px;
+    z-index: 100;
+}
+
+/* The little triangle arrow on the tooltip */
+.crew-member h4 .tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: rgba(244,208,63,0.95);  /* Matches tooltip background */
+}
+
+/* Show tooltip on hover */
+.crew-member h4:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/* =============================================================================
+   5. PHOTO GALLERY
+   =============================================================================
+
+   A CSS Grid layout that creates an interesting asymmetric gallery.
+   The first item spans 2 columns and 2 rows to be larger.
+*/
+
+.gallery-section {
+    padding: 50px 5%;
+    background: #0f0f0f;
+}
+
+.gallery-grid {
+    display: grid;                            /* CSS Grid layout */
+    grid-template-columns: repeat(4, 1fr);    /* 4 equal columns */
+    grid-template-rows: repeat(2, 180px);     /* 2 rows of 180px height */
+    gap: 10px;                                /* Space between items */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery-item {
+    overflow: hidden;                         /* Hide parts of zoomed images */
+    border-radius: 10px;
+    position: relative;                       /* For the overlay */
+}
+
+/* First gallery item is larger */
+.gallery-item:nth-child(1) {
+    grid-column: span 2;                      /* Span 2 columns */
+    grid-row: span 2;                         /* Span 2 rows */
+}
+
+/* Gallery images */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;          /* Smooth zoom effect */
+}
+
+/* Zoom in on hover */
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* Dark overlay that appears on hover */
+.gallery-item .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    opacity: 0;                               /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+/* Show overlay on hover */
+.gallery-item:hover .overlay {
+    opacity: 1;
+}
+
+
+/* =============================================================================
+   6. SCHEDULE/TIMELINE SECTION
+   =============================================================================
+
+   A vertical timeline showing the schedule for each day.
+*/
+
+.schedule-section {
+    padding: 100px 5%;
+    background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+}
+
+.days-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Card for each day */
+.day-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    border-radius: 20px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);  /* Subtle border */
+}
+
+.day-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 0;
+}
+
+.day-image {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.day-title-container {
+    padding: 30px;
+}
+
+.day-number {
+    font-size: 4rem;
+    font-family: 'Playfair Display', serif;
+    color: #f4d03f;
+    line-height: 1;
+}
+
+.day-name {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.day-date {
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.day-content {
+    padding: 40px;
+}
+
+/* The vertical timeline line */
+.timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #f4d03f, #e6b800);  /* Gold line */
+}
+
+/* Individual timeline event */
+.timeline-item {
+    position: relative;
+    padding-bottom: 25px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* The dot on the timeline */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 5px;
+    width: 18px;
+    height: 18px;
+    background: #f4d03f;                      /* Gold dot */
+    border-radius: 50%;
+    border: 3px solid #0f0f0f;
+}
+
+.timeline-time {
+    font-weight: 600;
+    color: #f4d03f;
+    min-width: 80px;
+    font-size: 1.1rem;
+}
+
+.timeline-event {
+    flex: 1;                                  /* Take remaining space */
+}
+
+.timeline-event h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.timeline-event p {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+/* Special highlighted note box */
+.special-note {
+    background: rgba(244, 208, 63, 0.1);
+    border-left: 3px solid #f4d03f;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+}
+
+
+/* =============================================================================
+   7. VILLA SECTION
+   =============================================================================
+
+   Two-column layout showing villa images and information.
+*/
+
+.villa-section {
+    padding: 100px 5%;
+    background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+}
+
+.villa-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;           /* Two equal columns */
+    gap: 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+    align-items: center;                      /* Vertically center items */
+}
+
+/* Grid of villa images */
+.villa-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.villa-images img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+/* First image spans both columns and is taller */
+.villa-images img:first-child {
+    grid-column: span 2;
+    height: 300px;
+}
+
+.villa-images img:hover {
+    transform: scale(1.02);
+}
+
+/* Villa info text */
+.villa-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.villa-info p {
+    color: #aaa;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* Villa features grid */
+.villa-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+}
+
+.feature-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #f4d03f, #e6b800);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+/* Villa booking button */
+.villa-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #f4d03f, #e6b800);
+    color: #000;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.villa-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(244, 208, 63, 0.4);
+}
+
+
+/* =============================================================================
+   8. HIGHLIGHTS CARDS
+   =============================================================================
+
+   Four-column grid of highlight cards with hover effects.
+*/
+
+.highlights-section {
+    padding: 100px 5%;
+    background: #0a0a0a;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);    /* 4 equal columns */
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.highlight-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-10px);
+    border-color: #f4d03f;                    /* Gold border on hover */
+}
+
+.highlight-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.highlight-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.highlight-card p {
+    color: #888;
+}
+
+
+/* =============================================================================
+   9. VENUE CARDS (Beach Clubs, Nightclubs, etc.)
+   =============================================================================
+
+   Reusable card style for venues with hover image effects.
+*/
+
+/* Venue card hover effect - shows image on hover */
+.venue-card:hover .venue-hover-img {
+    opacity: 1 !important;
+}
+
+
+/* =============================================================================
+   10. FOOTER & COUNTDOWN
+   =============================================================================
+
+   Footer with countdown timer to the trip date.
+*/
+
+footer {
+    padding: 60px 5%;
+    background: #050505;
+    text-align: center;
+}
+
+footer h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+footer p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Countdown container */
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.countdown-item {
+    text-align: center;
+}
+
+.countdown-item .number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #f4d03f;
+    display: block;
+}
+
+.countdown-item .label {
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+}
+
+
+/* =============================================================================
+   11. MUSIC PLAYER BUTTON
+   =============================================================================
+
+   Fixed button in bottom-right corner for music control.
+*/
+
+.music-btn {
+    position: fixed;                          /* Stays in place when scrolling */
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f4d03f, #e6b800);
+    border: none;
+    cursor: pointer;
+    z-index: 1000;                            /* On top of everything */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 20px rgba(244, 208, 63, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(244, 208, 63, 0.6);
+}
+
+/* Pulsing effect when music is playing */
+.music-btn.playing {
+    animation: pulse-music 1s infinite;
+}
+
+
+/* =============================================================================
+   12. ANIMATIONS
+   =============================================================================
+
+   @keyframes define animations that can be used with the 'animation' property.
+   They specify what happens at different points (0%, 50%, 100%, etc.)
+*/
+
+/* Bounce animation for scroll indicator */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+/* Scroll animation for the dot inside scroll indicator */
+@keyframes scroll {
+    0% { opacity: 1; top: 10px; }
+    100% { opacity: 0; top: 30px; }
+}
+
+/* Pulsing glow for music button */
+@keyframes pulse-music {
+    0%, 100% { box-shadow: 0 5px 20px rgba(244, 208, 63, 0.4); }
+    50% { box-shadow: 0 5px 30px rgba(244, 208, 63, 0.8); }
+}
+
+/* Flame flicker effect for steak game */
+@keyframes flicker {
+    0% { transform: scaleY(1) scaleX(1); opacity: 0.8; }
+    100% { transform: scaleY(1.2) scaleX(0.9); opacity: 1; }
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-50%) scale(1.2); }
+}
+
+/* Sizzle animation for steak game */
+@keyframes sizzle {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) rotate(1deg); }
+    75% { transform: translate(-50%, -50%) rotate(-1deg); }
+}
+
+/* Hover effect for doneness buttons */
+.doneness-btn:hover {
+    transform: scale(1.05);
+}
+
+.doneness-btn.selected {
+    transform: scale(1.1);
+}
+
+
+/* =============================================================================
+   13. MINIGAMES SECTION
+   =============================================================================
+
+   Styles for the tabbed minigames area including:
+   - Game tab selector
+   - Parachute game
+   - Hakken game
+*/
+
+/* Game tab buttons */
+.game-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 15px 25px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.game-tab:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+.game-tab.active {
+    background: linear-gradient(135deg, rgba(244,208,63,0.2) 0%, rgba(244,208,63,0.1) 100%);
+    border-color: #f4d03f;
+    color: #f4d03f;
+}
+
+.game-tab .tab-icon {
+    font-size: 2rem;
+}
+
+.game-tab .tab-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Game containers - show/hide based on selection */
+.game-container {
+    display: none;
+}
+
+.game-container.active {
+    display: block;
+}
+
+/* Cloud animation for parachute game */
+@keyframes cloudFloat {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100vw); }
+}
+
+/* Parachute falling animation */
+@keyframes parachuteSway {
+    0%, 100% { transform: translateX(-50%) rotate(-3deg); }
+    50% { transform: translateX(-50%) rotate(3deg); }
+}
+
+/* Club light animation for hakken game */
+@keyframes clubLight {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* Hakken dance moves */
+@keyframes hakkenJump {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+@keyframes hakkenArmPump {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-45deg); }
+}
+
+@keyframes hakkenKick {
+    0%, 100% { transform: scaleY(1); }
+    50% { transform: scaleY(0.7) translateY(10px); }
+}
+
+/* Hakken button active state */
+.hakken-btn:active,
+.hakken-btn.pressed {
+    transform: scale(0.9);
+    filter: brightness(1.5);
+}
+
+/* =============================================================================
+   BEER BUDDY GAME ANIMATIONS
+   ============================================================================= */
+
+/* Friend waving animation */
+@keyframes friendWave {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-5deg); }
+    75% { transform: translateY(-3px) rotate(5deg); }
+}
+
+/* Floating score text */
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-60px) scale(1.3);
+    }
+}
+
+/* Beer bounce on pickup */
+@keyframes beerBounce {
+    0% { transform: scale(0) translateY(20px); }
+    50% { transform: scale(1.3) translateY(-5px); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+/* Power-up bounce */
+@keyframes powerUpBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Power-up glow */
+@keyframes powerUpGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px gold); }
+    50% { filter: drop-shadow(0 0 20px gold) brightness(1.3); }
+}
+
+/* Combo pulse */
+@keyframes comboPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Shake animation for spill */
+@keyframes shake {
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-50%) rotate(-5deg) translateX(-5px); }
+    75% { transform: translateX(-50%) rotate(5deg) translateX(5px); }
+}
+
+/* Beer buddy combo display styling */
+#beerCombo {
+    position: absolute;
+    top: 55px;
+    left: 15px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    padding: 5px 12px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 50;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+}
+
+/* Hit feedback animation */
+@keyframes hitPop {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+.hit-feedback-show {
+    animation: hitPop 0.4s ease-out forwards;
+}
+
+/* Pascal dancing animation */
+.pascal-dancing {
+    animation: hakkenJump 0.25s ease-in-out infinite;
+}
+
+/* Specific tab colors when active */
+.game-tab[data-game="parachute"].active {
+    border-color: #9b59b6;
+    color: #9b59b6;
+    background: linear-gradient(135deg, rgba(155,89,182,0.2) 0%, rgba(155,89,182,0.1) 100%);
+}
+
+.game-tab[data-game="hakken"].active {
+    border-color: #e74c3c;
+    color: #e74c3c;
+    background: linear-gradient(135deg, rgba(231,76,60,0.2) 0%, rgba(231,76,60,0.1) 100%);
+}
+
+.game-tab[data-game="golfcar"].active {
+    border-color: #2ecc71;
+    color: #2ecc71;
+    background: linear-gradient(135deg, rgba(46,204,113,0.2) 0%, rgba(46,204,113,0.1) 100%);
+}
+
+.game-tab[data-game="beerbuddy"].active {
+    border-color: #f39c12;
+    color: #f39c12;
+    background: linear-gradient(135deg, rgba(243,156,18,0.2) 0%, rgba(243,156,18,0.1) 100%);
+}
+
+.game-tab[data-game="drivingrange"].active {
+    border-color: #2ecc71;
+    color: #2ecc71;
+    background: linear-gradient(135deg, rgba(46,204,113,0.2) 0%, rgba(46,204,113,0.1) 100%);
+}
+
+/* =============================================================================
+   DRIVING RANGE GAME ANIMATIONS
+   ============================================================================= */
+
+/* Target running animation */
+@keyframes targetRun {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Target hit burst effect */
+@keyframes hitBurst {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Star burst animation for combo hits */
+@keyframes starBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Golf ball flight animation */
+@keyframes ballFlight {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-100px) scale(0.7);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(0) scale(0.4);
+        opacity: 0.7;
+    }
+}
+
+/* Golfer swing animation */
+@keyframes golferSwing {
+    0% { transform: rotate(0deg); }
+    30% { transform: rotate(-30deg); }
+    60% { transform: rotate(45deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* Power bar pulse */
+@keyframes powerPulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+/* Target types specific animations */
+@keyframes zigzagMove {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-20px); }
+    75% { transform: translateY(20px); }
+}
+
+@keyframes bounceMove {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+/* Driving range touch optimization */
+#drivingrangeArea {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Mobile optimizations for driving range */
+@media (max-width: 768px) {
+    #drivingrangeArea {
+        height: 400px !important;
+    }
+}
+
+
+/* =============================================================================
+   14. RESPONSIVE DESIGN (Mobile/Tablet)
+   =============================================================================
+
+   @media queries change styles based on screen size.
+   This is how we make the site look good on phones and tablets.
+
+   Common breakpoints:
+   - 1024px: Tablets in landscape
+   - 768px: Tablets in portrait
+   - 480px: Large phones
+   - 375px: Small phones (iPhone SE)
+*/
+
+/* Tablets (1024px and below) */
+@media (max-width: 1024px) {
+    .hero-content h1 {
+        font-size: 3rem;                      /* Smaller title */
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);  /* 2 columns instead of 4 */
+    }
+
+    .villa-container {
+        grid-template-columns: 1fr;           /* Single column */
+    }
+
+    .highlights-grid {
+        grid-template-columns: repeat(2, 1fr);  /* 2 columns */
+    }
+
+    .day-header {
+        flex-direction: column;               /* Stack vertically */
+    }
+
+    .day-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+/* Tablets portrait (768px and below) */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+        letter-spacing: 4px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr;           /* Single column */
+    }
+
+    /* First gallery item no longer spans multiple cells */
+    .gallery-item:nth-child(1) {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* On mobile/touch devices: show highlight videos/images by default (no hover) */
+    .highlight-card img,
+    .highlight-card video,
+    .highlight-card .highlight-video {
+        opacity: 1 !important;
+    }
+
+    .villa-features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Phones (480px and below) */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .hero-content .subtitle {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .hero-content .dates {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        padding: 0 10px;
+    }
+
+    .section-title::after {
+        width: 60px;
+        margin: 15px auto 0;
+    }
+
+    /* Crew section adjustments */
+    .crew-section {
+        padding: 60px 3%;
+    }
+
+    .crew-grid {
+        gap: 15px;
+    }
+
+    .crew-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 1.8rem;
+    }
+
+    .crew-member h4 {
+        font-size: 0.9rem;
+    }
+
+    /* Flight section */
+    .flight-section {
+        padding: 60px 3% !important;
+    }
+
+    .flight-section p {
+        font-size: 0.9rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    .flight-section svg {
+        max-height: 300px;
+    }
+
+    .flight-section svg text {
+        font-size: 10px !important;
+    }
+
+    /* Flight info cards */
+    .flight-section > div > div:last-child {
+        gap: 10px !important;
+        margin-top: 20px !important;
+    }
+
+    .flight-section > div > div:last-child > div {
+        padding: 12px 15px !important;
+        min-width: 80px;
+    }
+
+    .flight-section > div > div:last-child > div > div:first-child {
+        font-size: 1.2rem !important;
+    }
+
+    .flight-section > div > div:last-child > div > div:nth-child(2) {
+        font-size: 0.85rem !important;
+    }
+
+    .flight-section > div > div:last-child > div > div:nth-child(3) {
+        font-size: 0.75rem !important;
+    }
+
+    /* Gallery - compact */
+    .gallery-section {
+        padding: 30px 3%;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 120px);
+        gap: 8px;
+    }
+
+    .gallery-item {
+        border-radius: 6px;
+    }
+
+    .gallery-item:nth-child(1) {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+
+    /* Highlights */
+    .highlights-section {
+        padding: 60px 3%;
+    }
+
+    .highlight-card {
+        padding: 25px 20px;
+        border-radius: 15px;
+    }
+
+    .highlight-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+
+    .highlight-card h4 {
+        font-size: 1.1rem;
+    }
+
+    .highlight-card p {
+        font-size: 0.85rem;
+    }
+
+    /* Venues */
+    .venues-section {
+        padding: 60px 3% !important;
+    }
+
+    .venues-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    .venue-card {
+        padding: 20px !important;
+        border-radius: 15px !important;
+    }
+
+    .venue-card h4 {
+        font-size: 1.1rem !important;
+    }
+
+    .venue-card p {
+        font-size: 0.85rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Villa */
+    .villa-section {
+        padding: 60px 3%;
+    }
+
+    .villa-container {
+        gap: 30px;
+    }
+
+    .villa-images {
+        gap: 10px;
+    }
+
+    .villa-images img:first-child {
+        height: 200px;
+    }
+
+    .villa-images img {
+        height: 120px;
+        border-radius: 10px;
+    }
+
+    .villa-info h3 {
+        font-size: 1.8rem;
+    }
+
+    .villa-info p {
+        font-size: 0.95rem;
+    }
+
+    .villa-features {
+        gap: 10px;
+    }
+
+    .feature {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .villa-btn {
+        padding: 12px 30px;
+        font-size: 0.9rem;
+    }
+
+    /* Footer */
+    footer {
+        padding: 40px 3%;
+    }
+
+    footer h2 {
+        font-size: 1.8rem;
+    }
+
+    footer p {
+        font-size: 0.9rem;
+    }
+
+    .countdown {
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .countdown-item .number {
+        font-size: 2rem;
+    }
+
+    .countdown-item .label {
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+    }
+
+    /* Music button */
+    .music-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.2rem;
+    }
+}
+
+/* Very small phones (375px and below, e.g., iPhone SE) */
+@media (max-width: 375px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .crew-avatar {
+        width: 65px;
+        height: 65px;
+    }
+
+    .crew-member h4 {
+        font-size: 0.8rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .countdown {
+        gap: 10px;
+    }
+
+    .countdown-item .number {
+        font-size: 1.5rem;
+    }
+}
+
+/* iPhone X and newer (notch support) */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(0px, env(safe-area-inset-left));
+        padding-right: max(0px, env(safe-area-inset-right));
+    }
+
+    footer {
+        padding-bottom: max(40px, env(safe-area-inset-bottom));
+    }
+}
+
+
+/* =============================================================================
+   15. MOBILE VIDEO PERFORMANCE OPTIMIZATIONS
+   =============================================================================
+
+   These styles improve video loading and playback on iPhones and other mobile devices.
+*/
+
+/* Lazy video placeholder - shows dark background until video loads */
+video.lazy-video {
+    background-color: #1a1a1a;
+}
+
+/* Hardware acceleration for smoother scrolling and animations */
+.gallery-item,
+.highlight-card,
+.venue-card,
+.crew-avatar,
+video {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Prevent layout shifts while videos load */
+video {
+    display: block;
+}
+
+/* Touch optimization for mobile games */
+.game-container,
+#parachuteArea,
+#hakkenArea,
+#golfcarArea,
+#beerbuddyArea {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Mobile button touch states - all game controls */
+.hakken-btn,
+#parachuteLeftBtn,
+#parachuteRightBtn,
+#golfcarUpBtn,
+#golfcarDownBtn,
+#golfcarLeftBtn,
+#golfcarRightBtn,
+#beerLeftBtn,
+#beerRightBtn,
+#beerUpBtn,
+#beerDownBtn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Larger touch targets on mobile */
+@media (max-width: 768px) {
+    .hakken-btn {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 1.8rem !important;
+    }
+
+    #parachuteLeftBtn,
+    #parachuteRightBtn {
+        width: 90px !important;
+        height: 90px !important;
+        font-size: 2.5rem !important;
+    }
+
+    #golfcarUpBtn,
+    #golfcarDownBtn,
+    #golfcarLeftBtn,
+    #golfcarRightBtn,
+    #beerLeftBtn,
+    #beerRightBtn,
+    #beerUpBtn,
+    #beerDownBtn {
+        width: 75px !important;
+        height: 75px !important;
+        font-size: 2rem !important;
+    }
+}
+
+/* Active/pressed states for touch feedback */
+.hakken-btn:active,
+.hakken-btn.pressed {
+    transform: scale(0.9);
+    filter: brightness(1.5);
+}
+
+#parachuteLeftBtn:active,
+#parachuteRightBtn:active,
+#beerLeftBtn:active,
+#beerRightBtn:active,
+#beerUpBtn:active,
+#beerDownBtn:active,
+#golfcarUpBtn:active,
+#golfcarDownBtn:active,
+#golfcarLeftBtn:active,
+#golfcarRightBtn:active {
+    transform: scale(0.9);
+    filter: brightness(1.3);
+}
+
+/* Prevent text selection and callouts on game elements */
+.game-container * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Steak game doneness buttons touch optimization */
+.doneness-btn {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .doneness-btn {
+        padding: 12px 18px !important;
+        font-size: 0.9rem !important;
+        min-height: 44px;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Golf videos on mobile - stack in single column */
+@media (max-width: 600px) {
+    /* Golf videos grid becomes single column on small screens */
+    .venues-section > div[style*="grid-template-columns: repeat(3"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+}
+
+/* Mobile game optimizations */
+@media (max-width: 480px) {
+    /* Ensure game areas fit on small screens */
+    #parachuteArea,
+    #hakkenArea,
+    #golfcarArea,
+    #beerbuddyArea {
+        height: 350px !important;
+        max-height: 50vh !important;
+    }
+
+    /* Scale down Pascal in hakken game */
+    #pascal svg {
+        width: 90px !important;
+        height: 144px !important;
+    }
+
+    /* Reduce font sizes in game overlays */
+    .game-container h3 {
+        font-size: 1.2rem !important;
+    }
+
+    .game-container p {
+        font-size: 0.85rem !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* Make sure mobile control buttons are visible and accessible */
+    .game-container > div[style*="display: flex"] {
+        padding: 10px 5px !important;
+    }
+}
+
+/* Prevent pull-to-refresh on game section */
+.games-section {
+    overscroll-behavior: contain;
+}
+
+/* iOS specific: prevent rubber-banding effect during game play */
+@supports (-webkit-touch-callout: none) {
+    #parachuteArea,
+    #hakkenArea,
+    #golfcarArea,
+    #beerbuddyArea {
+        -webkit-overflow-scrolling: auto;
+        overscroll-behavior: none;
+    }
+
+    /* Larger touch targets on iOS for better accessibility */
+    .hakken-btn,
+    #parachuteLeftBtn,
+    #parachuteRightBtn,
+    #golfcarUpBtn,
+    #golfcarDownBtn,
+    #golfcarLeftBtn,
+    #golfcarRightBtn,
+    #beerLeftBtn,
+    #beerRightBtn {
+        min-width: 60px;
+        min-height: 60px;
+    }
+}
+
+/* iPhone specific media query */
+@media only screen
+    and (max-device-width: 430px)
+    and (-webkit-device-pixel-ratio: 3) {
+
+    /* Ensure games are properly sized on iPhone */
+    .game-container {
+        padding: 10px !important;
+    }
+
+    /* Make control buttons easier to tap */
+    #parachuteLeftBtn,
+    #parachuteRightBtn,
+    #beerLeftBtn,
+    #beerRightBtn {
+        width: 85px !important;
+        height: 85px !important;
+        font-size: 2.2rem !important;
+    }
+
+    .hakken-btn {
+        width: 65px !important;
+        height: 65px !important;
+        font-size: 1.6rem !important;
+    }
+
+    #golfcarUpBtn,
+    #golfcarDownBtn,
+    #golfcarLeftBtn,
+    #golfcarRightBtn {
+        width: 65px !important;
+        height: 65px !important;
+        font-size: 1.8rem !important;
+    }
+
+    /* Adjust game area heights */
+    #parachuteArea,
+    #hakkenArea,
+    #golfcarArea,
+    #beerbuddyArea {
+        height: 380px !important;
+    }
+
+}
+
+/* Better button active states for touch feedback */
+button:active {
+    opacity: 0.8;
+}
+
+/* Game control buttons - enhanced touch feedback */
+.hakken-btn:active,
+#parachuteLeftBtn:active,
+#parachuteRightBtn:active,
+#golfcarUpBtn:active,
+#golfcarDownBtn:active,
+#golfcarLeftBtn:active,
+#golfcarRightBtn:active,
+#beerLeftBtn:active,
+#beerRightBtn:active {
+    transform: scale(0.92) !important;
+    filter: brightness(1.4) !important;
+    transition: transform 0.05s, filter 0.05s !important;
+}
+
+/* Ensure game tabs are easily tappable on mobile */
+.game-tab {
+    -webkit-tap-highlight-color: rgba(244, 208, 63, 0.3);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.game-tabs {
+    touch-action: pan-x pan-y;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 600px) {
+    .game-tab {
+        min-height: 50px !important;
+        padding: 10px 15px !important;
+    }
+
+    .game-tab .tab-icon {
+        font-size: 1.3rem !important;
+    }
+
+    .game-tab .tab-text {
+        font-size: 0.7rem !important;
+    }
+}
+
+
+/* =============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================= */
+
+/* GPU acceleration for animated elements */
+.crew-avatar,
+.highlight-card,
+.venue-card,
+.gallery-item,
+.palantir-orb {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    video { animation: none !important; }
+}
+
+/* Class-based reduce motion (for low battery) */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* iPhone/iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Fix 100vh on iOS */
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+
+    /* Prevent rubber-banding effect */
+    body {
+        overscroll-behavior-y: none;
+    }
+
+    /* Better touch scrolling */
+    .crew-grid,
+    .gallery-grid {
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* iPhone SE and small screens */
+@media (max-width: 375px) and (max-height: 667px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .crew-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .highlight-card {
+        padding: 15px;
+    }
+}
+
+/* Content visibility for off-screen content */
+section:not(.hero) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
+/* Optimize video rendering */
+video {
+    object-fit: cover;
+    will-change: auto;
+}
+
+/* Smooth scrolling only when not reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/* Game containers - allow scrolling when not playing */
+.game-container {
+    touch-action: pan-y pinch-zoom;
+}
+
+/* When game is active, block touch for game control */
+.game-container.game-active {
+    touch-action: none;
+}
+
+/* Ensure games section allows vertical scroll */
+.games-section {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+}
