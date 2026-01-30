@@ -457,13 +457,93 @@ document.addEventListener('DOMContentLoaded', function() {
     setupHakkenMobileControls();
     setupGolfcarMobileControls();
     setupBeerBuddyMobileControls();
+    setupDrivingRangeMobileControls();
 
     // Prevent default touch behaviors on game areas (prevents scroll/zoom)
     preventTouchDefaultOnGameAreas();
 
     // --- Set up Fun Zone video switching ---
     setupFunZone();
+
+    // --- Set up Website Suggestions Form ---
+    setupSuggestionForm();
 });
+
+
+/* =============================================================================
+   WEBSITE SUGGESTIONS - Email Form Handler
+   =============================================================================
+*/
+
+function setupSuggestionForm() {
+    const form = document.getElementById('suggestionForm');
+    if (!form) return;
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const nameInput = document.getElementById('suggesterName');
+        const textInput = document.getElementById('suggestionText');
+        const statusEl = document.getElementById('suggestionStatus');
+        const submitBtn = document.getElementById('suggestionSubmitBtn');
+
+        const name = nameInput.value.trim() || 'Anoniem';
+        const suggestion = textInput.value.trim();
+
+        if (!suggestion) {
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#ff6b6b';
+            statusEl.textContent = '⚠️ Vul alsjeblieft een suggestie in!';
+            return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Verzenden...';
+        statusEl.style.display = 'none';
+
+        // Obfuscated email (not visible in plain text)
+        const _e = [98,114,97,109,112,101,107,64,103,109,97,105,108,46,99,111,109];
+        const _d = _e.map(c => String.fromCharCode(c)).join('');
+
+        try {
+            // Send via Formsubmit.co AJAX
+            const response = await fetch(`https://formsubmit.co/ajax/${_d}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    naam: name,
+                    suggestie: suggestion,
+                    _subject: '🌴 Website Suggestie - Marbella 2026',
+                    _template: 'table'
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                statusEl.style.display = 'block';
+                statusEl.style.color = '#1ec864';
+                statusEl.textContent = '✅ Bedankt! Je suggestie is verzonden!';
+                nameInput.value = '';
+                textInput.value = '';
+            } else {
+                throw new Error('Verzenden mislukt');
+            }
+        } catch (error) {
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#ff6b6b';
+            statusEl.textContent = '❌ Er ging iets mis. Probeer het later opnieuw.';
+        }
+
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = '📧 Verstuur Suggestie';
+    });
+}
 
 
 /* =============================================================================
