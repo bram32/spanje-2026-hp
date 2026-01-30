@@ -308,16 +308,16 @@ html {
 */
 
 .gallery-section {
-    padding: 100px 5%;
+    padding: 50px 5%;
     background: #0f0f0f;
 }
 
 .gallery-grid {
     display: grid;                            /* CSS Grid layout */
     grid-template-columns: repeat(4, 1fr);    /* 4 equal columns */
-    grid-template-rows: repeat(2, 250px);     /* 2 rows of 250px height */
-    gap: 15px;                                /* Space between items */
-    max-width: 1400px;
+    grid-template-rows: repeat(2, 180px);     /* 2 rows of 180px height */
+    gap: 10px;                                /* Space between items */
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -1292,17 +1292,24 @@ footer p {
         font-size: 0.75rem !important;
     }
 
-    /* Gallery */
+    /* Gallery - compact */
     .gallery-section {
-        padding: 60px 3%;
+        padding: 30px 3%;
     }
 
     .gallery-grid {
-        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 120px);
+        gap: 8px;
     }
 
     .gallery-item {
-        border-radius: 8px;
+        border-radius: 6px;
+    }
+
+    .gallery-item:nth-child(1) {
+        grid-column: span 2;
+        grid-row: span 1;
     }
 
     /* Highlights */
@@ -1761,6 +1768,18 @@ button:active {
 }
 
 /* Ensure game tabs are easily tappable on mobile */
+.game-tab {
+    -webkit-tap-highlight-color: rgba(244, 208, 63, 0.3);
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.game-tabs {
+    touch-action: pan-x pan-y;
+    -webkit-overflow-scrolling: touch;
+}
+
 @media (max-width: 600px) {
     .game-tab {
         min-height: 50px !important;

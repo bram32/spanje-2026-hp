@@ -462,6 +462,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Prevent default touch behaviors on game areas (prevents scroll/zoom)
     preventTouchDefaultOnGameAreas();
 
+    // --- Set up game tab touch support for iOS ---
+    setupGameTabsTouch();
+
     // --- Set up Fun Zone video switching ---
     setupFunZone();
 
@@ -606,6 +609,25 @@ function setupFunZone() {
    Allows switching between different minigames using tabs.
    Only one game is visible at a time.
 */
+
+/**
+ * Sets up touch event listeners for game tabs on iOS
+ * This ensures tabs respond properly to taps on mobile devices
+ */
+function setupGameTabsTouch() {
+    const tabs = document.querySelectorAll('.game-tab');
+
+    tabs.forEach(function(tab) {
+        // Add touchend handler for iOS
+        tab.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            const game = this.getAttribute('data-game');
+            if (game) {
+                switchGame(game);
+            }
+        }, { passive: false });
+    });
+}
 
 /**
  * Switches between different minigames
