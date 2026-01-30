@@ -479,6 +479,16 @@ function setupSuggestionForm() {
     const form = document.getElementById('suggestionForm');
     if (!form) return;
 
+    // EmailJS configuratie
+    const EMAILJS_PUBLIC_KEY = 'HDwrs0mdxQKrNz4Qs';
+    const EMAILJS_SERVICE_ID = 'service_h0l9f1s';
+    const EMAILJS_TEMPLATE_ID = 'template_ub6x1bh';
+
+    // Initialiseer EmailJS (alleen als geconfigureerd)
+    if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== 'JOUW_PUBLIC_KEY') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
@@ -497,43 +507,34 @@ function setupSuggestionForm() {
             return;
         }
 
+        // Check of EmailJS is geconfigureerd
+        if (EMAILJS_PUBLIC_KEY === 'JOUW_PUBLIC_KEY') {
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#ff6b6b';
+            statusEl.textContent = '⚠️ EmailJS is nog niet geconfigureerd!';
+            return;
+        }
+
         // Show loading state
         submitBtn.disabled = true;
         submitBtn.textContent = '⏳ Verzenden...';
         statusEl.style.display = 'none';
 
-        // Obfuscated email (not visible in plain text)
-        const _e = [98,114,97,109,112,101,107,64,103,109,97,105,108,46,99,111,109];
-        const _d = _e.map(c => String.fromCharCode(c)).join('');
-
         try {
-            // Send via Formsubmit.co AJAX
-            const response = await fetch(`https://formsubmit.co/ajax/${_d}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    naam: name,
-                    suggestie: suggestion,
-                    _subject: '🌴 Website Suggestie - Marbella 2026',
-                    _template: 'table'
-                })
+            // Send via EmailJS
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                from_name: name,
+                message: suggestion,
+                to_name: 'Bram'
             });
 
-            const result = await response.json();
-
-            if (result.success) {
-                statusEl.style.display = 'block';
-                statusEl.style.color = '#1ec864';
-                statusEl.textContent = '✅ Bedankt! Je suggestie is verzonden!';
-                nameInput.value = '';
-                textInput.value = '';
-            } else {
-                throw new Error('Verzenden mislukt');
-            }
+            statusEl.style.display = 'block';
+            statusEl.style.color = '#1ec864';
+            statusEl.textContent = '✅ Bedankt! Je suggestie is verzonden!';
+            nameInput.value = '';
+            textInput.value = '';
         } catch (error) {
+            console.error('EmailJS error:', error);
             statusEl.style.display = 'block';
             statusEl.style.color = '#ff6b6b';
             statusEl.textContent = '❌ Er ging iets mis. Probeer het later opnieuw.';
