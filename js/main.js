@@ -404,7 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Set up video loops for gallery videos ---
     // Note: These will be set up after lazy loading loads the videos
     setupVideoLoop('epicNightVideo', 6, 11);
-    setupVideoLoop('golfVideo', 19, 27);  // Shortened by 1/3 (was 19-31, now 19-27)
 
     // --- Set up hover effects for highlight cards ---
     // Find highlight cards with images
