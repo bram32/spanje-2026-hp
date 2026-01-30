@@ -171,299 +171,7 @@ function setupVenueCardHoverEffects() {
 
 
 /* =============================================================================
-   4. BBQ STEAK GAME
-   =============================================================================
-
-   An interactive mini-game where you cook a virtual steak.
-
-   Game States:
-   - 'ready': Waiting to start
-   - 'cooking': First side is cooking
-   - 'flipped': Second side is cooking
-   - 'done': Game finished, showing score
-
-   The player clicks to:
-   1. Start cooking
-   2. Flip the steak
-   3. Take it off the grill
-*/
-
-// Game state variables (stored globally so all functions can access them)
-let steakGame = {
-    state: 'ready',           // Current game state
-    cookTime: 0,              // Total cooking time in seconds
-    side1Time: 0,             // Time spent on first side
-    side2Time: 0,             // Time spent on second side
-    cookInterval: null,       // Reference to the timer
-    targetDoneness: 'medium', // What the player is trying to achieve
-
-    // Cooking time ranges for each doneness level (in percentage of max)
-    targetRanges: {
-        'rare':        { min: 15, max: 25, pos: 20 },
-        'medium-rare': { min: 25, max: 40, pos: 40 },
-        'medium':      { min: 40, max: 55, pos: 55 },
-        'well-done':   { min: 55, max: 75, pos: 75 }
-    }
-};
-
-/**
- * Sets the target doneness level
- * Called when player clicks a doneness button
- *
- * @param {string} level - The doneness level (rare, medium-rare, medium, well-done)
- */
-function setTarget(level) {
-    steakGame.targetDoneness = level;
-
-    // Update button styles - reset all buttons first
-    document.querySelectorAll('.doneness-btn').forEach(function(btn) {
-        btn.style.background = 'transparent';
-        btn.style.color = btn.style.borderColor;
-    });
-
-    // Highlight the selected button
-    const selected = document.querySelector('[data-level="' + level + '"]');
-    if (selected) {
-        selected.style.background = selected.style.borderColor;
-        selected.style.color = '#000';
-    }
-
-    // Move the target marker on the doneness meter
-    const marker = document.getElementById('targetMarker');
-    if (marker) {
-        marker.style.left = steakGame.targetRanges[level].pos + '%';
-    }
-}
-
-/**
- * Handles click on the grill area
- * Different action depending on current game state
- */
-function handleSteakClick() {
-    switch(steakGame.state) {
-        case 'ready':
-            startCooking();
-            break;
-        case 'cooking':
-            flipSteak();
-            break;
-        case 'flipped':
-            finishCooking();
-            break;
-    }
-}
-
-/**
- * Starts the cooking process
- */
-function startCooking() {
-    steakGame.state = 'cooking';
-    steakGame.cookTime = 0;
-    steakGame.side1Time = 0;
-
-    // Show game elements
-    const flames = document.getElementById('flames');
-    const cookTimer = document.getElementById('cookTimer');
-    const currentMarker = document.getElementById('currentMarker');
-    const flipIndicator = document.getElementById('flipIndicator');
-    const gameStatus = document.getElementById('gameStatus');
-    const steak = document.getElementById('steak');
-
-    if (flames) flames.style.display = 'block';
-    if (cookTimer) cookTimer.style.display = 'block';
-    if (currentMarker) currentMarker.style.display = 'block';
-    if (flipIndicator) flipIndicator.style.display = 'block';
-    if (gameStatus) gameStatus.textContent = 'Klik om te flippen!';
-    if (steak) steak.style.animation = 'sizzle 0.1s infinite';
-
-    // Start the cooking timer (runs every 100ms = 0.1 seconds)
-    steakGame.cookInterval = setInterval(function() {
-        steakGame.cookTime += 0.1;
-        steakGame.side1Time += 0.1;
-        updateSteakDisplay();
-    }, 100);
-}
-
-/**
- * Flips the steak to the other side
- */
-function flipSteak() {
-    steakGame.state = 'flipped';
-    steakGame.side1Time = steakGame.cookTime;
-
-    // Update UI
-    const gameStatus = document.getElementById('gameStatus');
-    const flipIndicator = document.getElementById('flipIndicator');
-    const steak = document.getElementById('steak');
-
-    if (gameStatus) gameStatus.textContent = 'Klik als hij klaar is!';
-    if (flipIndicator) flipIndicator.innerHTML = '✋';
-
-    // Visual flip animation
-    if (steak) {
-        steak.style.transform = 'translate(-50%, -50%) scaleX(-1)';
-        setTimeout(function() {
-            steak.style.transform = 'translate(-50%, -50%) scaleX(1)';
-        }, 150);
-    }
-}
-
-/**
- * Finishes cooking and calculates score
- */
-function finishCooking() {
-    steakGame.state = 'done';
-
-    // Stop the cooking timer
-    clearInterval(steakGame.cookInterval);
-
-    steakGame.side2Time = steakGame.cookTime - steakGame.side1Time;
-
-    // Hide cooking elements
-    const flames = document.getElementById('flames');
-    const flipIndicator = document.getElementById('flipIndicator');
-    const steak = document.getElementById('steak');
-
-    if (flames) flames.style.display = 'none';
-    if (flipIndicator) flipIndicator.style.display = 'none';
-    if (steak) steak.style.animation = 'none';
-
-    calculateSteakScore();
-}
-
-/**
- * Updates the game display (timer, steak color, progress marker)
- */
-function updateSteakDisplay() {
-    // Update timer text
-    const cookTimer = document.getElementById('cookTimer');
-    if (cookTimer) {
-        cookTimer.textContent = steakGame.cookTime.toFixed(1) + 's';
-    }
-
-    // Calculate total cooking progress
-    const totalCook = steakGame.side1Time +
-        (steakGame.state === 'flipped' ? (steakGame.cookTime - steakGame.side1Time) : 0);
-    const percentage = Math.min((totalCook / 80) * 100, 100);
-
-    // Update progress marker position
-    const currentMarker = document.getElementById('currentMarker');
-    if (currentMarker) {
-        currentMarker.style.left = percentage + '%';
-    }
-
-    // Update steak color based on how cooked it is
-    const steakShape = document.getElementById('steakShape');
-    if (steakShape) {
-        if (percentage < 20) {
-            steakShape.setAttribute('fill', '#dc143c');       // Raw red
-        } else if (percentage < 40) {
-            steakShape.setAttribute('fill', '#c41e3a');       // Rare
-        } else if (percentage < 55) {
-            steakShape.setAttribute('fill', '#a0522d');       // Medium
-        } else if (percentage < 75) {
-            steakShape.setAttribute('fill', '#8b4513');       // Well done
-        } else {
-            steakShape.setAttribute('fill', '#3d2314');       // Burnt
-        }
-    }
-}
-
-/**
- * Calculates the player's score based on how close to target doneness
- */
-function calculateSteakScore() {
-    const target = steakGame.targetRanges[steakGame.targetDoneness];
-    const percentage = (steakGame.cookTime / 80) * 100;
-    const diff = Math.abs(percentage - target.pos);
-
-    // Get UI elements
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const scoreTitle = document.getElementById('scoreTitle');
-    const scoreText = document.getElementById('scoreText');
-    const gameStatus = document.getElementById('gameStatus');
-
-    if (scoreDisplay) scoreDisplay.style.display = 'block';
-    if (gameStatus) gameStatus.textContent = 'Klaar!';
-
-    // Determine score message based on accuracy
-    if (diff < 5) {
-        // Perfect!
-        if (scoreTitle) {
-            scoreTitle.textContent = '🏆 PERFECT!';
-            scoreTitle.style.color = '#f4d03f';
-        }
-        if (scoreText) {
-            scoreText.textContent = 'Je bent een echte BBQ Master! De jongens zijn trots.';
-        }
-    } else if (diff < 15) {
-        // Good
-        if (scoreTitle) {
-            scoreTitle.textContent = '👍 Goed gedaan!';
-            scoreTitle.style.color = '#2ecc71';
-        }
-        if (scoreText) {
-            scoreText.textContent = 'Prima steak! Bijna perfect, maar nog steeds lekker.';
-        }
-    } else if (diff < 25) {
-        // Okay
-        if (scoreTitle) {
-            scoreTitle.textContent = '😅 Oké...';
-            scoreTitle.style.color = '#e67e22';
-        }
-        if (scoreText) {
-            scoreText.textContent = 'Eetbaar, maar je kunt beter. Oefen nog even!';
-        }
-    } else {
-        // Failed - burnt or too raw
-        if (scoreTitle) {
-            scoreTitle.textContent = percentage > 80 ? '🔥 Verbrand!' : '🥶 Te rauw!';
-            scoreTitle.style.color = '#e74c3c';
-        }
-        if (scoreText) {
-            scoreText.textContent = percentage > 80 ?
-                'Deze steak is naar de haaien. Probeer opnieuw!' :
-                'Dit is nog geen steak, dit is carpaccio!';
-        }
-    }
-}
-
-/**
- * Resets the game to play again
- */
-function resetSteakGame() {
-    steakGame.state = 'ready';
-    steakGame.cookTime = 0;
-    steakGame.side1Time = 0;
-    steakGame.side2Time = 0;
-
-    // Reset UI elements
-    const cookTimer = document.getElementById('cookTimer');
-    const currentMarker = document.getElementById('currentMarker');
-    const scoreDisplay = document.getElementById('scoreDisplay');
-    const flipIndicator = document.getElementById('flipIndicator');
-    const gameStatus = document.getElementById('gameStatus');
-    const steakShape = document.getElementById('steakShape');
-    const steak = document.getElementById('steak');
-
-    if (cookTimer) cookTimer.style.display = 'none';
-    if (currentMarker) {
-        currentMarker.style.display = 'none';
-        currentMarker.style.left = '0%';
-    }
-    if (scoreDisplay) scoreDisplay.style.display = 'none';
-    if (flipIndicator) {
-        flipIndicator.style.display = 'none';
-        flipIndicator.innerHTML = '🔄';
-    }
-    if (gameStatus) gameStatus.textContent = 'Klik om te starten!';
-    if (steakShape) steakShape.setAttribute('fill', '#dc143c');
-    if (steak) steak.style.transform = 'translate(-50%, -50%)';
-}
-
-
-/* =============================================================================
-   5. COUNTDOWN TIMER
+   4. COUNTDOWN TIMER
    =============================================================================
 
    Calculates and displays time remaining until the trip date.
@@ -715,15 +423,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Set up venue card hover effects ---
     setupVenueCardHoverEffects();
 
-    // --- Initialize the steak game ---
-    setTarget('medium');
-
-    // Add click handler to grill area
-    const grillArea = document.getElementById('grillArea');
-    if (grillArea) {
-        grillArea.addEventListener('click', handleSteakClick);
-    }
-
     // --- Start the countdown timer ---
     updateCountdown();
     setInterval(updateCountdown, 1000);  // Update every second
@@ -736,7 +435,85 @@ document.addEventListener('DOMContentLoaded', function() {
     if (musicBtn) {
         musicBtn.addEventListener('click', toggleMusic);
     }
+
+    // --- Set up keyboard controls for all games ---
+    // Parachute game controls
+    document.addEventListener('keydown', handleParachuteKeyDown);
+    document.addEventListener('keyup', handleParachuteKeyUp);
+
+    // Hakken game controls
+    document.addEventListener('keydown', handleHakkenKeyDown);
+
+    // Golfcar game controls
+    document.addEventListener('keydown', handleGolfcarKeyDown);
+    document.addEventListener('keyup', handleGolfcarKeyUp);
+
+    // Beer Buddy game controls
+    document.addEventListener('keydown', handleBeerBuddyKeyDown);
+    document.addEventListener('keyup', handleBeerBuddyKeyUp);
+
+    // --- Set up mobile touch controls for all games ---
+    setupParachuteMobileControls();
+    setupHakkenMobileControls();
+    setupGolfcarMobileControls();
+    setupBeerBuddyMobileControls();
+
+    // Prevent default touch behaviors on game areas (prevents scroll/zoom)
+    preventTouchDefaultOnGameAreas();
+
+    // --- Set up Fun Zone video switching ---
+    setupFunZone();
 });
+
+
+/* =============================================================================
+   FUN ZONE - AI Video Gallery
+   =============================================================================
+*/
+
+function setupFunZone() {
+    const thumbs = document.querySelectorAll('.funzone-thumb');
+    const mainVideo = document.getElementById('funzoneVideo');
+    const caption = document.getElementById('funzoneCaption');
+
+    if (!thumbs.length || !mainVideo) return;
+
+    thumbs.forEach(function(thumb) {
+        thumb.addEventListener('click', function() {
+            // Remove active from all thumbs
+            thumbs.forEach(t => t.style.borderColor = 'transparent');
+            // Set active on clicked thumb
+            this.style.borderColor = '#f4d03f';
+
+            // Get video filename and title
+            const videoFile = this.getAttribute('data-video');
+            const title = this.getAttribute('data-title');
+
+            // Update main video
+            mainVideo.src = './assets/videos/funzone/' + videoFile;
+            mainVideo.load();
+            mainVideo.play();
+
+            // Update caption
+            if (caption) {
+                caption.querySelector('h3').textContent = title;
+            }
+        });
+
+        // Hover effect - play thumbnail video
+        thumb.addEventListener('mouseenter', function() {
+            const vid = this.querySelector('video');
+            if (vid) vid.play();
+        });
+        thumb.addEventListener('mouseleave', function() {
+            const vid = this.querySelector('video');
+            if (vid) {
+                vid.pause();
+                vid.currentTime = 0;
+            }
+        });
+    });
+}
 
 
 /* =============================================================================
@@ -755,17 +532,21 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function switchGame(game) {
     // Get all game containers
-    const steakGame = document.getElementById('steakGame');
     const parachuteGame = document.getElementById('parachuteGame');
     const hakkenGame = document.getElementById('hakkenGame');
+    const golfcarGame = document.getElementById('golfcarGame');
+    const beerbuddyGame = document.getElementById('beerbuddyGame');
+    const drivingrangeGame = document.getElementById('drivingrangeGame');
 
     // Get all tab buttons
     const tabs = document.querySelectorAll('.game-tab');
 
     // Hide all games first
-    if (steakGame) steakGame.style.display = 'none';
     if (parachuteGame) parachuteGame.style.display = 'none';
     if (hakkenGame) hakkenGame.style.display = 'none';
+    if (golfcarGame) golfcarGame.style.display = 'none';
+    if (beerbuddyGame) beerbuddyGame.style.display = 'none';
+    if (drivingrangeGame) drivingrangeGame.style.display = 'none';
 
     // Remove 'active' class from all tabs
     tabs.forEach(function(tab) {
@@ -774,9 +555,6 @@ function switchGame(game) {
 
     // Show the selected game and activate its tab
     switch(game) {
-        case 'steak':
-            if (steakGame) steakGame.style.display = 'block';
-            break;
         case 'parachute':
             if (parachuteGame) parachuteGame.style.display = 'block';
             // Initialize parachute game if not started
@@ -786,6 +564,15 @@ function switchGame(game) {
             break;
         case 'hakken':
             if (hakkenGame) hakkenGame.style.display = 'block';
+            break;
+        case 'golfcar':
+            if (golfcarGame) golfcarGame.style.display = 'block';
+            break;
+        case 'beerbuddy':
+            if (beerbuddyGame) beerbuddyGame.style.display = 'block';
+            break;
+        case 'drivingrange':
+            if (drivingrangeGame) drivingrangeGame.style.display = 'block';
             break;
     }
 
@@ -1014,6 +801,13 @@ function handleParachuteKeyUp(e) {
  * Handles touch controls for parachute game on mobile
  */
 function handleParachuteTouchStart(e) {
+    // If game is landed or ready, allow tap to restart
+    if (parachute.state === 'landed' || parachute.state === 'ready') {
+        resetParachuteGame();
+        e.preventDefault();
+        return;
+    }
+
     if (parachute.state !== 'falling') return;
 
     const touch = e.touches[0];
@@ -1046,6 +840,13 @@ function setupParachuteMobileControls() {
         gameArea.addEventListener('touchstart', handleParachuteTouchStart, { passive: false });
         gameArea.addEventListener('touchend', handleParachuteTouchEnd);
         gameArea.addEventListener('touchcancel', handleParachuteTouchEnd);
+
+        // Click to restart for desktop
+        gameArea.addEventListener('click', function() {
+            if (parachute.state === 'landed' || parachute.state === 'ready') {
+                resetParachuteGame();
+            }
+        });
     }
 
     // Also add touch support to the control buttons
@@ -1053,23 +854,39 @@ function setupParachuteMobileControls() {
     const rightBtn = document.getElementById('parachuteRightBtn');
 
     if (leftBtn) {
+        // Touch events for mobile
         leftBtn.addEventListener('touchstart', function(e) {
             if (parachute.state === 'falling') {
                 parachute.moveDirection = -1;
-                e.preventDefault();
             }
+            e.preventDefault();
         }, { passive: false });
         leftBtn.addEventListener('touchend', function() { parachute.moveDirection = 0; });
+        leftBtn.addEventListener('touchcancel', function() { parachute.moveDirection = 0; });
+        // Mouse events for desktop
+        leftBtn.addEventListener('mousedown', function() {
+            if (parachute.state === 'falling') parachute.moveDirection = -1;
+        });
+        leftBtn.addEventListener('mouseup', function() { parachute.moveDirection = 0; });
+        leftBtn.addEventListener('mouseleave', function() { parachute.moveDirection = 0; });
     }
 
     if (rightBtn) {
+        // Touch events for mobile
         rightBtn.addEventListener('touchstart', function(e) {
             if (parachute.state === 'falling') {
                 parachute.moveDirection = 1;
-                e.preventDefault();
             }
+            e.preventDefault();
         }, { passive: false });
         rightBtn.addEventListener('touchend', function() { parachute.moveDirection = 0; });
+        rightBtn.addEventListener('touchcancel', function() { parachute.moveDirection = 0; });
+        // Mouse events for desktop
+        rightBtn.addEventListener('mousedown', function() {
+            if (parachute.state === 'falling') parachute.moveDirection = 1;
+        });
+        rightBtn.addEventListener('mouseup', function() { parachute.moveDirection = 0; });
+        rightBtn.addEventListener('mouseleave', function() { parachute.moveDirection = 0; });
     }
 }
 
@@ -1502,41 +1319,41 @@ function handleHakkenKeyDown(e) {
 }
 
 
-/* =============================================================================
-   UPDATED INITIALIZATION
-   =============================================================================
-
-   Add keyboard listeners for the new games
-*/
-
-// Add keyboard event listeners when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // ... existing initialization code runs first ...
-
-    // Add keyboard listeners for parachute game
-    document.addEventListener('keydown', handleParachuteKeyDown);
-    document.addEventListener('keyup', handleParachuteKeyUp);
-
-    // Add keyboard listeners for hakken game
-    document.addEventListener('keydown', handleHakkenKeyDown);
-
-    // Set up mobile touch controls for both games
-    setupParachuteMobileControls();
-    setupHakkenMobileControls();
-});
-
 /**
  * Sets up mobile touch controls for hakken game
  * Makes the buttons work better on touch devices
  */
 function setupHakkenMobileControls() {
+    const gameArea = document.getElementById('hakkenArea');
+
+    // Tap on game area to start/restart
+    if (gameArea) {
+        gameArea.addEventListener('click', function() {
+            if (hakken.state === 'ready' || hakken.state === 'finished') {
+                startHakken();
+            }
+        });
+        gameArea.addEventListener('touchend', function(e) {
+            if (hakken.state === 'ready' || hakken.state === 'finished') {
+                startHakken();
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+
     const buttons = document.querySelectorAll('.hakken-btn');
 
     buttons.forEach(function(btn) {
         const key = btn.getAttribute('data-key');
         if (!key) return;
 
-        // Add touch feedback
+        // Reset button style helper
+        function resetBtnStyle() {
+            btn.style.transform = 'scale(1)';
+            btn.style.filter = 'brightness(1)';
+        }
+
+        // Touch events for mobile
         btn.addEventListener('touchstart', function(e) {
             if (hakken.state === 'playing') {
                 hakkenHit(key);
@@ -1546,11 +1363,1762 @@ function setupHakkenMobileControls() {
             e.preventDefault();
         }, { passive: false });
 
-        btn.addEventListener('touchend', function() {
-            btn.style.transform = 'scale(1)';
-            btn.style.filter = 'brightness(1)';
+        btn.addEventListener('touchend', resetBtnStyle);
+        btn.addEventListener('touchcancel', resetBtnStyle);
+
+        // Mouse events for desktop testing
+        btn.addEventListener('mousedown', function() {
+            if (hakken.state === 'playing') {
+                btn.style.transform = 'scale(0.9)';
+                btn.style.filter = 'brightness(1.5)';
+            }
+        });
+        btn.addEventListener('mouseup', resetBtnStyle);
+        btn.addEventListener('mouseleave', resetBtnStyle);
+    });
+}
+
+
+/* =============================================================================
+   12. GOLFCARMAGEDDON GAME
+   =============================================================================
+
+   Drive a golf cart and run over as many people as possible!
+
+   Controls:
+   - Arrow keys to move in all directions
+   - Touch controls on mobile
+
+   Goal:
+   - Hit as many people as possible in 30 seconds
+*/
+
+// Golfcar game state
+let golfcar = {
+    state: 'ready',          // 'ready', 'playing', 'finished'
+    x: 50,                   // Cart X position (percentage)
+    y: 50,                   // Cart Y position (percentage)
+    vx: 0,                   // Velocity X
+    vy: 0,                   // Velocity Y
+    speed: 0,                // Current speed
+    maxSpeed: 3,             // Maximum speed
+    acceleration: 0.15,      // How fast we accelerate
+    friction: 0.98,          // Slowdown factor
+    rotation: 0,             // Cart rotation angle
+    score: 0,                // People hit
+    timeRemaining: 30,       // Game time
+    gameLoop: null,
+    timerInterval: null,
+    people: [],              // Array of people on the field
+    spawnTimer: 0,
+    keys: {                  // Currently pressed keys
+        up: false,
+        down: false,
+        left: false,
+        right: false
+    }
+};
+
+/**
+ * Starts the golfcar game
+ */
+function startGolfcarGame() {
+    // Reset game state
+    golfcar.state = 'playing';
+    golfcar.x = 50;
+    golfcar.y = 50;
+    golfcar.vx = 0;
+    golfcar.vy = 0;
+    golfcar.speed = 0;
+    golfcar.rotation = 0;
+    golfcar.score = 0;
+    golfcar.timeRemaining = 30;
+    golfcar.people = [];
+    golfcar.spawnTimer = 0;
+
+    // Reset UI
+    const scoreDisplay = document.getElementById('golfcarScore');
+    const timerDisplay = document.getElementById('golfcarTimer');
+    const speedDisplay = document.getElementById('golfcarSpeed');
+    const statusDisplay = document.getElementById('golfcarStatus');
+    const resultDisplay = document.getElementById('golfcarResult');
+    const cart = document.getElementById('golfCart');
+    const peopleContainer = document.getElementById('peopleContainer');
+
+    if (scoreDisplay) scoreDisplay.textContent = '0';
+    if (timerDisplay) timerDisplay.textContent = '30';
+    if (speedDisplay) speedDisplay.textContent = '0';
+    if (statusDisplay) statusDisplay.style.display = 'none';
+    if (resultDisplay) resultDisplay.style.display = 'none';
+    if (peopleContainer) peopleContainer.innerHTML = '';
+    if (cart) {
+        cart.style.left = '50%';
+        cart.style.top = '50%';
+        cart.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+    }
+
+    // Spawn initial people
+    for (let i = 0; i < 8; i++) {
+        spawnPerson();
+    }
+
+    // Start game loop
+    golfcarGameLoop();
+
+    // Start timer
+    golfcar.timerInterval = setInterval(function() {
+        golfcar.timeRemaining--;
+        if (timerDisplay) timerDisplay.textContent = golfcar.timeRemaining;
+
+        if (golfcar.timeRemaining <= 0) {
+            finishGolfcarGame();
+        }
+    }, 1000);
+}
+
+/**
+ * Main game loop
+ */
+function golfcarGameLoop() {
+    if (golfcar.state !== 'playing') return;
+
+    // Apply acceleration based on keys
+    if (golfcar.keys.up) {
+        golfcar.vy -= golfcar.acceleration;
+    }
+    if (golfcar.keys.down) {
+        golfcar.vy += golfcar.acceleration;
+    }
+    if (golfcar.keys.left) {
+        golfcar.vx -= golfcar.acceleration;
+    }
+    if (golfcar.keys.right) {
+        golfcar.vx += golfcar.acceleration;
+    }
+
+    // Apply friction
+    golfcar.vx *= golfcar.friction;
+    golfcar.vy *= golfcar.friction;
+
+    // Limit speed
+    golfcar.speed = Math.sqrt(golfcar.vx * golfcar.vx + golfcar.vy * golfcar.vy);
+    if (golfcar.speed > golfcar.maxSpeed) {
+        golfcar.vx = (golfcar.vx / golfcar.speed) * golfcar.maxSpeed;
+        golfcar.vy = (golfcar.vy / golfcar.speed) * golfcar.maxSpeed;
+        golfcar.speed = golfcar.maxSpeed;
+    }
+
+    // Update position
+    golfcar.x += golfcar.vx;
+    golfcar.y += golfcar.vy;
+
+    // Keep in bounds
+    golfcar.x = Math.max(5, Math.min(95, golfcar.x));
+    golfcar.y = Math.max(5, Math.min(95, golfcar.y));
+
+    // Calculate rotation based on velocity
+    if (golfcar.speed > 0.1) {
+        golfcar.rotation = Math.atan2(golfcar.vy, golfcar.vx) * (180 / Math.PI) + 90;
+    }
+
+    // Update cart display
+    const cart = document.getElementById('golfCart');
+    if (cart) {
+        cart.style.left = golfcar.x + '%';
+        cart.style.top = golfcar.y + '%';
+        cart.style.transform = `translate(-50%, -50%) rotate(${golfcar.rotation}deg)`;
+    }
+
+    // Update speed display
+    const speedDisplay = document.getElementById('golfcarSpeed');
+    if (speedDisplay) {
+        speedDisplay.textContent = Math.round(golfcar.speed * 30);
+    }
+
+    // Spawn more people periodically
+    golfcar.spawnTimer++;
+    if (golfcar.spawnTimer > 60 && golfcar.people.length < 15) {
+        golfcar.spawnTimer = 0;
+        spawnPerson();
+    }
+
+    // Move people and check collisions
+    updatePeople();
+
+    // Continue loop
+    golfcar.gameLoop = requestAnimationFrame(golfcarGameLoop);
+}
+
+/**
+ * Spawns a person on the field
+ */
+function spawnPerson() {
+    const peopleContainer = document.getElementById('peopleContainer');
+    if (!peopleContainer) return;
+
+    // Random position (avoid center where cart starts)
+    let x, y;
+    do {
+        x = 10 + Math.random() * 80;
+        y = 10 + Math.random() * 80;
+    } while (Math.abs(x - golfcar.x) < 20 && Math.abs(y - golfcar.y) < 20);
+
+    // Random movement direction
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 0.1 + Math.random() * 0.2;
+
+    // Create person element
+    const person = document.createElement('div');
+    person.className = 'golfcar-person';
+    person.style.cssText = `
+        position: absolute;
+        left: ${x}%;
+        top: ${y}%;
+        transform: translate(-50%, -50%);
+        font-size: 1.8rem;
+        transition: none;
+        z-index: 5;
+    `;
+
+    // Random person emoji
+    const emojis = ['🚶', '🚶‍♂️', '🚶‍♀️', '🧍', '🧍‍♂️', '🧍‍♀️', '🏃', '🏃‍♂️', '🏃‍♀️', '🧑', '👨', '👩', '🧓', '👴', '👵'];
+    person.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    peopleContainer.appendChild(person);
+
+    // Store person data
+    golfcar.people.push({
+        element: person,
+        x: x,
+        y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        hit: false
+    });
+}
+
+/**
+ * Updates people positions and checks collisions
+ */
+function updatePeople() {
+    const hitDistance = 6; // How close cart needs to be to hit
+
+    golfcar.people.forEach(function(person, index) {
+        if (person.hit) return;
+
+        // Move person
+        person.x += person.vx;
+        person.y += person.vy;
+
+        // Bounce off walls
+        if (person.x < 5 || person.x > 95) {
+            person.vx *= -1;
+            person.x = Math.max(5, Math.min(95, person.x));
+        }
+        if (person.y < 5 || person.y > 95) {
+            person.vy *= -1;
+            person.y = Math.max(5, Math.min(95, person.y));
+        }
+
+        // Update display
+        person.element.style.left = person.x + '%';
+        person.element.style.top = person.y + '%';
+
+        // Check collision with cart
+        const dx = person.x - golfcar.x;
+        const dy = person.y - golfcar.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < hitDistance && golfcar.speed > 0.3) {
+            // HIT!
+            person.hit = true;
+            golfcar.score++;
+
+            // Update score display
+            const scoreDisplay = document.getElementById('golfcarScore');
+            if (scoreDisplay) scoreDisplay.textContent = golfcar.score;
+
+            // Visual effect - person goes flying
+            person.element.style.transition = 'all 0.5s ease-out';
+            person.element.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 720 - 360}deg) scale(0)`;
+            person.element.style.opacity = '0';
+
+            // Show hit indicator
+            showHitIndicator(person.x, person.y);
+
+            // Remove after animation
+            setTimeout(function() {
+                if (person.element.parentNode) {
+                    person.element.remove();
+                }
+                // Spawn new person
+                spawnPerson();
+            }, 500);
+        }
+    });
+
+    // Clean up hit people
+    golfcar.people = golfcar.people.filter(function(person) {
+        return !person.hit;
+    });
+}
+
+/**
+ * Shows a hit indicator at the given position
+ */
+function showHitIndicator(x, y) {
+    const gameArea = document.getElementById('golfcarArea');
+    if (!gameArea) return;
+
+    const indicator = document.createElement('div');
+    indicator.style.cssText = `
+        position: absolute;
+        left: ${x}%;
+        top: ${y}%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e74c3c;
+        text-shadow: 0 0 10px #e74c3c;
+        pointer-events: none;
+        z-index: 20;
+        animation: hitPop 0.5s ease-out forwards;
+    `;
+    indicator.textContent = '+1 💀';
+
+    gameArea.appendChild(indicator);
+
+    setTimeout(function() {
+        if (indicator.parentNode) {
+            indicator.remove();
+        }
+    }, 500);
+}
+
+/**
+ * Finishes the game and shows results
+ */
+function finishGolfcarGame() {
+    golfcar.state = 'finished';
+
+    if (golfcar.gameLoop) {
+        cancelAnimationFrame(golfcar.gameLoop);
+    }
+    if (golfcar.timerInterval) {
+        clearInterval(golfcar.timerInterval);
+    }
+
+    // Calculate rating
+    let rating, message;
+    if (golfcar.score >= 25) {
+        rating = '🏆 SERIAL KILLER!';
+        message = 'Je bent een gevaar op de golfbaan!';
+    } else if (golfcar.score >= 15) {
+        rating = '🎉 Dodelijk!';
+        message = 'De golfbaan is een stuk leger nu.';
+    } else if (golfcar.score >= 8) {
+        rating = '👍 Niet slecht!';
+        message = 'Je begint de smaak te pakken te krijgen.';
+    } else {
+        rating = '😅 Amateur';
+        message = 'Misschien beter een echte golfles nemen?';
+    }
+
+    // Show results
+    const resultDisplay = document.getElementById('golfcarResult');
+    const resultTitle = document.getElementById('golfcarResultTitle');
+    const resultText = document.getElementById('golfcarResultText');
+    const finalScore = document.getElementById('golfcarFinalScore');
+    const rankDisplay = document.getElementById('golfcarRank');
+
+    if (resultDisplay) resultDisplay.style.display = 'block';
+    if (resultTitle) resultTitle.textContent = rating;
+    if (finalScore) finalScore.textContent = golfcar.score;
+    if (rankDisplay) rankDisplay.textContent = message;
+}
+
+/**
+ * Keyboard handlers for golfcar game
+ */
+function handleGolfcarKeyDown(e) {
+    if (golfcar.state !== 'playing') return;
+
+    switch(e.key) {
+        case 'ArrowUp':
+        case 'w':
+        case 'W':
+            golfcar.keys.up = true;
+            e.preventDefault();
+            break;
+        case 'ArrowDown':
+        case 's':
+        case 'S':
+            golfcar.keys.down = true;
+            e.preventDefault();
+            break;
+        case 'ArrowLeft':
+        case 'a':
+        case 'A':
+            golfcar.keys.left = true;
+            e.preventDefault();
+            break;
+        case 'ArrowRight':
+        case 'd':
+        case 'D':
+            golfcar.keys.right = true;
+            e.preventDefault();
+            break;
+    }
+}
+
+function handleGolfcarKeyUp(e) {
+    switch(e.key) {
+        case 'ArrowUp':
+        case 'w':
+        case 'W':
+            golfcar.keys.up = false;
+            break;
+        case 'ArrowDown':
+        case 's':
+        case 'S':
+            golfcar.keys.down = false;
+            break;
+        case 'ArrowLeft':
+        case 'a':
+        case 'A':
+            golfcar.keys.left = false;
+            break;
+        case 'ArrowRight':
+        case 'd':
+        case 'D':
+            golfcar.keys.right = false;
+            break;
+    }
+}
+
+/**
+ * Sets up mobile touch controls for golfcar game
+ */
+function setupGolfcarMobileControls() {
+    const upBtn = document.getElementById('golfcarUpBtn');
+    const downBtn = document.getElementById('golfcarDownBtn');
+    const leftBtn = document.getElementById('golfcarLeftBtn');
+    const rightBtn = document.getElementById('golfcarRightBtn');
+    const gameArea = document.getElementById('golfcarArea');
+
+    // Button controls with touchcancel handling
+    if (upBtn) {
+        upBtn.addEventListener('touchstart', function(e) { golfcar.keys.up = true; e.preventDefault(); }, { passive: false });
+        upBtn.addEventListener('touchend', function() { golfcar.keys.up = false; });
+        upBtn.addEventListener('touchcancel', function() { golfcar.keys.up = false; });
+        upBtn.addEventListener('mousedown', function() { golfcar.keys.up = true; });
+        upBtn.addEventListener('mouseup', function() { golfcar.keys.up = false; });
+        upBtn.addEventListener('mouseleave', function() { golfcar.keys.up = false; });
+    }
+    if (downBtn) {
+        downBtn.addEventListener('touchstart', function(e) { golfcar.keys.down = true; e.preventDefault(); }, { passive: false });
+        downBtn.addEventListener('touchend', function() { golfcar.keys.down = false; });
+        downBtn.addEventListener('touchcancel', function() { golfcar.keys.down = false; });
+        downBtn.addEventListener('mousedown', function() { golfcar.keys.down = true; });
+        downBtn.addEventListener('mouseup', function() { golfcar.keys.down = false; });
+        downBtn.addEventListener('mouseleave', function() { golfcar.keys.down = false; });
+    }
+    if (leftBtn) {
+        leftBtn.addEventListener('touchstart', function(e) { golfcar.keys.left = true; e.preventDefault(); }, { passive: false });
+        leftBtn.addEventListener('touchend', function() { golfcar.keys.left = false; });
+        leftBtn.addEventListener('touchcancel', function() { golfcar.keys.left = false; });
+        leftBtn.addEventListener('mousedown', function() { golfcar.keys.left = true; });
+        leftBtn.addEventListener('mouseup', function() { golfcar.keys.left = false; });
+        leftBtn.addEventListener('mouseleave', function() { golfcar.keys.left = false; });
+    }
+    if (rightBtn) {
+        rightBtn.addEventListener('touchstart', function(e) { golfcar.keys.right = true; e.preventDefault(); }, { passive: false });
+        rightBtn.addEventListener('touchend', function() { golfcar.keys.right = false; });
+        rightBtn.addEventListener('touchcancel', function() { golfcar.keys.right = false; });
+        rightBtn.addEventListener('mousedown', function() { golfcar.keys.right = true; });
+        rightBtn.addEventListener('mouseup', function() { golfcar.keys.right = false; });
+        rightBtn.addEventListener('mouseleave', function() { golfcar.keys.right = false; });
+    }
+
+    // Click/tap on game area to start
+    if (gameArea) {
+        gameArea.addEventListener('click', function() {
+            if (golfcar.state === 'ready' || golfcar.state === 'finished') {
+                startGolfcarGame();
+            }
+        });
+        // Also support tap on mobile
+        gameArea.addEventListener('touchend', function(e) {
+            if (golfcar.state === 'ready' || golfcar.state === 'finished') {
+                startGolfcarGame();
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+}
+
+
+/* =============================================================================
+   13. EXOSKELETON BEER BUDDY GAME
+   =============================================================================
+
+   Wear an exoskeleton and deliver beers to friends!
+   Balance the beers while walking - don't spill!
+*/
+
+let beerbuddy = {
+    state: 'ready',
+    x: 50,
+    y: 85,             // Vertical position (percentage from top)
+    tilt: 0,           // -100 to 100, beer spills at extremes
+    beersCarrying: 0,
+    beersDelivered: 0,
+    maxBeers: 4,       // Reduced for faster gameplay
+    timeRemaining: 45, // Shorter, more intense!
+    gameLoop: null,
+    timerInterval: null,
+    friends: [],
+    moveDirectionX: 0, // Horizontal: -1 left, 0 none, 1 right
+    moveDirectionY: 0, // Vertical: -1 up, 0 none, 1 down
+    walkSpeed: 1.4,    // FASTER movement!
+    combo: 0,          // Combo counter for quick deliveries
+    lastDeliveryTime: 0,
+    comboTimeout: 3000, // 3 seconds to keep combo
+    speedBoost: false,
+    speedBoostTimer: 0
+};
+
+function startBeerBuddyGame() {
+    beerbuddy.state = 'playing';
+    beerbuddy.x = 15;
+    beerbuddy.y = 85;  // Start near bottom (fridge area)
+    beerbuddy.tilt = 0;
+    beerbuddy.beersCarrying = 0;
+    beerbuddy.beersDelivered = 0;
+    beerbuddy.timeRemaining = 45;
+    beerbuddy.friends = [];
+    beerbuddy.moveDirectionX = 0;
+    beerbuddy.moveDirectionY = 0;
+    beerbuddy.combo = 0;
+    beerbuddy.lastDeliveryTime = 0;
+    beerbuddy.speedBoost = false;
+    beerbuddy.speedBoostTimer = 0;
+
+    // Reset UI
+    const scoreDisplay = document.getElementById('beerScore');
+    const carryDisplay = document.getElementById('beersCarrying');
+    const timerDisplay = document.getElementById('beerTimer');
+    const statusDisplay = document.getElementById('beerbuddyStatus');
+    const resultDisplay = document.getElementById('beerbuddyResult');
+    const trayDisplay = document.getElementById('beerTray');
+    const friendsContainer = document.getElementById('beerFriends');
+    const comboDisplay = document.getElementById('beerCombo');
+
+    if (scoreDisplay) scoreDisplay.textContent = '0';
+    if (carryDisplay) carryDisplay.textContent = '0';
+    if (timerDisplay) timerDisplay.textContent = '45';
+    if (statusDisplay) statusDisplay.style.display = 'none';
+    if (resultDisplay) resultDisplay.style.display = 'none';
+    if (trayDisplay) trayDisplay.innerHTML = '';
+    if (friendsContainer) friendsContainer.innerHTML = '';
+    if (comboDisplay) comboDisplay.style.display = 'none';
+
+    // Spawn friends around the pool
+    spawnBeerFriends();
+
+    // Start game loop
+    beerBuddyGameLoop();
+
+    // Start timer
+    beerbuddy.timerInterval = setInterval(function() {
+        beerbuddy.timeRemaining--;
+        if (timerDisplay) timerDisplay.textContent = beerbuddy.timeRemaining;
+
+        // Spawn power-up occasionally
+        if (beerbuddy.timeRemaining % 15 === 0 && beerbuddy.timeRemaining > 0) {
+            spawnBeerPowerUp();
+        }
+
+        if (beerbuddy.timeRemaining <= 0) {
+            finishBeerBuddyGame();
+        }
+    }, 1000);
+}
+
+function spawnBeerFriends() {
+    const container = document.getElementById('beerFriends');
+    if (!container) return;
+
+    // Friends spread around using percentage positions (x%, y%)
+    // y% ranges from 15 (top) to about 70 (above fridge area)
+    const positions = [
+        { x: 35, y: 20 }, { x: 70, y: 20 },
+        { x: 25, y: 35 }, { x: 80, y: 35 },
+        { x: 45, y: 50 }, { x: 60, y: 50 },
+        { x: 30, y: 65 }, { x: 75, y: 65 }
+    ];
+
+    const emojis = ['🧑', '👨', '👱', '🧔', '👨‍🦰', '👨‍🦱', '🧑‍🦱', '👴'];
+    const names = ['Bram', 'Piet', 'Jan', 'Kees', 'Henk', 'Willem', 'Dirk', 'Joost'];
+
+    positions.forEach((pos, i) => {
+        const friend = document.createElement('div');
+        friend.className = 'beer-friend';
+        friend.setAttribute('data-index', i);
+        friend.style.cssText = `
+            position: absolute;
+            left: ${pos.x}%;
+            top: ${pos.y}%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        `;
+        friend.innerHTML = `
+            <div class="friend-emoji" style="animation: friendWave 1s ease-in-out infinite; animation-delay: ${i * 0.2}s;">${emojis[i % emojis.length]}</div>
+            <div class="friend-request" style="font-size: 0.7rem; margin-top: 2px; background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 10px;">🍺 ${names[i]}!</div>
+        `;
+        container.appendChild(friend);
+
+        beerbuddy.friends.push({
+            element: friend,
+            x: pos.x,
+            yPercent: pos.y,  // Y position as percentage
+            wantsBeer: true,
+            name: names[i]
         });
     });
+}
+
+// Spawn power-up function
+function spawnBeerPowerUp() {
+    const container = document.getElementById('beerFriends');
+    if (!container) return;
+
+    const powerUp = document.createElement('div');
+    powerUp.className = 'beer-powerup';
+    // Use percentage positioning
+    const powerUpY = 25 + Math.random() * 40; // Between 25% and 65%
+    powerUp.style.cssText = `
+        position: absolute;
+        left: ${30 + Math.random() * 40}%;
+        top: ${powerUpY}%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        animation: powerUpBounce 0.5s ease-in-out infinite, powerUpGlow 1s ease-in-out infinite;
+        cursor: pointer;
+        z-index: 20;
+        filter: drop-shadow(0 0 10px gold);
+    `;
+    powerUp.textContent = '⚡';
+    powerUp.setAttribute('data-powerup', 'speed');
+    powerUp.setAttribute('data-y', powerUpY); // Store Y position for collision
+    container.appendChild(powerUp);
+
+    // Remove after 5 seconds if not collected
+    setTimeout(() => {
+        if (powerUp.parentNode) powerUp.remove();
+    }, 5000);
+}
+
+function beerBuddyGameLoop() {
+    if (beerbuddy.state !== 'playing') return;
+
+    // Calculate current speed (with boost)
+    const currentSpeed = beerbuddy.speedBoost ? beerbuddy.walkSpeed * 1.8 : beerbuddy.walkSpeed;
+
+    // Check if moving at all
+    const isMoving = beerbuddy.moveDirectionX !== 0 || beerbuddy.moveDirectionY !== 0;
+
+    // Move player horizontally
+    if (beerbuddy.moveDirectionX !== 0) {
+        beerbuddy.x += beerbuddy.moveDirectionX * currentSpeed;
+        beerbuddy.x = Math.max(8, Math.min(92, beerbuddy.x));
+    }
+
+    // Move player vertically
+    if (beerbuddy.moveDirectionY !== 0) {
+        beerbuddy.y += beerbuddy.moveDirectionY * currentSpeed * 0.8; // Slightly slower vertical
+        beerbuddy.y = Math.max(15, Math.min(90, beerbuddy.y)); // Keep within game area
+    }
+
+    // Walking causes tilt based on beers carried and horizontal movement
+    if (isMoving) {
+        if (beerbuddy.beersCarrying > 0 && !beerbuddy.speedBoost) {
+            const tiltChange = beerbuddy.moveDirectionX * (0.3 + beerbuddy.beersCarrying * 0.15);
+            beerbuddy.tilt += tiltChange + (Math.random() - 0.5) * 0.3;
+        }
+    } else {
+        // Stabilize when not moving (faster stabilization)
+        beerbuddy.tilt *= 0.9;
+    }
+
+    // Clamp tilt
+    beerbuddy.tilt = Math.max(-100, Math.min(100, beerbuddy.tilt));
+
+    // Check if beer spills (more forgiving threshold)
+    if (Math.abs(beerbuddy.tilt) > 85 && beerbuddy.beersCarrying > 0) {
+        spillBeer();
+    }
+
+    // Update player position and tilt
+    const player = document.getElementById('exoPlayer');
+    const tiltIndicator = document.getElementById('tiltIndicator');
+    if (player) {
+        player.style.left = beerbuddy.x + '%';
+        player.style.top = beerbuddy.y + '%';
+        player.style.transform = `translate(-50%, -50%) rotate(${beerbuddy.tilt * 0.08}deg)`;
+        // Speed boost visual
+        if (beerbuddy.speedBoost) {
+            player.style.filter = 'drop-shadow(0 0 15px gold)';
+        } else {
+            player.style.filter = 'none';
+        }
+    }
+    if (tiltIndicator) {
+        tiltIndicator.style.left = (50 + beerbuddy.tilt * 0.4) + '%';
+        // Color indicator based on danger
+        const danger = Math.abs(beerbuddy.tilt);
+        if (danger > 70) {
+            tiltIndicator.style.background = '#e74c3c';
+            tiltIndicator.style.boxShadow = '0 0 15px #e74c3c';
+        } else if (danger > 50) {
+            tiltIndicator.style.background = '#f39c12';
+            tiltIndicator.style.boxShadow = '0 0 10px #f39c12';
+        } else {
+            tiltIndicator.style.background = '#fff';
+            tiltIndicator.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+        }
+    }
+
+    // Check fridge pickup (near fridge at bottom-left)
+    if (beerbuddy.x < 25 && beerbuddy.y > 70 && beerbuddy.beersCarrying < beerbuddy.maxBeers) {
+        pickupBeer();
+    }
+
+    // Check friend delivery
+    checkBeerDelivery();
+
+    // Check power-up collection
+    checkPowerUpCollection();
+
+    // Update combo timer
+    if (beerbuddy.combo > 0 && Date.now() - beerbuddy.lastDeliveryTime > beerbuddy.comboTimeout) {
+        beerbuddy.combo = 0;
+        const comboDisplay = document.getElementById('beerCombo');
+        if (comboDisplay) comboDisplay.style.display = 'none';
+    }
+
+    // Speed boost timer
+    if (beerbuddy.speedBoost) {
+        beerbuddy.speedBoostTimer -= 16;
+        if (beerbuddy.speedBoostTimer <= 0) {
+            beerbuddy.speedBoost = false;
+        }
+    }
+
+    beerbuddy.gameLoop = requestAnimationFrame(beerBuddyGameLoop);
+}
+
+function checkPowerUpCollection() {
+    const powerUps = document.querySelectorAll('.beer-powerup');
+    powerUps.forEach(powerUp => {
+        const rect = powerUp.getBoundingClientRect();
+        const gameArea = document.getElementById('beerbuddyArea');
+        if (!gameArea) return;
+        const gameRect = gameArea.getBoundingClientRect();
+
+        const powerUpX = ((rect.left + rect.width/2) - gameRect.left) / gameRect.width * 100;
+        const powerUpY = parseFloat(powerUp.getAttribute('data-y')) || 50;
+
+        // Check both X and Y proximity
+        if (Math.abs(powerUpX - beerbuddy.x) < 15 && Math.abs(powerUpY - beerbuddy.y) < 15) {
+            // Collect power-up!
+            powerUp.remove();
+            beerbuddy.speedBoost = true;
+            beerbuddy.speedBoostTimer = 4000; // 4 seconds of speed boost
+            showBeerFloatingText('⚡ TURBO!', beerbuddy.x, '#ffd700');
+        }
+    });
+}
+
+function pickupBeer() {
+    if (beerbuddy.beersCarrying >= beerbuddy.maxBeers) return;
+
+    // Faster pickup (300ms instead of 500ms)
+    if (!beerbuddy.lastPickup || Date.now() - beerbuddy.lastPickup > 300) {
+        beerbuddy.beersCarrying++;
+        beerbuddy.lastPickup = Date.now();
+        updateBeerTray();
+        const carryDisplay = document.getElementById('beersCarrying');
+        if (carryDisplay) carryDisplay.textContent = beerbuddy.beersCarrying;
+
+        // Visual feedback for pickup
+        showBeerFloatingText('+🍺', 15, '#3498db');
+
+        // Animate fridge
+        const fridge = document.getElementById('beerFridge');
+        if (fridge) {
+            fridge.style.transform = 'translateX(-50%) scale(1.2)';
+            setTimeout(() => fridge.style.transform = 'translateX(-50%) scale(1)', 100);
+        }
+    }
+}
+
+function updateBeerTray() {
+    const tray = document.getElementById('beerTray');
+    if (!tray) return;
+
+    tray.innerHTML = '';
+    for (let i = 0; i < beerbuddy.beersCarrying; i++) {
+        const beer = document.createElement('span');
+        beer.textContent = '🍺';
+        beer.style.cssText = `
+            font-size: 1.3rem;
+            display: inline-block;
+            animation: beerBounce 0.3s ease-out;
+            animation-delay: ${i * 0.05}s;
+        `;
+        tray.appendChild(beer);
+    }
+}
+
+// Show floating text feedback
+function showBeerFloatingText(text, xPercent, color) {
+    const gameArea = document.getElementById('beerbuddyArea');
+    if (!gameArea) return;
+
+    const floater = document.createElement('div');
+    floater.textContent = text;
+    floater.style.cssText = `
+        position: absolute;
+        left: ${xPercent}%;
+        top: 50%;
+        transform: translateX(-50%);
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: ${color};
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        pointer-events: none;
+        z-index: 100;
+        animation: floatUp 1s ease-out forwards;
+    `;
+    gameArea.appendChild(floater);
+    setTimeout(() => floater.remove(), 1000);
+}
+
+function spillBeer() {
+    if (!beerbuddy.lastSpill || Date.now() - beerbuddy.lastSpill > 600) {
+        beerbuddy.beersCarrying = Math.max(0, beerbuddy.beersCarrying - 1);
+        beerbuddy.lastSpill = Date.now();
+
+        // Reset combo on spill
+        beerbuddy.combo = 0;
+        const comboDisplay = document.getElementById('beerCombo');
+        if (comboDisplay) comboDisplay.style.display = 'none';
+
+        updateBeerTray();
+        const carryDisplay = document.getElementById('beersCarrying');
+        if (carryDisplay) carryDisplay.textContent = beerbuddy.beersCarrying;
+
+        // Visual splash effect
+        showBeerFloatingText('💦 OEPS!', beerbuddy.x, '#e74c3c');
+
+        const player = document.getElementById('exoPlayer');
+        if (player) {
+            player.style.animation = 'shake 0.3s';
+            setTimeout(() => player.style.animation = '', 300);
+        }
+    }
+}
+
+function checkBeerDelivery() {
+    if (beerbuddy.beersCarrying <= 0) return;
+
+    beerbuddy.friends.forEach((friend, index) => {
+        if (!friend.wantsBeer) return;
+
+        const dx = Math.abs(friend.x - beerbuddy.x);
+        const dy = Math.abs(friend.yPercent - beerbuddy.y);
+        // Check if close enough (both horizontally and vertically)
+        if (dx < 15 && dy < 15) {
+            // Deliver beer!
+            friend.wantsBeer = false;
+            beerbuddy.beersCarrying--;
+
+            // COMBO SYSTEM
+            const now = Date.now();
+            if (now - beerbuddy.lastDeliveryTime < beerbuddy.comboTimeout) {
+                beerbuddy.combo++;
+            } else {
+                beerbuddy.combo = 1;
+            }
+            beerbuddy.lastDeliveryTime = now;
+
+            // Calculate points with combo multiplier
+            const basePoints = 1;
+            const comboMultiplier = Math.min(beerbuddy.combo, 5); // Max 5x
+            const points = basePoints * comboMultiplier;
+            beerbuddy.beersDelivered += points;
+
+            updateBeerTray();
+            const carryDisplay = document.getElementById('beersCarrying');
+            const scoreDisplay = document.getElementById('beerScore');
+            if (carryDisplay) carryDisplay.textContent = beerbuddy.beersCarrying;
+            if (scoreDisplay) scoreDisplay.textContent = beerbuddy.beersDelivered;
+
+            // Show combo display
+            if (beerbuddy.combo > 1) {
+                const comboDisplay = document.getElementById('beerCombo');
+                if (comboDisplay) {
+                    comboDisplay.style.display = 'block';
+                    comboDisplay.innerHTML = `🔥 COMBO x${beerbuddy.combo}!`;
+                    comboDisplay.style.animation = 'none';
+                    comboDisplay.offsetHeight; // Trigger reflow
+                    comboDisplay.style.animation = 'comboPulse 0.3s';
+                }
+            }
+
+            // Floating score feedback
+            let feedbackText = `+${points}`;
+            let feedbackColor = '#2ecc71';
+            if (beerbuddy.combo >= 5) {
+                feedbackText = `🔥 +${points} MEGA!`;
+                feedbackColor = '#ffd700';
+            } else if (beerbuddy.combo >= 3) {
+                feedbackText = `✨ +${points} NICE!`;
+                feedbackColor = '#f39c12';
+            }
+            showBeerFloatingText(feedbackText, friend.x, feedbackColor);
+
+            // Update friend display - happy reaction!
+            const emoji = friend.element.querySelector('.friend-emoji');
+            const request = friend.element.querySelector('.friend-request');
+            if (emoji) emoji.textContent = '😄';
+            if (request) request.innerHTML = '🍺 Proost!';
+            friend.element.style.transform = 'translateX(-50%) scale(1.2)';
+            setTimeout(() => {
+                friend.element.style.transform = 'translateX(-50%) scale(1)';
+                friend.element.style.opacity = '0.5';
+            }, 300);
+
+            // Check if all friends served
+            const allServed = beerbuddy.friends.every(f => !f.wantsBeer);
+            if (allServed) {
+                // BONUS for completing a round!
+                beerbuddy.beersDelivered += 5;
+                if (scoreDisplay) scoreDisplay.textContent = beerbuddy.beersDelivered;
+                showBeerFloatingText('🎉 RONDE BONUS +5!', 50, '#ffd700');
+
+                // Respawn friends for more rounds!
+                setTimeout(() => {
+                    const emojis = ['🧑', '👨', '👱', '🧔', '👨‍🦰', '👨‍🦱', '🧑‍🦱', '👴'];
+                    beerbuddy.friends.forEach((f, i) => {
+                        f.wantsBeer = true;
+                        f.element.style.opacity = '1';
+                        const emoji = f.element.querySelector('.friend-emoji');
+                        const request = f.element.querySelector('.friend-request');
+                        if (emoji) emoji.textContent = emojis[i % emojis.length];
+                        if (request) request.innerHTML = `🍺 ${f.name}!`;
+                    });
+                }, 800);
+            }
+        }
+    });
+}
+
+function finishBeerBuddyGame() {
+    beerbuddy.state = 'finished';
+    if (beerbuddy.gameLoop) cancelAnimationFrame(beerbuddy.gameLoop);
+    if (beerbuddy.timerInterval) clearInterval(beerbuddy.timerInterval);
+
+    let rating, message;
+    if (beerbuddy.beersDelivered >= 50) {
+        rating = '🏆 BIER LEGENDE!';
+        message = 'Je bent de absolute kampioen!';
+    } else if (beerbuddy.beersDelivered >= 35) {
+        rating = '🥇 TOP BARMAN!';
+        message = 'Dikke fooi verdiend!';
+    } else if (beerbuddy.beersDelivered >= 25) {
+        rating = '🎉 Super service!';
+        message = 'De jongens zijn mega blij!';
+    } else if (beerbuddy.beersDelivered >= 15) {
+        rating = '👍 Lekker bezig!';
+        message = 'Goed gedaan met de combos!';
+    } else if (beerbuddy.beersDelivered >= 8) {
+        rating = '😊 Niet slecht!';
+        message = 'Probeer meer combos te scoren!';
+    } else {
+        rating = '😅 Beginner';
+        message = 'Tip: Lever snel achter elkaar voor combos!';
+    }
+
+    const resultDisplay = document.getElementById('beerbuddyResult');
+    const resultTitle = document.getElementById('beerbuddyResultTitle');
+    const finalScore = document.getElementById('beerFinalScore');
+    const rankDisplay = document.getElementById('beerRank');
+
+    if (resultDisplay) resultDisplay.style.display = 'block';
+    if (resultTitle) resultTitle.textContent = rating;
+    if (finalScore) finalScore.textContent = beerbuddy.beersDelivered;
+    if (rankDisplay) rankDisplay.textContent = message;
+}
+
+function handleBeerBuddyKeyDown(e) {
+    if (beerbuddy.state !== 'playing') return;
+
+    // Horizontal movement
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        beerbuddy.moveDirectionX = -1;
+        e.preventDefault();
+    } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        beerbuddy.moveDirectionX = 1;
+        e.preventDefault();
+    }
+
+    // Vertical movement
+    if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+        beerbuddy.moveDirectionY = -1;
+        e.preventDefault();
+    } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        beerbuddy.moveDirectionY = 1;
+        e.preventDefault();
+    }
+}
+
+function handleBeerBuddyKeyUp(e) {
+    // Horizontal
+    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A' || e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        beerbuddy.moveDirectionX = 0;
+    }
+    // Vertical
+    if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+        beerbuddy.moveDirectionY = 0;
+    }
+}
+
+function setupBeerBuddyMobileControls() {
+    const leftBtn = document.getElementById('beerLeftBtn');
+    const rightBtn = document.getElementById('beerRightBtn');
+    const upBtn = document.getElementById('beerUpBtn');
+    const downBtn = document.getElementById('beerDownBtn');
+    const gameArea = document.getElementById('beerbuddyArea');
+    const fridge = document.getElementById('beerFridge');
+
+    // Left button
+    if (leftBtn) {
+        leftBtn.addEventListener('touchstart', e => { beerbuddy.moveDirectionX = -1; e.preventDefault(); }, { passive: false });
+        leftBtn.addEventListener('touchend', () => beerbuddy.moveDirectionX = 0);
+        leftBtn.addEventListener('touchcancel', () => beerbuddy.moveDirectionX = 0);
+        leftBtn.addEventListener('mousedown', () => beerbuddy.moveDirectionX = -1);
+        leftBtn.addEventListener('mouseup', () => beerbuddy.moveDirectionX = 0);
+        leftBtn.addEventListener('mouseleave', () => beerbuddy.moveDirectionX = 0);
+    }
+    // Right button
+    if (rightBtn) {
+        rightBtn.addEventListener('touchstart', e => { beerbuddy.moveDirectionX = 1; e.preventDefault(); }, { passive: false });
+        rightBtn.addEventListener('touchend', () => beerbuddy.moveDirectionX = 0);
+        rightBtn.addEventListener('touchcancel', () => beerbuddy.moveDirectionX = 0);
+        rightBtn.addEventListener('mousedown', () => beerbuddy.moveDirectionX = 1);
+        rightBtn.addEventListener('mouseup', () => beerbuddy.moveDirectionX = 0);
+        rightBtn.addEventListener('mouseleave', () => beerbuddy.moveDirectionX = 0);
+    }
+    // Up button
+    if (upBtn) {
+        upBtn.addEventListener('touchstart', e => { beerbuddy.moveDirectionY = -1; e.preventDefault(); }, { passive: false });
+        upBtn.addEventListener('touchend', () => beerbuddy.moveDirectionY = 0);
+        upBtn.addEventListener('touchcancel', () => beerbuddy.moveDirectionY = 0);
+        upBtn.addEventListener('mousedown', () => beerbuddy.moveDirectionY = -1);
+        upBtn.addEventListener('mouseup', () => beerbuddy.moveDirectionY = 0);
+        upBtn.addEventListener('mouseleave', () => beerbuddy.moveDirectionY = 0);
+    }
+    // Down button
+    if (downBtn) {
+        downBtn.addEventListener('touchstart', e => { beerbuddy.moveDirectionY = 1; e.preventDefault(); }, { passive: false });
+        downBtn.addEventListener('touchend', () => beerbuddy.moveDirectionY = 0);
+        downBtn.addEventListener('touchcancel', () => beerbuddy.moveDirectionY = 0);
+        downBtn.addEventListener('mousedown', () => beerbuddy.moveDirectionY = 1);
+        downBtn.addEventListener('mouseup', () => beerbuddy.moveDirectionY = 0);
+        downBtn.addEventListener('mouseleave', () => beerbuddy.moveDirectionY = 0);
+    }
+    if (gameArea) {
+        gameArea.addEventListener('click', () => {
+            if (beerbuddy.state === 'ready' || beerbuddy.state === 'finished') startBeerBuddyGame();
+        });
+        // Also support tap on mobile
+        gameArea.addEventListener('touchend', function(e) {
+            if (beerbuddy.state === 'ready' || beerbuddy.state === 'finished') {
+                startBeerBuddyGame();
+                e.preventDefault();
+            }
+        }, { passive: false });
+    }
+    // Make fridge tappable on mobile
+    if (fridge) {
+        fridge.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            // Trigger beer pickup if player is close
+            if (beerbuddy.state === 'playing' && beerbuddy.x < 30 && beerbuddy.beersCarrying < beerbuddy.maxBeers) {
+                pickupBeer();
+            }
+        }, { passive: false });
+    }
+}
+
+
+/**
+ * Prevents default touch behaviors on all game areas
+ * This stops scroll, zoom, and other unwanted gestures while playing
+ */
+function preventTouchDefaultOnGameAreas() {
+    const gameAreas = [
+        'parachuteArea',
+        'hakkenArea',
+        'grillArea',
+        'golfcarArea',
+        'beerbuddyArea',
+        'drivingrangeArea'
+    ];
+
+    gameAreas.forEach(function(areaId) {
+        const area = document.getElementById(areaId);
+        if (area) {
+            // Prevent all default touch behaviors
+            area.addEventListener('touchstart', function(e) {
+                // Allow the event but prevent default scroll/zoom
+                e.preventDefault();
+            }, { passive: false });
+
+            area.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+
+            // Double-tap zoom prevention
+            let lastTap = 0;
+            area.addEventListener('touchend', function(e) {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTap;
+                if (tapLength < 500 && tapLength > 0) {
+                    e.preventDefault();
+                }
+                lastTap = currentTime;
+            });
+        }
+    });
+
+    // Also prevent zoom on the entire games section
+    const gamesSection = document.querySelector('.games-section');
+    if (gamesSection) {
+        gamesSection.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+        gamesSection.addEventListener('gesturechange', function(e) {
+            e.preventDefault();
+        });
+        gamesSection.addEventListener('gestureend', function(e) {
+            e.preventDefault();
+        });
+    }
+}
+
+
+/* =============================================================================
+   14. DRIVING RANGE CHAOS GAME
+   =============================================================================
+
+   Hit golf balls at funny running targets on the driving range!
+
+   Controls:
+   - Click/tap and drag to aim
+   - Release to swing and hit the ball
+   - The further you drag, the more power
+
+   Goal:
+   - Hit as many running targets as possible before time/balls run out
+*/
+
+let drivingrange = {
+    state: 'ready',          // 'ready', 'playing', 'aiming', 'finished'
+    score: 0,
+    ballsRemaining: 20,
+    timeRemaining: 60,
+    combo: 1,
+    maxCombo: 1,
+    lastHitTime: 0,
+    comboTimeout: 2000,      // 2 seconds to keep combo
+    targets: [],
+    gameLoop: null,
+    timerInterval: null,
+    spawnInterval: null,
+    // Aiming state
+    isAiming: false,
+    aimStartX: 0,
+    aimStartY: 0,
+    aimCurrentX: 0,
+    aimCurrentY: 0,
+    power: 0
+};
+
+// Funny target types with different behaviors
+const targetTypes = [
+    { emoji: '🏃', name: 'Jogger', speed: 2, points: 1, size: 1, sound: 'Oef!' },
+    { emoji: '🚶', name: 'Wandelaar', speed: 1, points: 1, size: 1, sound: 'Hé!' },
+    { emoji: '🏃‍♂️', name: 'Sprinter', speed: 4, points: 3, size: 1, sound: 'Au!' },
+    { emoji: '🧘', name: 'Yogi', speed: 0.5, points: 2, size: 1.2, sound: 'Namaste... NOT!' },
+    { emoji: '💃', name: 'Danser', speed: 2, points: 2, size: 1, zigzag: true, sound: 'Olé!' },
+    { emoji: '🕺', name: 'Disco Dude', speed: 2.5, points: 2, size: 1, zigzag: true, sound: 'Groovy!' },
+    { emoji: '🧑‍🦽', name: 'Speeder', speed: 5, points: 5, size: 0.9, sound: 'Wheee!' },
+    { emoji: '🏄', name: 'Surfer Dude', speed: 3, points: 2, size: 1, sound: 'Cowabunga!' },
+    { emoji: '🤸', name: 'Gymnast', speed: 3, points: 3, size: 0.8, bouncy: true, sound: 'Tada!' },
+    { emoji: '🧟', name: 'Zombie', speed: 0.8, points: 1, size: 1.3, sound: 'Braaains...' },
+    { emoji: '🎅', name: 'Kerstman', speed: 1.5, points: 4, size: 1.4, sound: 'Ho ho OW!' },
+    { emoji: '👰', name: 'Bruid', speed: 2, points: 3, size: 1.1, sound: 'Mijn jurk!' },
+    { emoji: '🤵', name: 'Bruidegom', speed: 2.5, points: 2, size: 1, sound: 'Wacht op mij!' }
+];
+
+function startDrivingRangeGame() {
+    drivingrange.state = 'playing';
+    drivingrange.score = 0;
+    drivingrange.ballsRemaining = 20;
+    drivingrange.timeRemaining = 60;
+    drivingrange.combo = 1;
+    drivingrange.maxCombo = 1;
+    drivingrange.lastHitTime = 0;
+    drivingrange.targets = [];
+    drivingrange.isAiming = false;
+
+    // Reset UI
+    const scoreDisplay = document.getElementById('drivingScore');
+    const comboDisplay = document.getElementById('drivingCombo');
+    const ballsDisplay = document.getElementById('ballsRemaining');
+    const timerDisplay = document.getElementById('drivingTimer');
+    const statusDisplay = document.getElementById('drivingrangeStatus');
+    const resultDisplay = document.getElementById('drivingrangeResult');
+    const targetsContainer = document.getElementById('drivingrangeTargets');
+    const ballsContainer = document.getElementById('golfBallsContainer');
+    const hitEffects = document.getElementById('hitEffects');
+
+    if (scoreDisplay) scoreDisplay.textContent = '0';
+    if (comboDisplay) comboDisplay.textContent = 'x1';
+    if (ballsDisplay) ballsDisplay.textContent = '20';
+    if (timerDisplay) timerDisplay.textContent = '60';
+    if (statusDisplay) statusDisplay.style.display = 'none';
+    if (resultDisplay) resultDisplay.style.display = 'none';
+    if (targetsContainer) targetsContainer.innerHTML = '';
+    if (ballsContainer) ballsContainer.innerHTML = '';
+    if (hitEffects) hitEffects.innerHTML = '';
+
+    // Start spawning targets
+    spawnDrivingTarget();
+    drivingrange.spawnInterval = setInterval(spawnDrivingTarget, 1500);
+
+    // Start game loop
+    drivingRangeGameLoop();
+
+    // Start timer
+    drivingrange.timerInterval = setInterval(function() {
+        drivingrange.timeRemaining--;
+        if (timerDisplay) timerDisplay.textContent = drivingrange.timeRemaining;
+        if (drivingrange.timeRemaining <= 0) {
+            finishDrivingRangeGame();
+        }
+    }, 1000);
+}
+
+function spawnDrivingTarget() {
+    if (drivingrange.state !== 'playing') return;
+
+    const container = document.getElementById('drivingrangeTargets');
+    if (!container) return;
+
+    // Random target type
+    const type = targetTypes[Math.floor(Math.random() * targetTypes.length)];
+
+    // Random starting position (left or right side)
+    const fromLeft = Math.random() > 0.5;
+    const startX = fromLeft ? -10 : 110;
+    const targetX = fromLeft ? 110 : -10;
+    const yPos = 10 + Math.random() * 70; // Random Y position
+
+    const target = document.createElement('div');
+    target.className = 'driving-target';
+    target.setAttribute('data-speed', type.speed);
+    target.setAttribute('data-points', type.points);
+    target.setAttribute('data-direction', fromLeft ? 1 : -1);
+    target.setAttribute('data-sound', type.sound);
+    target.setAttribute('data-y', yPos);
+    if (type.zigzag) target.setAttribute('data-zigzag', 'true');
+    if (type.bouncy) target.setAttribute('data-bouncy', 'true');
+
+    target.style.cssText = `
+        position: absolute;
+        left: ${startX}%;
+        top: ${yPos}%;
+        font-size: ${2 * type.size}rem;
+        transform: translate(-50%, -50%) scaleX(${fromLeft ? 1 : -1});
+        transition: none;
+        cursor: crosshair;
+        z-index: 5;
+        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+    `;
+    target.innerHTML = `
+        <div class="target-emoji" style="animation: targetRun 0.3s steps(2) infinite;">${type.emoji}</div>
+        <div class="target-shadow" style="position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 20px; height: 6px; background: rgba(0,0,0,0.3); border-radius: 50%;"></div>
+    `;
+    container.appendChild(target);
+
+    // Store target data
+    drivingrange.targets.push({
+        element: target,
+        x: startX,
+        y: yPos,
+        targetX: targetX,
+        speed: type.speed,
+        points: type.points,
+        direction: fromLeft ? 1 : -1,
+        sound: type.sound,
+        zigzag: type.zigzag || false,
+        bouncy: type.bouncy || false,
+        zigzagPhase: 0
+    });
+}
+
+function drivingRangeGameLoop() {
+    if (drivingrange.state !== 'playing' && drivingrange.state !== 'aiming') return;
+
+    // Update combo timer
+    if (drivingrange.combo > 1 && Date.now() - drivingrange.lastHitTime > drivingrange.comboTimeout) {
+        drivingrange.combo = 1;
+        const comboDisplay = document.getElementById('drivingCombo');
+        if (comboDisplay) comboDisplay.textContent = 'x1';
+    }
+
+    // Move targets
+    drivingrange.targets.forEach((target, index) => {
+        // Base movement
+        target.x += target.speed * target.direction * 0.15;
+
+        // Zigzag movement
+        if (target.zigzag) {
+            target.zigzagPhase += 0.1;
+            target.y += Math.sin(target.zigzagPhase) * 0.5;
+        }
+
+        // Bouncy movement
+        if (target.bouncy) {
+            target.zigzagPhase += 0.15;
+            const bounce = Math.abs(Math.sin(target.zigzagPhase)) * 10;
+            target.element.style.transform = `translate(-50%, calc(-50% - ${bounce}px)) scaleX(${target.direction})`;
+        }
+
+        target.element.style.left = target.x + '%';
+        if (target.zigzag) {
+            target.element.style.top = target.y + '%';
+        }
+
+        // Remove if off screen
+        if (target.x < -15 || target.x > 115) {
+            target.element.remove();
+            drivingrange.targets.splice(index, 1);
+        }
+    });
+
+    drivingrange.gameLoop = requestAnimationFrame(drivingRangeGameLoop);
+}
+
+function hitGolfBall(power, aimX, aimY) {
+    if (drivingrange.ballsRemaining <= 0) return;
+
+    drivingrange.ballsRemaining--;
+    const ballsDisplay = document.getElementById('ballsRemaining');
+    if (ballsDisplay) ballsDisplay.textContent = drivingrange.ballsRemaining;
+
+    // Create golf ball
+    const container = document.getElementById('golfBallsContainer');
+    const gameArea = document.getElementById('drivingrangeArea');
+    if (!container || !gameArea) return;
+
+    const rect = gameArea.getBoundingClientRect();
+    const startX = 50; // Start from golfer position
+    const startY = 85;
+
+    // Calculate target based on aim
+    const targetXPercent = (aimX / rect.width) * 100;
+    const targetYPercent = (aimY / rect.height) * 100;
+
+    const ball = document.createElement('div');
+    ball.className = 'golf-ball';
+    ball.style.cssText = `
+        position: absolute;
+        left: ${startX}%;
+        top: ${startY}%;
+        width: 15px;
+        height: 15px;
+        background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        transition: none;
+    `;
+    container.appendChild(ball);
+
+    // Animate ball flight
+    const duration = 800 - (power * 3); // Faster with more power
+    let elapsed = 0;
+    const startTime = Date.now();
+
+    function animateBall() {
+        elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Parabolic arc
+        const currentX = startX + (targetXPercent - startX) * progress;
+        const arcHeight = power * 0.4 * Math.sin(progress * Math.PI);
+        const currentY = startY + (targetYPercent - startY) * progress - arcHeight;
+
+        ball.style.left = currentX + '%';
+        ball.style.top = currentY + '%';
+
+        // Scale ball (perspective effect)
+        const scale = 1 - (progress * 0.5) + (arcHeight * 0.01);
+        ball.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+        if (progress < 1) {
+            requestAnimationFrame(animateBall);
+        } else {
+            // Ball landed - check for hits
+            checkBallHit(currentX, currentY);
+            ball.remove();
+        }
+    }
+
+    animateBall();
+
+    // Check if out of balls
+    if (drivingrange.ballsRemaining <= 0) {
+        setTimeout(finishDrivingRangeGame, 1000);
+    }
+}
+
+function checkBallHit(ballX, ballY) {
+    let hitAny = false;
+
+    drivingrange.targets.forEach((target, index) => {
+        const dx = Math.abs(target.x - ballX);
+        const dy = Math.abs(target.y - (ballY - 40)); // Adjust for target zone
+
+        // Hit detection
+        if (dx < 12 && dy < 15) {
+            hitAny = true;
+
+            // Update combo
+            const now = Date.now();
+            if (now - drivingrange.lastHitTime < drivingrange.comboTimeout) {
+                drivingrange.combo = Math.min(drivingrange.combo + 1, 10);
+            } else {
+                drivingrange.combo = 1;
+            }
+            drivingrange.lastHitTime = now;
+            drivingrange.maxCombo = Math.max(drivingrange.maxCombo, drivingrange.combo);
+
+            // Calculate points
+            const points = target.points * drivingrange.combo;
+            drivingrange.score += points;
+
+            // Update displays
+            const scoreDisplay = document.getElementById('drivingScore');
+            const comboDisplay = document.getElementById('drivingCombo');
+            if (scoreDisplay) scoreDisplay.textContent = drivingrange.score;
+            if (comboDisplay) {
+                comboDisplay.textContent = 'x' + drivingrange.combo;
+                comboDisplay.style.animation = 'none';
+                comboDisplay.offsetHeight;
+                comboDisplay.style.animation = 'comboPulse 0.3s';
+            }
+
+            // Show hit effect
+            showDrivingHitEffect(target.x, target.y, target.sound, points);
+
+            // Remove target
+            target.element.remove();
+            drivingrange.targets.splice(index, 1);
+        }
+    });
+
+    if (!hitAny) {
+        // Miss effect
+        showDrivingMissEffect(ballX, ballY);
+    }
+}
+
+function showDrivingHitEffect(x, y, sound, points) {
+    const container = document.getElementById('hitEffects');
+    if (!container) return;
+
+    // Hit emoji burst
+    const effect = document.createElement('div');
+    effect.style.cssText = `
+        position: absolute;
+        left: ${x}%;
+        top: ${y + 20}%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        z-index: 30;
+        animation: hitBurst 0.8s ease-out forwards;
+        pointer-events: none;
+    `;
+    effect.innerHTML = `
+        <div style="color: #2ecc71; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">+${points}</div>
+        <div style="font-size: 0.8rem; color: #fff;">${sound}</div>
+    `;
+    container.appendChild(effect);
+
+    // Stars burst
+    for (let i = 0; i < 5; i++) {
+        const star = document.createElement('div');
+        const angle = (i / 5) * Math.PI * 2;
+        star.style.cssText = `
+            position: absolute;
+            left: ${x}%;
+            top: ${y + 20}%;
+            font-size: 1rem;
+            animation: starBurst 0.5s ease-out forwards;
+            --angle: ${angle}rad;
+            pointer-events: none;
+        `;
+        star.textContent = '⭐';
+        container.appendChild(star);
+        setTimeout(() => star.remove(), 500);
+    }
+
+    setTimeout(() => effect.remove(), 800);
+}
+
+function showDrivingMissEffect(x, y) {
+    const container = document.getElementById('hitEffects');
+    if (!container) return;
+
+    const effect = document.createElement('div');
+    effect.style.cssText = `
+        position: absolute;
+        left: ${x}%;
+        top: ${y}%;
+        transform: translate(-50%, -50%);
+        font-size: 1.2rem;
+        color: #e74c3c;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        animation: floatUp 0.6s ease-out forwards;
+        pointer-events: none;
+        z-index: 30;
+    `;
+    effect.textContent = 'Mis!';
+    container.appendChild(effect);
+    setTimeout(() => effect.remove(), 600);
+}
+
+function finishDrivingRangeGame() {
+    drivingrange.state = 'finished';
+    if (drivingrange.gameLoop) cancelAnimationFrame(drivingrange.gameLoop);
+    if (drivingrange.timerInterval) clearInterval(drivingrange.timerInterval);
+    if (drivingrange.spawnInterval) clearInterval(drivingrange.spawnInterval);
+
+    let rating, message;
+    if (drivingrange.score >= 100) {
+        rating = '🏆 GOLF LEGENDE!';
+        message = 'Tiger Woods belt je zo!';
+    } else if (drivingrange.score >= 70) {
+        rating = '🥇 Pro Golfer!';
+        message = 'Klaar voor de PGA Tour!';
+    } else if (drivingrange.score >= 45) {
+        rating = '🎯 Sharpshooter!';
+        message = 'Niet slecht, niet slecht!';
+    } else if (drivingrange.score >= 25) {
+        rating = '👍 Goed bezig!';
+        message = 'Blijf oefenen!';
+    } else if (drivingrange.score >= 10) {
+        rating = '😅 Beginner';
+        message = 'De poppetjes lachen je uit...';
+    } else {
+        rating = '🙈 Brildrager?';
+        message = 'Heb je de ballen wel geraakt?';
+    }
+
+    const resultDisplay = document.getElementById('drivingrangeResult');
+    const resultTitle = document.getElementById('drivingResultTitle');
+    const finalScore = document.getElementById('drivingFinalScore');
+    const maxCombo = document.getElementById('drivingMaxCombo');
+    const rankDisplay = document.getElementById('drivingRank');
+
+    if (resultDisplay) resultDisplay.style.display = 'block';
+    if (resultTitle) resultTitle.textContent = rating;
+    if (finalScore) finalScore.textContent = drivingrange.score;
+    if (maxCombo) maxCombo.textContent = 'x' + drivingrange.maxCombo;
+    if (rankDisplay) rankDisplay.textContent = message;
+}
+
+function setupDrivingRangeMobileControls() {
+    const gameArea = document.getElementById('drivingrangeArea');
+    if (!gameArea) return;
+
+    // Tap to start
+    gameArea.addEventListener('click', function(e) {
+        if (drivingrange.state === 'ready' || drivingrange.state === 'finished') {
+            startDrivingRangeGame();
+            return;
+        }
+    });
+
+    // Mouse controls
+    gameArea.addEventListener('mousedown', function(e) {
+        if (drivingrange.state !== 'playing') return;
+        startAiming(e.clientX, e.clientY);
+    });
+
+    gameArea.addEventListener('mousemove', function(e) {
+        if (drivingrange.isAiming) {
+            updateAiming(e.clientX, e.clientY);
+        }
+    });
+
+    gameArea.addEventListener('mouseup', function(e) {
+        if (drivingrange.isAiming) {
+            releaseShot(e.clientX, e.clientY);
+        }
+    });
+
+    gameArea.addEventListener('mouseleave', function() {
+        if (drivingrange.isAiming) {
+            cancelAiming();
+        }
+    });
+
+    // Touch controls
+    gameArea.addEventListener('touchstart', function(e) {
+        if (drivingrange.state === 'ready' || drivingrange.state === 'finished') {
+            startDrivingRangeGame();
+            e.preventDefault();
+            return;
+        }
+        if (drivingrange.state !== 'playing') return;
+        const touch = e.touches[0];
+        startAiming(touch.clientX, touch.clientY);
+        e.preventDefault();
+    }, { passive: false });
+
+    gameArea.addEventListener('touchmove', function(e) {
+        if (drivingrange.isAiming) {
+            const touch = e.touches[0];
+            updateAiming(touch.clientX, touch.clientY);
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    gameArea.addEventListener('touchend', function(e) {
+        if (drivingrange.isAiming) {
+            const touch = e.changedTouches[0];
+            releaseShot(touch.clientX, touch.clientY);
+            e.preventDefault();
+        }
+    }, { passive: false });
+}
+
+function startAiming(x, y) {
+    drivingrange.isAiming = true;
+    drivingrange.state = 'aiming';
+    drivingrange.aimStartX = x;
+    drivingrange.aimStartY = y;
+    drivingrange.aimCurrentX = x;
+    drivingrange.aimCurrentY = y;
+
+    const aimIndicator = document.getElementById('aimIndicator');
+    const aimLine = document.getElementById('aimLine');
+    if (aimIndicator) aimIndicator.style.display = 'block';
+    if (aimLine) aimLine.style.display = 'block';
+}
+
+function updateAiming(x, y) {
+    drivingrange.aimCurrentX = x;
+    drivingrange.aimCurrentY = y;
+
+    const gameArea = document.getElementById('drivingrangeArea');
+    const aimLine = document.getElementById('aimLine');
+    const powerLevel = document.getElementById('powerLevel');
+
+    if (!gameArea) return;
+    const rect = gameArea.getBoundingClientRect();
+
+    // Calculate power based on drag distance
+    const dx = drivingrange.aimStartX - x;
+    const dy = drivingrange.aimStartY - y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    drivingrange.power = Math.min(distance, 150);
+
+    // Update power indicator
+    if (powerLevel) {
+        const powerPercent = (drivingrange.power / 150) * 100;
+        powerLevel.style.left = `calc(${powerPercent}% - 10px)`;
+    }
+
+    // Update aim line
+    if (aimLine) {
+        const startXPercent = 50;
+        const startYPercent = 85;
+        // Aim in opposite direction of drag
+        const aimXPercent = startXPercent + (dx / rect.width) * 100;
+        const aimYPercent = startYPercent + (dy / rect.height) * 100;
+
+        aimLine.innerHTML = `
+            <line x1="${startXPercent}%" y1="${startYPercent}%" x2="${aimXPercent}%" y2="${aimYPercent}%"
+                  stroke="#fff" stroke-width="2" stroke-dasharray="5,5" opacity="0.7"/>
+            <circle cx="${aimXPercent}%" cy="${aimYPercent}%" r="15" fill="none" stroke="#e74c3c" stroke-width="2" opacity="0.8"/>
+            <circle cx="${aimXPercent}%" cy="${aimYPercent}%" r="5" fill="#e74c3c" opacity="0.8"/>
+        `;
+    }
+}
+
+function releaseShot(x, y) {
+    if (drivingrange.ballsRemaining <= 0) {
+        cancelAiming();
+        return;
+    }
+
+    const gameArea = document.getElementById('drivingrangeArea');
+    if (!gameArea) return;
+    const rect = gameArea.getBoundingClientRect();
+
+    // Calculate aim direction (opposite of drag)
+    const dx = drivingrange.aimStartX - x;
+    const dy = drivingrange.aimStartY - y;
+
+    // Target position
+    const startXPercent = 50;
+    const startYPercent = 85;
+    const aimX = (startXPercent / 100) * rect.width + dx;
+    const aimY = (startYPercent / 100) * rect.height + dy;
+
+    // Minimum power check
+    if (drivingrange.power > 20) {
+        hitGolfBall(drivingrange.power, aimX, aimY);
+    }
+
+    cancelAiming();
+    drivingrange.state = 'playing';
+}
+
+function cancelAiming() {
+    drivingrange.isAiming = false;
+    drivingrange.power = 0;
+
+    const aimIndicator = document.getElementById('aimIndicator');
+    const aimLine = document.getElementById('aimLine');
+    const powerLevel = document.getElementById('powerLevel');
+
+    if (aimIndicator) aimIndicator.style.display = 'none';
+    if (aimLine) aimLine.style.display = 'none';
+    if (powerLevel) powerLevel.style.left = '0';
 }
 
 
@@ -1563,13 +3131,13 @@ function setupHakkenMobileControls() {
 */
 
 // Make functions globally available
-window.setTarget = setTarget;
-window.handleClick = handleSteakClick;
-window.resetGame = resetSteakGame;
 window.toggleMusic = toggleMusic;
 
-// New game functions
+// Game functions
 window.switchGame = switchGame;
 window.resetParachuteGame = resetParachuteGame;
 window.hakkenHit = hakkenHit;
 window.toggleHakken = toggleHakken;
+window.startGolfcarGame = startGolfcarGame;
+window.startBeerBuddyGame = startBeerBuddyGame;
+window.startDrivingRangeGame = startDrivingRangeGame;

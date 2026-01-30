@@ -492,7 +492,7 @@
          MINIGAMES SECTION
          =========================================================================
          Interactive minigames with tab selection.
-         Three games: BBQ Steak, Paars Parachuteren, Hakken
+         Games: Paars Parachuteren, Hakken, Golfcarmageddon, Exoskeleton Beer Buddy, Driving Range Chaos
          The game logic is in js/main.js
     -->
     <section class="venues-section minigames-section" style="padding: 100px 5%; background: linear-gradient(180deg, #1a0a0a 0%, #0a0a0a 100%);">
@@ -501,98 +501,34 @@
 
         <!-- Game Tab Selector -->
         <div class="game-tabs" style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 40px; max-width: 800px; margin-left: auto; margin-right: auto;">
-            <button class="game-tab active" data-game="steak" onclick="switchGame('steak')">
-                <span class="tab-icon">🥩</span>
-                <span class="tab-text">BBQ Master</span>
-            </button>
-            <button class="game-tab" data-game="parachute" onclick="switchGame('parachute')">
+            <button class="game-tab active" data-game="parachute" onclick="switchGame('parachute')">
                 <span class="tab-icon">🪂</span>
                 <span class="tab-text">Paars Parachuteren</span>
             </button>
             <button class="game-tab" data-game="hakken" onclick="switchGame('hakken')">
                 <span class="tab-icon">🕺</span>
-                <span class="tab-text">Hakken</span>
+                <span class="tab-text">Hakken met Pascal</span>
+            </button>
+            <button class="game-tab" data-game="golfcar" onclick="switchGame('golfcar')">
+                <span class="tab-icon">🏎️</span>
+                <span class="tab-text">Golfcarmageddon</span>
+            </button>
+            <button class="game-tab" data-game="beerbuddy" onclick="switchGame('beerbuddy')">
+                <span class="tab-icon">🤖</span>
+                <span class="tab-text">Exoskeleton Beer Buddy</span>
+            </button>
+            <button class="game-tab" data-game="drivingrange" onclick="switchGame('drivingrange')">
+                <span class="tab-icon">🏌️</span>
+                <span class="tab-text">Driving Range Chaos</span>
             </button>
         </div>
 
         <!-- =====================================================================
-             GAME 1: BBQ STEAK MASTER
-             =====================================================================
-        -->
-        <div id="steakGame" class="game-container active" style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <h3 style="color: #f4d03f; margin-bottom: 10px; font-size: 1.5rem;">🥩 BBQ Master Challenge</h3>
-            <p style="color: #888; margin-bottom: 30px;">Bereid de perfecte sappige steak! Klik om te flippen.</p>
-
-            <!-- Doneness target selection buttons -->
-            <div style="margin-bottom: 30px;">
-                <p style="color: #f4d03f; margin-bottom: 15px; font-weight: bold;">Kies je gewenste gaarheid:</p>
-                <div id="targetButtons" style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
-                    <button onclick="setTarget('rare')" class="doneness-btn" data-level="rare" style="padding: 10px 20px; border: 2px solid #e74c3c; background: transparent; color: #e74c3c; border-radius: 25px; cursor: pointer; transition: all 0.3s;">Rare</button>
-                    <button onclick="setTarget('medium-rare')" class="doneness-btn" data-level="medium-rare" style="padding: 10px 20px; border: 2px solid #e67e22; background: transparent; color: #e67e22; border-radius: 25px; cursor: pointer; transition: all 0.3s;">Medium Rare</button>
-                    <button onclick="setTarget('medium')" class="doneness-btn" data-level="medium" style="padding: 10px 20px; border: 2px solid #f4d03f; background: #f4d03f; color: #000; border-radius: 25px; cursor: pointer; transition: all 0.3s;">Medium</button>
-                    <button onclick="setTarget('well-done')" class="doneness-btn" data-level="well-done" style="padding: 10px 20px; border: 2px solid #8b4513; background: transparent; color: #8b4513; border-radius: 25px; cursor: pointer; transition: all 0.3s;">Well Done</button>
-                </div>
-            </div>
-
-            <!-- The grill area -->
-            <div id="grillArea" style="position: relative; width: 100%; height: 350px; background: linear-gradient(180deg, #2d2d2d 0%, #1a1a1a 100%); border-radius: 20px; overflow: hidden; cursor: pointer; border: 3px solid #444;">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; height: 60%;">
-                    <div style="display: flex; flex-direction: column; gap: 15px; height: 100%; justify-content: center;">
-                        <div style="height: 4px; background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%); border-radius: 2px;"></div>
-                        <div style="height: 4px; background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%); border-radius: 2px;"></div>
-                        <div style="height: 4px; background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%); border-radius: 2px;"></div>
-                        <div style="height: 4px; background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%); border-radius: 2px;"></div>
-                        <div style="height: 4px; background: linear-gradient(90deg, #333 0%, #555 50%, #333 100%); border-radius: 2px;"></div>
-                    </div>
-                </div>
-                <div id="flames" style="position: absolute; bottom: 0; left: 0; right: 0; height: 60px; display: none;">
-                    <div style="position: absolute; bottom: 0; left: 20%; width: 30px; height: 50px; background: linear-gradient(0deg, #ff6b35, #f7c59f, transparent); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation: flicker 0.5s infinite alternate;"></div>
-                    <div style="position: absolute; bottom: 0; left: 40%; width: 25px; height: 40px; background: linear-gradient(0deg, #ff6b35, #f7c59f, transparent); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation: flicker 0.3s infinite alternate;"></div>
-                    <div style="position: absolute; bottom: 0; left: 55%; width: 35px; height: 55px; background: linear-gradient(0deg, #ff6b35, #f7c59f, transparent); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation: flicker 0.4s infinite alternate;"></div>
-                    <div style="position: absolute; bottom: 0; left: 75%; width: 28px; height: 45px; background: linear-gradient(0deg, #ff6b35, #f7c59f, transparent); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; animation: flicker 0.35s infinite alternate;"></div>
-                </div>
-                <div id="steak" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 150px; height: 100px; transition: all 0.3s ease;">
-                    <svg viewBox="0 0 150 100" style="width: 100%; height: 100%; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
-                        <ellipse id="steakShape" cx="75" cy="50" rx="70" ry="45" fill="#dc143c"/>
-                        <ellipse cx="75" cy="50" rx="55" ry="35" fill="none" stroke="#8b0000" stroke-width="2" opacity="0.5"/>
-                        <path d="M40,40 Q55,35 70,42 Q85,38 100,45" fill="none" stroke="#fff" stroke-width="3" opacity="0.4"/>
-                        <path d="M45,55 Q60,60 80,52 Q95,58 105,55" fill="none" stroke="#fff" stroke-width="2" opacity="0.3"/>
-                    </svg>
-                </div>
-                <div id="gameStatus" style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); color: #f4d03f; font-size: 1.2rem; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Klik om te starten!</div>
-                <div id="cookTimer" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: #fff; font-size: 2rem; font-weight: bold; font-family: monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); display: none;">0.0s</div>
-                <div id="flipIndicator" style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%); color: #f4d03f; font-size: 2rem; display: none; animation: pulse 1s infinite;">🔄</div>
-            </div>
-
-            <!-- Doneness meter -->
-            <div style="margin-top: 30px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem;">
-                    <span style="color: #e74c3c;">Raw</span>
-                    <span style="color: #e74c3c;">Rare</span>
-                    <span style="color: #e67e22;">Med-Rare</span>
-                    <span style="color: #f4d03f;">Medium</span>
-                    <span style="color: #8b4513;">Well</span>
-                    <span style="color: #333;">Burnt</span>
-                </div>
-                <div style="height: 20px; background: linear-gradient(90deg, #ff0000 0%, #e74c3c 20%, #e67e22 40%, #f4d03f 55%, #8b4513 75%, #222 100%); border-radius: 10px; position: relative;">
-                    <div id="targetMarker" style="position: absolute; top: -8px; width: 4px; height: 36px; background: #fff; border-radius: 2px; left: 55%; transition: left 0.3s;"></div>
-                    <div id="currentMarker" style="position: absolute; top: -5px; width: 10px; height: 30px; background: transparent; border: 3px solid #f4d03f; border-radius: 5px; left: 0%; transition: left 0.1s; display: none;"></div>
-                </div>
-            </div>
-
-            <div id="scoreDisplay" style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; display: none;">
-                <h3 id="scoreTitle" style="color: #f4d03f; margin-bottom: 10px;">🎉 Perfect!</h3>
-                <p id="scoreText" style="color: #aaa;">Je hebt een perfecte medium steak gebakken!</p>
-                <button onclick="resetGame()" style="margin-top: 15px; padding: 12px 30px; background: #f4d03f; color: #000; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; transition: transform 0.2s;">🔄 Opnieuw</button>
-            </div>
-        </div>
-
-        <!-- =====================================================================
-             GAME 2: PAARS PARACHUTEREN
+             GAME 1: PAARS PARACHUTEREN
              =====================================================================
              Land the purple ballsack parachute on the Marbella villa!
         -->
-        <div id="parachuteGame" class="game-container" style="max-width: 600px; margin: 0 auto; text-align: center; display: none;">
+        <div id="parachuteGame" class="game-container active" style="max-width: 600px; margin: 0 auto; text-align: center;">
             <h3 style="color: #9b59b6; margin-bottom: 10px; font-size: 1.5rem;">🪂 Paars Parachuteren</h3>
             <p style="color: #888; margin-bottom: 30px;">Land met je paarse parachute op de villa! Gebruik ← → pijltjes of tik links/rechts.</p>
 
@@ -891,6 +827,347 @@
 
             <p style="color: #666; margin-top: 15px; font-size: 0.85rem;">Pro tip: Gebruik je toetsenbord (A S D F) voor de beste ervaring!</p>
         </div>
+
+        <!-- =====================================================================
+             GAME 4: GOLFCARMAGEDDON
+             =====================================================================
+             Drive a golf cart and run over as many people as possible!
+        -->
+        <div id="golfcarGame" class="game-container" style="max-width: 600px; margin: 0 auto; text-align: center; display: none;">
+            <h3 style="color: #2ecc71; margin-bottom: 10px; font-size: 1.5rem;">🏎️ Golfcarmageddon</h3>
+            <p style="color: #888; margin-bottom: 30px;">Rijd zoveel mogelijk mannetjes aan! Gebruik ← → ↑ ↓ of tik om te sturen.</p>
+
+            <!-- Game area -->
+            <div id="golfcarArea" style="position: relative; width: 100%; height: 450px; border-radius: 20px; overflow: hidden; border: 3px solid #2ecc71; background: linear-gradient(180deg, #228B22 0%, #32CD32 50%, #228B22 100%);" tabindex="0">
+
+                <!-- Golf course grass pattern -->
+                <div style="position: absolute; inset: 0; opacity: 0.3;">
+                    <div style="position: absolute; top: 0; left: 10%; width: 2px; height: 100%; background: #1a5f1a;"></div>
+                    <div style="position: absolute; top: 0; left: 30%; width: 2px; height: 100%; background: #1a5f1a;"></div>
+                    <div style="position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: #1a5f1a;"></div>
+                    <div style="position: absolute; top: 0; left: 70%; width: 2px; height: 100%; background: #1a5f1a;"></div>
+                    <div style="position: absolute; top: 0; left: 90%; width: 2px; height: 100%; background: #1a5f1a;"></div>
+                </div>
+
+                <!-- Sand bunkers -->
+                <div style="position: absolute; top: 20%; left: 10%; width: 60px; height: 40px; background: #f4d03f; border-radius: 50%; opacity: 0.6;"></div>
+                <div style="position: absolute; top: 60%; right: 15%; width: 80px; height: 50px; background: #f4d03f; border-radius: 50%; opacity: 0.6;"></div>
+                <div style="position: absolute; bottom: 15%; left: 30%; width: 50px; height: 35px; background: #f4d03f; border-radius: 50%; opacity: 0.6;"></div>
+
+                <!-- Water hazard -->
+                <div style="position: absolute; top: 35%; right: 5%; width: 70px; height: 100px; background: linear-gradient(180deg, #1e90ff, #4169e1); border-radius: 40%; opacity: 0.7;"></div>
+
+                <!-- Trees -->
+                <div style="position: absolute; top: 10%; left: 5%; font-size: 2rem;">🌳</div>
+                <div style="position: absolute; top: 5%; right: 20%; font-size: 1.5rem;">🌲</div>
+                <div style="position: absolute; bottom: 10%; right: 8%; font-size: 2rem;">🌳</div>
+                <div style="position: absolute; bottom: 20%; left: 8%; font-size: 1.8rem;">🌲</div>
+
+                <!-- Golf cart (player) -->
+                <div id="golfCart" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); transition: none; z-index: 10;">
+                    <svg viewBox="0 0 50 35" width="60" height="42">
+                        <!-- Cart body -->
+                        <rect x="5" y="10" width="40" height="18" rx="3" fill="#fff" stroke="#333" stroke-width="2"/>
+                        <!-- Roof -->
+                        <rect x="8" y="2" width="25" height="10" rx="2" fill="#2ecc71"/>
+                        <line x1="10" y1="12" x2="10" y2="2" stroke="#333" stroke-width="2"/>
+                        <line x1="30" y1="12" x2="30" y2="2" stroke="#333" stroke-width="2"/>
+                        <!-- Wheels -->
+                        <circle cx="12" cy="28" r="5" fill="#333"/>
+                        <circle cx="38" cy="28" r="5" fill="#333"/>
+                        <circle cx="12" cy="28" r="2" fill="#666"/>
+                        <circle cx="38" cy="28" r="2" fill="#666"/>
+                        <!-- Seat -->
+                        <rect x="15" y="14" width="20" height="8" rx="2" fill="#8B4513"/>
+                        <!-- Steering wheel -->
+                        <circle cx="35" cy="16" r="3" fill="none" stroke="#333" stroke-width="1.5"/>
+                    </svg>
+                </div>
+
+                <!-- Container for spawned people -->
+                <div id="peopleContainer" style="position: absolute; inset: 0; pointer-events: none;"></div>
+
+                <!-- Score display -->
+                <div style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: #2ecc71; font-size: 1rem; font-weight: bold;">
+                    💀 Hits: <span id="golfcarScore">0</span>
+                </div>
+
+                <!-- Timer -->
+                <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: #fff; font-size: 1rem; font-weight: bold;">
+                    ⏱️ <span id="golfcarTimer">30</span>s
+                </div>
+
+                <!-- Speed indicator -->
+                <div style="position: absolute; bottom: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: #f4d03f; font-size: 0.9rem;">
+                    🚗 Speed: <span id="golfcarSpeed">0</span>
+                </div>
+
+                <!-- Game status overlay -->
+                <div id="golfcarStatus" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.5rem; font-weight: bold; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); text-align: center; background: rgba(0,0,0,0.7); padding: 20px 40px; border-radius: 15px;">
+                    Klik om te starten!
+                </div>
+
+                <!-- Result overlay -->
+                <div id="golfcarResult" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 30px 50px; border-radius: 20px; text-align: center; border: 3px solid #2ecc71; z-index: 100;">
+                    <h3 id="golfcarResultTitle" style="color: #2ecc71; font-size: 1.8rem; margin-bottom: 15px;">🏆 Game Over!</h3>
+                    <p id="golfcarResultText" style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">Je hebt <span id="golfcarFinalScore">0</span> mensen aangereden!</p>
+                    <p id="golfcarRank" style="color: #f4d03f; font-size: 1rem; margin-bottom: 20px;"></p>
+                    <button onclick="startGolfcarGame()" style="padding: 12px 30px; background: #2ecc71; color: #fff; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1rem;">🔄 Opnieuw</button>
+                </div>
+            </div>
+
+            <!-- Mobile controls -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px;">
+                <button id="golfcarUpBtn" style="width: 60px; height: 60px; font-size: 1.5rem; background: rgba(46,204,113,0.3); border: 3px solid #2ecc71; border-radius: 50%; color: #2ecc71; cursor: pointer; touch-action: manipulation;">↑</button>
+                <div style="display: flex; gap: 60px;">
+                    <button id="golfcarLeftBtn" style="width: 60px; height: 60px; font-size: 1.5rem; background: rgba(46,204,113,0.3); border: 3px solid #2ecc71; border-radius: 50%; color: #2ecc71; cursor: pointer; touch-action: manipulation;">←</button>
+                    <button id="golfcarRightBtn" style="width: 60px; height: 60px; font-size: 1.5rem; background: rgba(46,204,113,0.3); border: 3px solid #2ecc71; border-radius: 50%; color: #2ecc71; cursor: pointer; touch-action: manipulation;">→</button>
+                </div>
+                <button id="golfcarDownBtn" style="width: 60px; height: 60px; font-size: 1.5rem; background: rgba(46,204,113,0.3); border: 3px solid #2ecc71; border-radius: 50%; color: #2ecc71; cursor: pointer; touch-action: manipulation;">↓</button>
+            </div>
+
+            <p style="color: #666; margin-top: 15px; font-size: 0.85rem;">Pro tip: Gebruik pijltjestoetsen voor sneller rijden!</p>
+        </div>
+
+        <!-- =====================================================================
+             GAME 5: EXOSKELETON BEER BUDDY
+             =====================================================================
+             Wear an exoskeleton and deliver beers to your friends at the villa!
+        -->
+        <div id="beerbuddyGame" class="game-container" style="max-width: 600px; margin: 0 auto; text-align: center; display: none;">
+            <h3 style="color: #f39c12; margin-bottom: 10px; font-size: 1.5rem;">🤖 Exoskeleton Beer Buddy</h3>
+            <p style="color: #888; margin-bottom: 30px;">Loop met ← → ↑ ↓ of WASD. Lever snel voor COMBO's! ⚡ Pak power-ups!</p>
+
+            <!-- Game area -->
+            <div id="beerbuddyArea" style="position: relative; width: 100%; height: 450px; border-radius: 20px; overflow: hidden; border: 3px solid #f39c12; background: linear-gradient(180deg, #87ceeb 0%, #98d8c8 30%, #7ec850 100%);" tabindex="0">
+
+                <!-- Villa pool background -->
+                <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 150px; background: linear-gradient(180deg, #c4a777 0%, #a08060 100%); border-top: 3px solid #8B4513;">
+                    <!-- Pool -->
+                    <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 200px; height: 80px; background: linear-gradient(180deg, #4fc3f7 0%, #0288d1 100%); border-radius: 20px; border: 3px solid #01579b;"></div>
+                </div>
+
+                <!-- Friends waiting for beer (targets) -->
+                <div id="beerFriends" style="position: absolute; inset: 0; pointer-events: none;">
+                    <!-- Friends will be spawned here -->
+                </div>
+
+                <!-- Exoskeleton player -->
+                <div id="exoPlayer" style="position: absolute; top: 85%; left: 15%; transform: translate(-50%, -50%); z-index: 10;">
+                    <div style="position: relative; width: 80px; height: 120px;">
+                        <!-- Exoskeleton body -->
+                        <svg viewBox="0 0 80 120" width="80" height="120">
+                            <!-- Legs (mechanical) -->
+                            <rect x="20" y="70" width="12" height="45" fill="#555" rx="3"/>
+                            <rect x="48" y="70" width="12" height="45" fill="#555" rx="3"/>
+                            <!-- Knee joints -->
+                            <circle cx="26" cy="90" r="5" fill="#f39c12"/>
+                            <circle cx="54" cy="90" r="5" fill="#f39c12"/>
+                            <!-- Feet -->
+                            <rect x="15" y="112" width="22" height="8" fill="#333" rx="2"/>
+                            <rect x="43" y="112" width="22" height="8" fill="#333" rx="2"/>
+                            <!-- Body/torso (mechanical frame) -->
+                            <rect x="15" y="35" width="50" height="40" fill="#444" rx="5"/>
+                            <!-- Chest plate -->
+                            <rect x="20" y="40" width="40" height="30" fill="#666" rx="3"/>
+                            <!-- Power core -->
+                            <circle cx="40" cy="55" r="8" fill="#f39c12"/>
+                            <circle cx="40" cy="55" r="4" fill="#fff" opacity="0.5"/>
+                            <!-- Arms (mechanical) -->
+                            <rect x="5" y="40" width="10" height="35" fill="#555" rx="3"/>
+                            <rect x="65" y="40" width="10" height="35" fill="#555" rx="3"/>
+                            <!-- Shoulder joints -->
+                            <circle cx="15" cy="40" r="6" fill="#f39c12"/>
+                            <circle cx="65" cy="40" r="6" fill="#f39c12"/>
+                            <!-- Head (person inside) -->
+                            <circle cx="40" cy="22" r="15" fill="#f4d03f"/>
+                            <!-- Helmet -->
+                            <path d="M25,22 Q25,8 40,8 Q55,8 55,22" fill="#666" stroke="#f39c12" stroke-width="2"/>
+                            <!-- Visor -->
+                            <rect x="30" y="15" width="20" height="8" fill="#3498db" rx="2" opacity="0.8"/>
+                            <!-- Eyes behind visor -->
+                            <circle cx="35" cy="19" r="2" fill="#000"/>
+                            <circle cx="45" cy="19" r="2" fill="#000"/>
+                        </svg>
+                        <!-- Beer tray on arms -->
+                        <div id="beerTray" style="position: absolute; top: 35px; left: -20px; width: 120px; height: 30px; display: flex; justify-content: center; gap: 5px;">
+                            <!-- Beers will be shown here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tilt meter -->
+                <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px;">
+                    <div style="background: rgba(0,0,0,0.5); border-radius: 10px; padding: 10px;">
+                        <div style="color: #fff; font-size: 0.8rem; text-align: center; margin-bottom: 5px;">⚖️ BALANS</div>
+                        <div style="position: relative; height: 20px; background: linear-gradient(90deg, #e74c3c, #f4d03f 40%, #2ecc71 50%, #f4d03f 60%, #e74c3c); border-radius: 10px;">
+                            <div id="tiltIndicator" style="position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 10px; height: 30px; background: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: left 0.1s;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Score -->
+                <div style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: #f39c12; font-size: 1rem; font-weight: bold;">
+                    🍺 Score: <span id="beerScore">0</span>
+                </div>
+
+                <!-- Combo display -->
+                <div id="beerCombo" style="display: none;">🔥 COMBO x1</div>
+
+                <!-- Beers remaining -->
+                <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: #3498db; font-size: 1rem; font-weight: bold;">
+                    🍺 Draagt: <span id="beersCarrying">0</span>/4
+                </div>
+
+                <!-- Timer -->
+                <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: #fff; font-size: 1rem; font-weight: bold;">
+                    ⏱️ <span id="beerTimer">45</span>s
+                </div>
+
+                <!-- Game status -->
+                <div id="beerbuddyStatus" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 1.3rem; font-weight: bold; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); text-align: center; background: rgba(0,0,0,0.8); padding: 25px 35px; border-radius: 15px; border: 2px solid #f39c12;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🤖🍺</div>
+                    <div>Lever snel bier voor COMBOS!</div>
+                    <div style="font-size: 0.9rem; color: #f39c12; margin-top: 8px;">⚡ Pak power-ups voor TURBO!</div>
+                    <div style="font-size: 0.85rem; color: #aaa; margin-top: 10px;">Tik om te starten</div>
+                </div>
+
+                <!-- Result overlay -->
+                <div id="beerbuddyResult" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 30px 50px; border-radius: 20px; text-align: center; border: 3px solid #f39c12; z-index: 100;">
+                    <h3 id="beerbuddyResultTitle" style="color: #f39c12; font-size: 1.8rem; margin-bottom: 15px;">🏆 Tijd om!</h3>
+                    <p style="color: #fff; font-size: 1.2rem; margin-bottom: 10px;">Je bezorgde <span id="beerFinalScore">0</span> 🍺!</p>
+                    <p id="beerRank" style="color: #f4d03f; font-size: 1rem; margin-bottom: 20px;"></p>
+                    <button onclick="startBeerBuddyGame()" style="padding: 12px 30px; background: #f39c12; color: #fff; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1rem;">🔄 Opnieuw</button>
+                </div>
+
+                <!-- Fridge (beer pickup point) -->
+                <div id="beerFridge" style="position: absolute; bottom: 160px; left: 20px; font-size: 2.5rem; cursor: pointer;">
+                    🧊
+                    <div style="position: absolute; top: -25px; left: 50%; transform: translateX(-50%); background: #2ecc71; color: #fff; padding: 3px 8px; border-radius: 10px; font-size: 0.7rem; white-space: nowrap;">BIER HIER!</div>
+                </div>
+            </div>
+
+            <!-- Mobile controls - D-pad style -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 20px;">
+                <button id="beerUpBtn" style="width: 70px; height: 70px; font-size: 2rem; background: rgba(243,156,18,0.3); border: 3px solid #f39c12; border-radius: 50%; color: #f39c12; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;">↑</button>
+                <div style="display: flex; gap: 50px;">
+                    <button id="beerLeftBtn" style="width: 70px; height: 70px; font-size: 2rem; background: rgba(243,156,18,0.3); border: 3px solid #f39c12; border-radius: 50%; color: #f39c12; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;">←</button>
+                    <button id="beerRightBtn" style="width: 70px; height: 70px; font-size: 2rem; background: rgba(243,156,18,0.3); border: 3px solid #f39c12; border-radius: 50%; color: #f39c12; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;">→</button>
+                </div>
+                <button id="beerDownBtn" style="width: 70px; height: 70px; font-size: 2rem; background: rgba(243,156,18,0.3); border: 3px solid #f39c12; border-radius: 50%; color: #f39c12; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;">↓</button>
+            </div>
+
+            <p style="color: #666; margin-top: 15px; font-size: 0.85rem;">🧊 Pak bier linksonder → Loop naar vrienden → COMBO voor punten! ⚡ Power-ups!</p>
+        </div>
+
+        <!-- =====================================================================
+             GAME 6: DRIVING RANGE CHAOS
+             =====================================================================
+             Hit golf balls at funny running targets on the driving range!
+        -->
+        <div id="drivingrangeGame" class="game-container" style="max-width: 700px; margin: 0 auto; text-align: center; display: none;">
+            <h3 style="color: #2ecc71; margin-bottom: 10px; font-size: 1.5rem;">🏌️ Driving Range Chaos</h3>
+            <p style="color: #888; margin-bottom: 20px;">Mik op de wegrennende poppetjes! Richt met de muis/vinger, sleep voor power!</p>
+
+            <!-- Game area -->
+            <div id="drivingrangeArea" style="position: relative; width: 100%; height: 500px; border-radius: 20px; overflow: hidden; border: 3px solid #2ecc71; background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 40%, #228B22 40%, #32CD32 60%, #228B22 100%); cursor: crosshair;" tabindex="0">
+
+                <!-- Sky with clouds -->
+                <div style="position: absolute; top: 5%; left: 10%; font-size: 2rem; opacity: 0.7; animation: cloudFloat 20s linear infinite;">☁️</div>
+                <div style="position: absolute; top: 15%; left: 60%; font-size: 1.5rem; opacity: 0.5; animation: cloudFloat 25s linear infinite reverse;">☁️</div>
+                <div style="position: absolute; top: 8%; left: 85%; font-size: 1.8rem; opacity: 0.6; animation: cloudFloat 22s linear infinite;">☁️</div>
+
+                <!-- Sun -->
+                <div style="position: absolute; top: 5%; right: 10%; font-size: 3rem;">☀️</div>
+
+                <!-- Distance markers on the range -->
+                <div style="position: absolute; top: 42%; left: 10%; color: #fff; font-size: 0.7rem; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 5px;">50m</div>
+                <div style="position: absolute; top: 42%; left: 30%; color: #fff; font-size: 0.7rem; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 5px;">100m</div>
+                <div style="position: absolute; top: 42%; left: 50%; color: #fff; font-size: 0.7rem; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 5px;">150m</div>
+                <div style="position: absolute; top: 42%; left: 70%; color: #fff; font-size: 0.7rem; background: rgba(0,0,0,0.5); padding: 2px 6px; border-radius: 5px;">200m</div>
+
+                <!-- Targets container -->
+                <div id="drivingrangeTargets" style="position: absolute; top: 40%; left: 0; right: 0; bottom: 20%; overflow: hidden;">
+                    <!-- Running targets will be spawned here -->
+                </div>
+
+                <!-- Golf balls container (for flying balls) -->
+                <div id="golfBallsContainer" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;"></div>
+
+                <!-- Golfer at bottom -->
+                <div id="golfer" style="position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);">
+                    <svg viewBox="0 0 60 100" width="60" height="100">
+                        <!-- Body -->
+                        <ellipse cx="30" cy="25" rx="12" ry="14" fill="#f4d03f"/> <!-- Head -->
+                        <rect x="20" y="38" width="20" height="30" fill="#e74c3c" rx="3"/> <!-- Polo shirt -->
+                        <rect x="22" y="68" width="7" height="25" fill="#2c3e50"/> <!-- Left leg -->
+                        <rect x="31" y="68" width="7" height="25" fill="#2c3e50"/> <!-- Right leg -->
+                        <!-- Cap -->
+                        <ellipse cx="30" cy="18" rx="14" ry="8" fill="#fff"/>
+                        <rect x="16" y="15" width="28" height="6" fill="#fff"/>
+                        <rect x="28" y="10" width="15" height="6" fill="#2ecc71"/>
+                        <!-- Face -->
+                        <circle cx="25" cy="25" r="2" fill="#000"/> <!-- Left eye -->
+                        <circle cx="35" cy="25" r="2" fill="#000"/> <!-- Right eye -->
+                        <path d="M25,32 Q30,36 35,32" stroke="#000" stroke-width="2" fill="none"/> <!-- Smile -->
+                        <!-- Golf club -->
+                        <line id="golfClub" x1="45" y1="40" x2="70" y2="20" stroke="#8B4513" stroke-width="3" stroke-linecap="round"/>
+                        <rect x="65" y="15" width="12" height="8" fill="#888" rx="2" transform="rotate(-30, 70, 20)"/>
+                    </svg>
+                </div>
+
+                <!-- Power/aim indicator -->
+                <div id="aimIndicator" style="position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); display: none;">
+                    <div style="width: 150px; height: 10px; background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c); border-radius: 5px; border: 2px solid #fff;">
+                        <div id="powerLevel" style="position: absolute; top: -5px; left: 0; width: 20px; height: 20px; background: #fff; border-radius: 50%; border: 2px solid #333; transition: left 0.05s;"></div>
+                    </div>
+                </div>
+
+                <!-- Aim line -->
+                <svg id="aimLine" style="position: absolute; inset: 0; pointer-events: none; display: none;">
+                    <line x1="50%" y1="85%" x2="50%" y2="50%" stroke="#fff" stroke-width="2" stroke-dasharray="5,5" opacity="0.7"/>
+                    <circle cx="50%" cy="50%" r="15" fill="none" stroke="#e74c3c" stroke-width="2" opacity="0.8"/>
+                </svg>
+
+                <!-- Score display -->
+                <div style="position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.7); padding: 10px 15px; border-radius: 15px;">
+                    <div style="color: #2ecc71; font-size: 1rem; font-weight: bold;">🎯 Hits: <span id="drivingScore">0</span></div>
+                    <div style="color: #f1c40f; font-size: 0.8rem;">Combo: <span id="drivingCombo">x1</span></div>
+                </div>
+
+                <!-- Balls remaining -->
+                <div style="position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); padding: 10px 15px; border-radius: 15px;">
+                    <div style="color: #fff; font-size: 1rem; font-weight: bold;">⛳ Ballen: <span id="ballsRemaining">20</span></div>
+                </div>
+
+                <!-- Timer -->
+                <div style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); padding: 8px 20px; border-radius: 15px;">
+                    <span style="color: #fff; font-size: 1.2rem; font-weight: bold;">⏱️ <span id="drivingTimer">60</span>s</span>
+                </div>
+
+                <!-- Game status overlay -->
+                <div id="drivingrangeStatus" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(0,0,0,0.85); padding: 30px 40px; border-radius: 20px; border: 3px solid #2ecc71;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🏌️⛳</div>
+                    <div style="color: #fff; font-size: 1.3rem; font-weight: bold; margin-bottom: 10px;">Driving Range Chaos!</div>
+                    <div style="color: #aaa; font-size: 0.9rem; margin-bottom: 15px;">Sleep om te mikken en te slaan!<br>Raak de rennende poppetjes!</div>
+                    <div style="color: #2ecc71; font-size: 0.85rem;">Tik om te starten</div>
+                </div>
+
+                <!-- Result overlay -->
+                <div id="drivingrangeResult" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.95); padding: 30px 50px; border-radius: 20px; text-align: center; border: 3px solid #2ecc71; z-index: 100;">
+                    <h3 id="drivingResultTitle" style="color: #2ecc71; font-size: 1.8rem; margin-bottom: 15px;">🏆 Game Over!</h3>
+                    <p style="color: #fff; font-size: 1.2rem; margin-bottom: 5px;">Je raakte <span id="drivingFinalScore">0</span> poppetjes!</p>
+                    <p style="color: #f1c40f; font-size: 1rem; margin-bottom: 5px;">Max combo: <span id="drivingMaxCombo">x1</span></p>
+                    <p id="drivingRank" style="color: #aaa; font-size: 1rem; margin-bottom: 20px;"></p>
+                    <button onclick="startDrivingRangeGame()" style="padding: 12px 30px; background: #2ecc71; color: #fff; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; font-size: 1rem;">🔄 Opnieuw</button>
+                </div>
+
+                <!-- Hit effects container -->
+                <div id="hitEffects" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden;"></div>
+            </div>
+
+            <p style="color: #666; margin-top: 15px; font-size: 0.85rem;">💡 Sleep naar achteren voor power, laat los om te slaan! Raak meerdere poppetjes snel voor COMBO bonus!</p>
+        </div>
     </section>
 
 
@@ -1130,7 +1407,7 @@
             <div class="venue-card" style="position:relative; overflow:hidden; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s ease, border-color 0.3s ease;">
                 <img class="venue-hover-img" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600&q=80" alt="" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity 0.4s ease; z-index:0; border-radius:inherit;">
                 <div style="position:relative; z-index:1;">
-                    <h4 style="font-size: 1.3rem; margin-bottom: 10px; color: #f4d03f;">🍺 Kankerhard Zuipen</h4>
+                    <h4 style="font-size: 1.3rem; margin-bottom: 10px; color: #f4d03f;">🍺 Episch Borrelen</h4>
                     <p style="color: #aaa; margin-bottom: 15px;">De belangrijkste activiteit. Van ochtend-biertjes bij het zwembad tot shots om 4 uur 's nachts. Hydrateren is key.</p>
                 </div>
             </div>
@@ -1226,33 +1503,55 @@
 
 
     <!-- =========================================================================
-         WHAT AWAITS GALLERY
+         FUN ZONE SECTION
          =========================================================================
-         General vibe photos of what to expect on the trip.
+         AI-generated absurd videos for entertainment.
     -->
-    <section class="gallery-section">
-        <h2 class="section-title">What Awaits</h2>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80" alt="Pool Party">
-                <div class="overlay"><h4>Pool Party</h4></div>
+    <section class="funzone-section" style="padding: 100px 5%; background: linear-gradient(180deg, #0a0a1a 0%, #1a0a2a 50%, #0a0a0a 100%);">
+        <h2 class="section-title">🤪 Fun Zone</h2>
+        <p style="text-align: center; color: #aaa; margin-bottom: 40px; font-size: 1.1rem;">AI-gegenereerde chaos. Klik voor meer absurditeit!</p>
+
+        <div class="funzone-container" style="max-width: 800px; margin: 0 auto;">
+            <!-- Main video display -->
+            <div class="funzone-video-wrapper" style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(244,208,63,0.2); margin-bottom: 30px;">
+                <video id="funzoneVideo" autoplay loop muted playsinline style="width: 100%; display: block; border-radius: 20px;">
+                    <source src="./assets/videos/funzone/grok-video-1ae5cd38-e9cc-4ffc-b472-d353b987539c.mp4" type="video/mp4">
+                </video>
+                <div id="funzoneCaption" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.9)); padding: 40px 20px 20px; text-align: center;">
+                    <h3 style="color: #f4d03f; font-size: 1.5rem; margin: 0;">🕺 Hakken Glory</h3>
+                </div>
             </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80" alt="Party Drinks">
-                <div class="overlay"><h4>Cheers! 🍻</h4></div>
+
+            <!-- Thumbnail grid -->
+            <div class="funzone-thumbs" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;">
+                <div class="funzone-thumb active" data-video="grok-video-1ae5cd38-e9cc-4ffc-b472-d353b987539c.mp4" data-title="🕺 Hakken Glory" style="border-radius: 10px; overflow: hidden; cursor: pointer; border: 2px solid #f4d03f; transition: all 0.3s ease;">
+                    <video muted preload="metadata" style="width: 100%; display: block; pointer-events: none;">
+                        <source src="./assets/videos/funzone/grok-video-1ae5cd38-e9cc-4ffc-b472-d353b987539c.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="funzone-thumb" data-video="grok-video-ad4613ae-5961-44b3-9c38-91a4b73d4251.mp4" data-title="🏌️ Seagull Beer Karma" style="border-radius: 10px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <video muted preload="metadata" style="width: 100%; display: block; pointer-events: none;">
+                        <source src="./assets/videos/funzone/grok-video-ad4613ae-5961-44b3-9c38-91a4b73d4251.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="funzone-thumb" data-video="grok-video-0ced8b0c-f9c1-4d81-adba-f009c867fa2a.mp4" data-title="🦩 Poolside Dominoes" style="border-radius: 10px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <video muted preload="metadata" style="width: 100%; display: block; pointer-events: none;">
+                        <source src="./assets/videos/funzone/grok-video-0ced8b0c-f9c1-4d81-adba-f009c867fa2a.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="funzone-thumb" data-video="grok-video-b15d1f4e-19e4-486a-9976-6f7c37166b41.mp4" data-title="🪂 Parachute Pool Party" style="border-radius: 10px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <video muted preload="metadata" style="width: 100%; display: block; pointer-events: none;">
+                        <source src="./assets/videos/funzone/grok-video-b15d1f4e-19e4-486a-9976-6f7c37166b41.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="funzone-thumb" data-video="grok-video-2e7a8393-9b7e-4ffe-a31e-5afffe54fe58.mp4" data-title="🏎️ Golfcart Grand Prix" style="border-radius: 10px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: all 0.3s ease;">
+                    <video muted preload="metadata" style="width: 100%; display: block; pointer-events: none;">
+                        <source src="./assets/videos/funzone/grok-video-2e7a8393-9b7e-4ffe-a31e-5afffe54fe58.mp4" type="video/mp4">
+                    </video>
+                </div>
             </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=600&q=80" alt="Drinks">
-                <div class="overlay"><h4>Cocktails</h4></div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80" alt="Beach Drinks">
-                <div class="overlay"><h4>Fine Dining</h4></div>
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=600&q=80" alt="Sunset">
-                <div class="overlay"><h4>The Party</h4></div>
-            </div>
+
+            <p style="text-align: center; color: #666; margin-top: 20px; font-size: 0.9rem;">🤖 Gegenereerd met Grok Imagine AI</p>
         </div>
     </section>
 

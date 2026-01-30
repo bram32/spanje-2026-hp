@@ -908,6 +908,77 @@ footer p {
     filter: brightness(1.5);
 }
 
+/* =============================================================================
+   BEER BUDDY GAME ANIMATIONS
+   ============================================================================= */
+
+/* Friend waving animation */
+@keyframes friendWave {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-5deg); }
+    75% { transform: translateY(-3px) rotate(5deg); }
+}
+
+/* Floating score text */
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-60px) scale(1.3);
+    }
+}
+
+/* Beer bounce on pickup */
+@keyframes beerBounce {
+    0% { transform: scale(0) translateY(20px); }
+    50% { transform: scale(1.3) translateY(-5px); }
+    100% { transform: scale(1) translateY(0); }
+}
+
+/* Power-up bounce */
+@keyframes powerUpBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Power-up glow */
+@keyframes powerUpGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px gold); }
+    50% { filter: drop-shadow(0 0 20px gold) brightness(1.3); }
+}
+
+/* Combo pulse */
+@keyframes comboPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Shake animation for spill */
+@keyframes shake {
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(-50%) rotate(-5deg) translateX(-5px); }
+    75% { transform: translateX(-50%) rotate(5deg) translateX(5px); }
+}
+
+/* Beer buddy combo display styling */
+#beerCombo {
+    position: absolute;
+    top: 55px;
+    left: 15px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    padding: 5px 12px;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 50;
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+}
+
 /* Hit feedback animation */
 @keyframes hitPop {
     0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
@@ -925,12 +996,6 @@ footer p {
 }
 
 /* Specific tab colors when active */
-.game-tab[data-game="steak"].active {
-    border-color: #f4d03f;
-    color: #f4d03f;
-    background: linear-gradient(135deg, rgba(244,208,63,0.2) 0%, rgba(244,208,63,0.1) 100%);
-}
-
 .game-tab[data-game="parachute"].active {
     border-color: #9b59b6;
     color: #9b59b6;
@@ -941,6 +1006,123 @@ footer p {
     border-color: #e74c3c;
     color: #e74c3c;
     background: linear-gradient(135deg, rgba(231,76,60,0.2) 0%, rgba(231,76,60,0.1) 100%);
+}
+
+.game-tab[data-game="golfcar"].active {
+    border-color: #2ecc71;
+    color: #2ecc71;
+    background: linear-gradient(135deg, rgba(46,204,113,0.2) 0%, rgba(46,204,113,0.1) 100%);
+}
+
+.game-tab[data-game="beerbuddy"].active {
+    border-color: #f39c12;
+    color: #f39c12;
+    background: linear-gradient(135deg, rgba(243,156,18,0.2) 0%, rgba(243,156,18,0.1) 100%);
+}
+
+.game-tab[data-game="drivingrange"].active {
+    border-color: #2ecc71;
+    color: #2ecc71;
+    background: linear-gradient(135deg, rgba(46,204,113,0.2) 0%, rgba(46,204,113,0.1) 100%);
+}
+
+/* =============================================================================
+   DRIVING RANGE GAME ANIMATIONS
+   ============================================================================= */
+
+/* Target running animation */
+@keyframes targetRun {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Target hit burst effect */
+@keyframes hitBurst {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Star burst animation for combo hits */
+@keyframes starBurst {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(180deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.5) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Golf ball flight animation */
+@keyframes ballFlight {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-100px) scale(0.7);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(0) scale(0.4);
+        opacity: 0.7;
+    }
+}
+
+/* Golfer swing animation */
+@keyframes golferSwing {
+    0% { transform: rotate(0deg); }
+    30% { transform: rotate(-30deg); }
+    60% { transform: rotate(45deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* Power bar pulse */
+@keyframes powerPulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+/* Target types specific animations */
+@keyframes zigzagMove {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-20px); }
+    75% { transform: translateY(20px); }
+}
+
+@keyframes bounceMove {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+}
+
+/* Driving range touch optimization */
+#drivingrangeArea {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Mobile optimizations for driving range */
+@media (max-width: 768px) {
+    #drivingrangeArea {
+        height: 400px !important;
+    }
 }
 
 
@@ -1331,18 +1513,103 @@ video {
 .game-container,
 #parachuteArea,
 #hakkenArea,
-#grillArea {
+#golfcarArea,
+#beerbuddyArea {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* Mobile button touch states - all game controls */
+.hakken-btn,
+#parachuteLeftBtn,
+#parachuteRightBtn,
+#golfcarUpBtn,
+#golfcarDownBtn,
+#golfcarLeftBtn,
+#golfcarRightBtn,
+#beerLeftBtn,
+#beerRightBtn,
+#beerUpBtn,
+#beerDownBtn {
+    -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     -webkit-user-select: none;
     user-select: none;
 }
 
-/* Mobile button touch states */
-.hakken-btn,
-#parachuteLeftBtn,
-#parachuteRightBtn {
+/* Larger touch targets on mobile */
+@media (max-width: 768px) {
+    .hakken-btn {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 1.8rem !important;
+    }
+
+    #parachuteLeftBtn,
+    #parachuteRightBtn {
+        width: 90px !important;
+        height: 90px !important;
+        font-size: 2.5rem !important;
+    }
+
+    #golfcarUpBtn,
+    #golfcarDownBtn,
+    #golfcarLeftBtn,
+    #golfcarRightBtn,
+    #beerLeftBtn,
+    #beerRightBtn,
+    #beerUpBtn,
+    #beerDownBtn {
+        width: 75px !important;
+        height: 75px !important;
+        font-size: 2rem !important;
+    }
+}
+
+/* Active/pressed states for touch feedback */
+.hakken-btn:active,
+.hakken-btn.pressed {
+    transform: scale(0.9);
+    filter: brightness(1.5);
+}
+
+#parachuteLeftBtn:active,
+#parachuteRightBtn:active,
+#beerLeftBtn:active,
+#beerRightBtn:active,
+#beerUpBtn:active,
+#beerDownBtn:active,
+#golfcarUpBtn:active,
+#golfcarDownBtn:active,
+#golfcarLeftBtn:active,
+#golfcarRightBtn:active {
+    transform: scale(0.9);
+    filter: brightness(1.3);
+}
+
+/* Prevent text selection and callouts on game elements */
+.game-container * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Steak game doneness buttons touch optimization */
+.doneness-btn {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+@media (max-width: 768px) {
+    .doneness-btn {
+        padding: 12px 18px !important;
+        font-size: 0.9rem !important;
+        min-height: 44px;
+    }
 }
 
 /* Reduce motion for users who prefer it */
@@ -1362,5 +1629,149 @@ video {
     .venues-section > div[style*="grid-template-columns: repeat(3"] {
         grid-template-columns: 1fr !important;
         gap: 15px !important;
+    }
+}
+
+/* Mobile game optimizations */
+@media (max-width: 480px) {
+    /* Ensure game areas fit on small screens */
+    #parachuteArea,
+    #hakkenArea,
+    #golfcarArea,
+    #beerbuddyArea {
+        height: 350px !important;
+        max-height: 50vh !important;
+    }
+
+    /* Scale down Pascal in hakken game */
+    #pascal svg {
+        width: 90px !important;
+        height: 144px !important;
+    }
+
+    /* Reduce font sizes in game overlays */
+    .game-container h3 {
+        font-size: 1.2rem !important;
+    }
+
+    .game-container p {
+        font-size: 0.85rem !important;
+        margin-bottom: 15px !important;
+    }
+
+    /* Make sure mobile control buttons are visible and accessible */
+    .game-container > div[style*="display: flex"] {
+        padding: 10px 5px !important;
+    }
+}
+
+/* Prevent pull-to-refresh on game section */
+.games-section {
+    overscroll-behavior: contain;
+}
+
+/* iOS specific: prevent rubber-banding effect during game play */
+@supports (-webkit-touch-callout: none) {
+    #parachuteArea,
+    #hakkenArea,
+    #golfcarArea,
+    #beerbuddyArea {
+        -webkit-overflow-scrolling: auto;
+        overscroll-behavior: none;
+    }
+
+    /* Larger touch targets on iOS for better accessibility */
+    .hakken-btn,
+    #parachuteLeftBtn,
+    #parachuteRightBtn,
+    #golfcarUpBtn,
+    #golfcarDownBtn,
+    #golfcarLeftBtn,
+    #golfcarRightBtn,
+    #beerLeftBtn,
+    #beerRightBtn {
+        min-width: 60px;
+        min-height: 60px;
+    }
+}
+
+/* iPhone specific media query */
+@media only screen
+    and (max-device-width: 430px)
+    and (-webkit-device-pixel-ratio: 3) {
+
+    /* Ensure games are properly sized on iPhone */
+    .game-container {
+        padding: 10px !important;
+    }
+
+    /* Make control buttons easier to tap */
+    #parachuteLeftBtn,
+    #parachuteRightBtn,
+    #beerLeftBtn,
+    #beerRightBtn {
+        width: 85px !important;
+        height: 85px !important;
+        font-size: 2.2rem !important;
+    }
+
+    .hakken-btn {
+        width: 65px !important;
+        height: 65px !important;
+        font-size: 1.6rem !important;
+    }
+
+    #golfcarUpBtn,
+    #golfcarDownBtn,
+    #golfcarLeftBtn,
+    #golfcarRightBtn {
+        width: 65px !important;
+        height: 65px !important;
+        font-size: 1.8rem !important;
+    }
+
+    /* Adjust game area heights */
+    #parachuteArea,
+    #hakkenArea,
+    #golfcarArea,
+    #beerbuddyArea {
+        height: 380px !important;
+    }
+
+}
+
+/* Better button active states for touch feedback */
+button:active {
+    opacity: 0.8;
+}
+
+/* Game control buttons - enhanced touch feedback */
+.hakken-btn:active,
+#parachuteLeftBtn:active,
+#parachuteRightBtn:active,
+#golfcarUpBtn:active,
+#golfcarDownBtn:active,
+#golfcarLeftBtn:active,
+#golfcarRightBtn:active,
+#beerLeftBtn:active,
+#beerRightBtn:active {
+    transform: scale(0.92) !important;
+    filter: brightness(1.4) !important;
+    transition: transform 0.05s, filter 0.05s !important;
+}
+
+/* Ensure game tabs are easily tappable on mobile */
+@media (max-width: 600px) {
+    .game-tab {
+        min-height: 50px !important;
+        padding: 10px 15px !important;
+    }
+
+    .game-tab .tab-icon {
+        font-size: 1.3rem !important;
+    }
+
+    .game-tab .tab-text {
+        font-size: 0.7rem !important;
     }
 }
