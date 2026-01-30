@@ -1863,3 +1863,19 @@ video {
         scroll-behavior: smooth;
     }
 }
+
+/* Game containers - allow scrolling when not playing */
+.game-container {
+    touch-action: pan-y pinch-zoom;
+}
+
+/* When game is active, block touch for game control */
+.game-container.game-active {
+    touch-action: none;
+}
+
+/* Ensure games section allows vertical scroll */
+.games-section {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+}

@@ -2515,43 +2515,59 @@ function preventTouchDefaultOnGameAreas() {
         'drivingrangeArea'
     ];
 
+    // Helper function to check if any game is actively running
+    function isAnyGameRunning() {
+        return (typeof parachute !== 'undefined' && parachute.state === 'falling') ||
+               (typeof hakken !== 'undefined' && hakken.state === 'playing') ||
+               (typeof golfcar !== 'undefined' && golfcar.state === 'playing') ||
+               (typeof beerbuddy !== 'undefined' && beerbuddy.state === 'playing') ||
+               (typeof drivingrange !== 'undefined' && drivingrange.state === 'playing');
+    }
+
     gameAreas.forEach(function(areaId) {
         const area = document.getElementById(areaId);
         if (area) {
-            // Prevent all default touch behaviors
+            // Only prevent touch default when game is actively running
             area.addEventListener('touchstart', function(e) {
-                // Allow the event but prevent default scroll/zoom
-                e.preventDefault();
+                if (isAnyGameRunning()) {
+                    e.preventDefault();
+                }
+                // Otherwise allow normal scrolling
             }, { passive: false });
 
             area.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-            }, { passive: false });
-
-            // Double-tap zoom prevention
-            let lastTap = 0;
-            area.addEventListener('touchend', function(e) {
-                const currentTime = new Date().getTime();
-                const tapLength = currentTime - lastTap;
-                if (tapLength < 500 && tapLength > 0) {
+                if (isAnyGameRunning()) {
                     e.preventDefault();
                 }
-                lastTap = currentTime;
+                // Otherwise allow normal scrolling
+            }, { passive: false });
+
+            // Double-tap zoom prevention only during active gameplay
+            let lastTap = 0;
+            area.addEventListener('touchend', function(e) {
+                if (isAnyGameRunning()) {
+                    const currentTime = new Date().getTime();
+                    const tapLength = currentTime - lastTap;
+                    if (tapLength < 500 && tapLength > 0) {
+                        e.preventDefault();
+                    }
+                    lastTap = currentTime;
+                }
             });
         }
     });
 
-    // Also prevent zoom on the entire games section
+    // Only prevent gestures during active gameplay
     const gamesSection = document.querySelector('.games-section');
     if (gamesSection) {
         gamesSection.addEventListener('gesturestart', function(e) {
-            e.preventDefault();
+            if (isAnyGameRunning()) e.preventDefault();
         });
         gamesSection.addEventListener('gesturechange', function(e) {
-            e.preventDefault();
+            if (isAnyGameRunning()) e.preventDefault();
         });
         gamesSection.addEventListener('gestureend', function(e) {
-            e.preventDefault();
+            if (isAnyGameRunning()) e.preventDefault();
         });
     }
 }

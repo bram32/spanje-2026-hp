@@ -106,51 +106,73 @@
         <!-- Grid container for crew members -->
         <div class="crew-grid">
             <!-- Each crew member is a "crew-member" div with LOTR toggle -->
-            <div class="crew-member" data-normal="./assets/videos/crew-1.mp4" data-lotr="./assets/videos/lotr-treb.mp4" data-lotr-name="Hobbit 🧝" data-lotr2="./assets/videos/lotr-treb-gandalf.mp4" data-lotr2-name="Gandalf 🧙‍♂️">
+            <!-- Treb (3 videos: normal, hobbit, gandalf) -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-1.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-1.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-treb.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr2" src="./assets/videos/lotr-treb-gandalf.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">Treb</h4>
             </div>
 
-            <div class="crew-member" data-normal="./assets/videos/crew-2.mp4" data-lotr="./assets/videos/lotr-marc.mp4" data-lotr-name="Hobbit 🧝">
+            <!-- Marc -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-2.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-2.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-marc.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">Marc</h4>
             </div>
 
-            <div class="crew-member" data-normal="./assets/videos/crew-3.mp4" data-lotr="./assets/videos/lotr-derk.mp4" data-lotr-name="Sauron 👁️‍🗨️">
+            <!-- Derk (Sauron) -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-3.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-3.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-derk.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">Derk</h4>
             </div>
 
-            <div class="crew-member" data-normal="./assets/videos/crew-4.mp4" data-lotr="./assets/videos/lotr-samuel.mp4" data-lotr-name="Hobbit 🧝">
+            <!-- Samuel -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-4.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-4.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-samuel.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">Samuel<span class="tooltip">Maakt tijd vrij van werk voor vrienden</span></h4>
             </div>
 
-            <div class="crew-member" data-normal="./assets/videos/crew-5.mp4" data-lotr="./assets/videos/lotr-david.mp4" data-lotr-name="Hobbit 🧝">
+            <!-- David -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-5.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-5.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-david.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">David<span class="tooltip">Gaat een andere keer naar New York</span></h4>
             </div>
 
-            <div class="crew-member" data-normal="./assets/videos/crew-6.mp4" data-lotr="./assets/videos/lotr-peeg.mp4" data-lotr-name="Hobbit 🧝">
+            <!-- Peeg -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-6.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-6.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-peeg.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">Peeg</h4>
             </div>
 
-            <div class="crew-member" data-normal="./assets/videos/crew-7.mp4" data-lotr="./assets/videos/lotr-bram.mp4" data-lotr-name="Hobbit 🧝">
+            <!-- Bram -->
+            <div class="crew-member" data-state="normal">
                 <div class="crew-avatar clickable-avatar" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-7.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-7.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-bram.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name">Bram</h4>
             </div>
@@ -159,60 +181,101 @@
         <!-- "Thuisblijver" (staying home) section -->
         <h3 class="section-title" style="font-size: 1.8rem; margin-top: 60px; margin-bottom: 30px;">Thuisblijver?</h3>
         <div class="crew-grid">
-            <div class="crew-member thuisblijver" data-normal="./assets/videos/crew-8.mp4" data-lotr="./assets/videos/lotr-jaap.mp4" data-lotr-name="Hobbit 🧝">
+            <div class="crew-member thuisblijver" data-state="normal">
                 <div class="crew-avatar clickable-avatar" style="border-color: #666; opacity: 0.7; filter: grayscale(50%);" onclick="toggleLotr(this)">
-                    <video src="./assets/videos/crew-8.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
+                    <video class="vid-normal active" src="./assets/videos/crew-8.mp4" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <video class="vid-lotr" src="./assets/videos/lotr-jaap.mp4" loop muted playsinline webkit-playsinline preload="auto"></video>
+                    <div class="video-loader">⏳</div>
                 </div>
                 <h4 class="crew-name" style="color: #888;">Jaap 😢<span class="tooltip">Wil eigenlijk ook gewoon mee</span></h4>
             </div>
         </div>
 
-        <!-- LOTR Toggle Script -->
+        <!-- Optimized LOTR Toggle Script - Instant Switching -->
         <script>
             function toggleLotr(avatarElement) {
                 const crewMember = avatarElement.closest('.crew-member');
-                const video = crewMember.querySelector('video');
-                const normalSrc = crewMember.dataset.normal;
-                const lotrSrc = crewMember.dataset.lotr;
-                const lotr2Src = crewMember.dataset.lotr2; // For Treb's Gandalf
+                const videos = crewMember.querySelectorAll('video');
+                const normalVid = crewMember.querySelector('.vid-normal');
+                const lotrVid = crewMember.querySelector('.vid-lotr');
+                const lotr2Vid = crewMember.querySelector('.vid-lotr2');
                 const currentState = crewMember.dataset.state || 'normal';
 
-                // Handle 3-state cycle for Treb (has lotr2)
-                if (lotr2Src) {
+                // Hide all videos first
+                videos.forEach(v => {
+                    v.classList.remove('active');
+                    v.pause();
+                });
+
+                // Determine next state and show correct video
+                let nextVid, nextState;
+
+                if (lotr2Vid) {
+                    // 3-state cycle: normal -> lotr -> lotr2 -> normal
                     if (currentState === 'normal') {
-                        video.src = lotrSrc;
-                        crewMember.dataset.state = 'lotr1';
-                        crewMember.classList.add('lotr-mode');
+                        nextVid = lotrVid;
+                        nextState = 'lotr';
                         avatarElement.style.borderColor = '#d4af37';
                         avatarElement.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.5)';
-                    } else if (currentState === 'lotr1') {
-                        video.src = lotr2Src;
-                        crewMember.dataset.state = 'lotr2';
+                        crewMember.classList.add('lotr-mode');
+                    } else if (currentState === 'lotr') {
+                        nextVid = lotr2Vid;
+                        nextState = 'lotr2';
                         avatarElement.style.borderColor = '#ffffff';
                         avatarElement.style.boxShadow = '0 0 25px rgba(255, 255, 255, 0.7)';
                     } else {
-                        video.src = normalSrc;
-                        crewMember.dataset.state = 'normal';
-                        crewMember.classList.remove('lotr-mode');
+                        nextVid = normalVid;
+                        nextState = 'normal';
                         avatarElement.style.borderColor = '';
                         avatarElement.style.boxShadow = '';
+                        crewMember.classList.remove('lotr-mode');
                     }
                 } else {
-                    // Standard 2-state toggle for others
-                    if (crewMember.classList.contains('lotr-mode')) {
-                        video.src = normalSrc;
-                        crewMember.classList.remove('lotr-mode');
-                        avatarElement.style.borderColor = '';
-                        avatarElement.style.boxShadow = '';
-                    } else {
-                        video.src = lotrSrc;
-                        crewMember.classList.add('lotr-mode');
+                    // 2-state cycle: normal <-> lotr
+                    if (currentState === 'normal') {
+                        nextVid = lotrVid;
+                        nextState = 'lotr';
                         avatarElement.style.borderColor = '#d4af37';
                         avatarElement.style.boxShadow = '0 0 20px rgba(212, 175, 55, 0.5)';
+                        crewMember.classList.add('lotr-mode');
+                    } else {
+                        nextVid = normalVid;
+                        nextState = 'normal';
+                        avatarElement.style.borderColor = '';
+                        avatarElement.style.boxShadow = '';
+                        crewMember.classList.remove('lotr-mode');
                     }
                 }
 
-                video.play();
+                // Show and play the next video
+                nextVid.classList.add('active');
+                nextVid.play().catch(() => {});
+                crewMember.dataset.state = nextState;
+            }
+
+            // Preload all LOTR videos when crew section is visible
+            const preloadCrewVideos = () => {
+                const crewSection = document.querySelector('.crew-section');
+                if (!crewSection) return;
+
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        // Start loading all LOTR videos
+                        document.querySelectorAll('.vid-lotr, .vid-lotr2').forEach(video => {
+                            video.load();
+                        });
+                        observer.disconnect();
+                    }
+                }, { rootMargin: '200px' });
+
+                observer.observe(crewSection);
+            };
+
+            // Initialize preloading
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', preloadCrewVideos);
+            } else {
+                preloadCrewVideos();
             }
         </script>
 
@@ -220,6 +283,7 @@
             .crew-avatar.clickable-avatar {
                 cursor: pointer;
                 transition: all 0.3s ease;
+                position: relative;
             }
             .crew-avatar.clickable-avatar:hover {
                 transform: scale(1.05);
@@ -227,6 +291,41 @@
             }
             .crew-member.lotr-mode .crew-avatar {
                 border-color: #d4af37 !important;
+            }
+            /* Video switching - instant with no yellow flash */
+            .crew-avatar video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+                opacity: 0;
+                transition: opacity 0.15s ease;
+            }
+            .crew-avatar video.active {
+                opacity: 1;
+                position: relative;
+            }
+            /* Loading indicator (hidden by default) */
+            .video-loader {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 1.5rem;
+                opacity: 0;
+                pointer-events: none;
+                z-index: 10;
+            }
+            .crew-avatar.loading .video-loader {
+                opacity: 1;
+                animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+                from { transform: translate(-50%, -50%) rotate(0deg); }
+                to { transform: translate(-50%, -50%) rotate(360deg); }
             }
         </style>
     </section>
@@ -1268,7 +1367,7 @@
             <p style="color: #00CED1; font-style: italic; margin-bottom: 10px; font-size: 1.1rem;">Lekker Glibberen!</p>
             <p style="color: #888; margin-bottom: 20px;">Glibber door de oceaan, vang zoveel mogelijk vissen 🐟 en ontwijken de hongerige haaien! 🦈<br>Gebruik pijltjes of swipe om te bewegen. Let op: Kwal is GLIBBERIG!</p>
 
-            <div id="kwalArea" style="position: relative; width: 100%; height: 450px; border-radius: 20px; overflow: hidden; border: 3px solid #00CED1; cursor: pointer; touch-action: none;" tabindex="0">
+            <div id="kwalArea" style="position: relative; width: 100%; height: 450px; border-radius: 20px; overflow: hidden; border: 3px solid #00CED1; cursor: pointer;" tabindex="0">
                 <!-- Ocean background -->
                 <div style="position: absolute; inset: 0; background: linear-gradient(180deg, #001833 0%, #003366 30%, #006699 60%, #0099cc 100%);">
                     <!-- Underwater bubbles animation -->
@@ -1622,19 +1721,19 @@
                     e.preventDefault();
                 });
 
-                // Touch controls for mobile
+                // Touch controls for mobile - only block scroll when game is running
                 document.getElementById('kwalArea').addEventListener('touchstart', function(e) {
                     if (!kwalGameState.running) {
-                        startKwalGame();
+                        // Allow scroll when game not running, but start on tap
                         return;
                     }
                     kwalGameState.touchStartX = e.touches[0].clientX;
                     kwalGameState.touchStartY = e.touches[0].clientY;
-                    e.preventDefault();
+                    e.preventDefault(); // Only prevent when game running
                 }, {passive: false});
 
                 document.getElementById('kwalArea').addEventListener('touchmove', function(e) {
-                    if (!kwalGameState.running || !kwalGameState.touchStartX) return;
+                    if (!kwalGameState.running || !kwalGameState.touchStartX) return; // Allow scroll when not running
 
                     const touchX = e.touches[0].clientX;
                     const touchY = e.touches[0].clientY;
@@ -1646,7 +1745,7 @@
 
                     kwalGameState.touchStartX = touchX;
                     kwalGameState.touchStartY = touchY;
-                    e.preventDefault();
+                    e.preventDefault(); // Only prevent when game running
                 }, {passive: false});
 
                 document.getElementById('kwalArea').addEventListener('touchend', function() {
@@ -2524,39 +2623,137 @@
             // Story subtitles for the journey
             // Volgorde: David → Treb(Gandalf) → Samuel → Treb(Hobbit) → Bram → Derk(Sauron) → Jaap
             // Grok clips = 10 seconden per karakter
+            // Volgorde: David → Treb(Gandalf) → Samuel → Treb(Hobbit) → Bram → Derk(Sauron) → Jaap
+            // Clips zijn 6 seconden elk, video loopt door (~234 sec totaal)
             const lotrSubtitles = [
-                // David (Hobbit) - 0-10s
+                // === EERSTE RONDE (0-42s) ===
+                // David (Hobbit) - 0-6s
                 { time: 0, text: "🧝 David de Dappere Hobbit" },
-                { time: 5, text: "Gaat een andere keer naar New York..." },
+                { time: 3, text: "Gaat een andere keer naar New York..." },
 
-                // Treb als Gandalf - 10-20s
-                { time: 10, text: "🧙‍♂️ Treb de Grijze" },
-                { time: 15, text: "\"Een tovenaar komt nooit te laat...\"" },
+                // Treb als Gandalf - 6-12s
+                { time: 6, text: "🧙‍♂️ Treb de Grijze" },
+                { time: 9, text: "\"Een tovenaar komt nooit te laat...\"" },
 
-                // Samuel (Hobbit) - 20-30s
-                { time: 20, text: "🧝 Samuel de Standvastige" },
-                { time: 25, text: "Maakt tijd vrij van werk voor vrienden" },
+                // Samuel (Hobbit) - 12-18s
+                { time: 12, text: "🧝 Samuel de Standvastige" },
+                { time: 15, text: "Maakt tijd vrij van werk voor vrienden" },
 
-                // Treb als Hobbit - 30-40s
-                { time: 30, text: "🧝 Treb als Hobbit" },
-                { time: 35, text: "Van tovenaar naar Shire-bewoner..." },
+                // Treb als Hobbit - 18-24s
+                { time: 18, text: "🧝 Treb als Hobbit" },
+                { time: 21, text: "Van tovenaar naar Shire-bewoner..." },
 
-                // Bram (Hobbit) - 40-50s
-                { time: 40, text: "🧝 Bram de Avonturier" },
-                { time: 45, text: "Met een hart van goud..." },
+                // Bram (Hobbit) - 24-30s
+                { time: 24, text: "🧝 Bram de Avonturier" },
+                { time: 27, text: "Met een hart van goud..." },
 
-                // Derk als Sauron - 50-60s
-                { time: 50, text: "👁️ Derk... Het Oog van Sauron" },
-                { time: 55, text: "Zijn blik ziet alles..." },
+                // Derk als Sauron - 30-36s
+                { time: 30, text: "👁️ Derk... Het Oog van Sauron" },
+                { time: 33, text: "Zijn blik ziet alles..." },
 
-                // Jaap (Hobbit) - 60-70s
-                { time: 60, text: "🧝 Jaap, de Thuisblijver" },
-                { time: 65, text: "Wil eigenlijk ook gewoon mee..." },
+                // Jaap (Hobbit) - 36-42s
+                { time: 36, text: "🧝 Jaap, de Thuisblijver" },
+                { time: 39, text: "Wil eigenlijk ook gewoon mee..." },
 
-                // Outro (video loopt door of herhaalt)
-                { time: 70, text: "🏰 An Unexpected Journey 🏰" },
-                { time: 75, text: "Marbella 2026 - De weg gaat door..." },
-                { time: 80, text: "" }
+                // === TWEEDE RONDE (42-84s) ===
+                { time: 42, text: "🏰 De reis begint opnieuw..." },
+                { time: 45, text: "Zeven vrienden, één bestemming" },
+
+                { time: 48, text: "🧝 David - Altijd klaar voor actie" },
+                { time: 51, text: "De eerste die 'ja' zegt" },
+
+                { time: 54, text: "🧙‍♂️ Treb spreekt wijze woorden" },
+                { time: 57, text: "\"Niet alle die dwalen zijn verloren\"" },
+
+                { time: 60, text: "🧝 Samuel - De betrouwbare" },
+                { time: 63, text: "Altijd op tijd, altijd paraat" },
+
+                { time: 66, text: "🧝 Treb kent beide werelden" },
+                { time: 69, text: "Tovenaar én Hobbit in één" },
+
+                { time: 72, text: "🧝 Bram - Born to explore" },
+                { time: 75, text: "Geen berg te hoog, geen bar te ver" },
+
+                { time: 78, text: "👁️ Derk ziet alles..." },
+                { time: 81, text: "Maar deelt niet al zijn geheimen" },
+
+                { time: 84, text: "🧝 Jaap kijkt mee van thuis" },
+                { time: 87, text: "Volgende keer ben jij erbij! 💪" },
+
+                // === DERDE RONDE (90-132s) ===
+                { time: 90, text: "✨ Marbella wacht..." },
+                { time: 93, text: "9 - 12 April 2026" },
+
+                { time: 96, text: "🧝 David maakt er een feest van" },
+                { time: 99, text: "Party Hobbit #1" },
+
+                { time: 102, text: "🧙‍♂️ Treb regelt de wijsheid" },
+                { time: 105, text: "En de beste restaurants" },
+
+                { time: 108, text: "🧝 Samuel brengt de energie" },
+                { time: 111, text: "Non-stop good vibes" },
+
+                { time: 114, text: "🧝 Treb's dubbelleven" },
+                { time: 117, text: "Overdag wijs, 's avonds wild" },
+
+                { time: 120, text: "🧝 Bram zoekt het avontuur" },
+                { time: 123, text: "Elke dag een nieuwe ontdekking" },
+
+                { time: 126, text: "👁️ Derk houdt de wacht" },
+                { time: 129, text: "Het oog slaapt nooit" },
+
+                { time: 132, text: "🧝 Jaap, we missen je!" },
+                { time: 135, text: "2027 is jouw jaar!" },
+
+                // === VIERDE RONDE (138-180s) ===
+                { time: 138, text: "🌴 Costa del Sol calling" },
+                { time: 141, text: "Zon, zee, sangria" },
+
+                { time: 144, text: "🧝 De Hobbits verzamelen" },
+                { time: 147, text: "Het fellowship is compleet" },
+
+                { time: 150, text: "🧙‍♂️ \"Spreek vriend en treed binnen\"" },
+                { time: 153, text: "Password: Marbella" },
+
+                { time: 156, text: "🧝 Vier dagen, nul zorgen" },
+                { time: 159, text: "Alleen maar legendarische momenten" },
+
+                { time: 162, text: "🧝 Van Shire naar Spanje" },
+                { time: 165, text: "De ultieme Hobbit vakantie" },
+
+                { time: 168, text: "🧝 Vriendschap kent geen grenzen" },
+                { time: 171, text: "Of landsgrenzen" },
+
+                { time: 174, text: "👁️ Sauron approved this trip" },
+                { time: 177, text: "Zelfs het kwaad heeft vakantie nodig" },
+
+                { time: 180, text: "🧝 Voor Jaap bewaren we een stoel" },
+                { time: 183, text: "En een biertje 🍺" },
+
+                // === VIJFDE RONDE (186-228s) ===
+                { time: 186, text: "🎉 The Boys Weekend 2026" },
+                { time: 189, text: "Een reis om nooit te vergeten" },
+
+                { time: 192, text: "🧝 Zeven helden, één missie" },
+                { time: 195, text: "Maximaal genieten" },
+
+                { time: 198, text: "🧙‍♂️ Treb's laatste wijsheid:" },
+                { time: 201, text: "\"All we have to decide is what to drink\"" },
+
+                { time: 204, text: "🧝 Van hobbithole naar penthouse" },
+                { time: 207, text: "Upgrade van het jaar" },
+
+                { time: 210, text: "🏰 An Unexpected Journey" },
+                { time: 213, text: "Wordt An Unforgettable Journey" },
+
+                { time: 216, text: "👁️ Derk zegt: BOEK DIE VLUCHT" },
+                { time: 219, text: "Het Oog heeft gesproken" },
+
+                { time: 222, text: "✈️ Volgende stop: Málaga" },
+                { time: 225, text: "De weg gaat altijd door..." },
+
+                { time: 228, text: "🏰 MARBELLA 2026 🏰" },
+                { time: 231, text: "" }
             ];
             let subtitleInterval = null;
             let currentSubtitleIndex = 0;
