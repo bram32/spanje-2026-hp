@@ -1,0 +1,36 @@
+.git
+.github
+.idea
+.DS_Store
+node_modules
+wrangler.jsonc
+
+# --- Ongebruikte erfstukken: niet uploaden naar Cloudflare (~69MB dood gewicht) ---
+# Oude LOTR-assets (site is naar het HP-concept gemigreerd)
+assets/videos/lotr-bram.mp4
+assets/videos/lotr-david.mp4
+assets/videos/lotr-derk.mp4
+assets/videos/lotr-jaap.mp4
+assets/videos/lotr-journey.mp4
+assets/videos/lotr-marc.mp4
+assets/videos/lotr-peeg.mp4
+assets/videos/lotr-samuel.mp4
+assets/videos/lotr-treb-gandalf.mp4
+assets/videos/lotr-treb.mp4
+assets/images/lotr-crew
+# NB: assets/videos/lotr-music.m4a WEL uploaden — de journey/bgMusic gebruikt die.
+# Duplicaat audio (de site verwijst naar assets/videos/lotr-music.m4a)
+assets/audio
+# Vervangen funzone-bronnen (site gebruikt hp-fun-1/2/3.mp4)
+assets/videos/funzone/grok-video-*.mp4
+# Overige nergens gerefereerde media
+assets/images/golf.gif
+assets/videos/golf-3.mp4
+assets/videos/golf-video.mp4
+assets/videos/hover-1.mp4
+assets/videos/hover-2.mp4
+assets/videos/night-video.mp4
+assets/videos/nightclub-crowd.mp4
+# Stale minified twins (index.html laadt de niet-geminifieerde bestanden)
+js/main.min.js
+css/styles.min.css

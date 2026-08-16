@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Hogwarts aan Zee//Halloween Editie 2026//NL
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:zweinstein-aan-zee-2026@spanje-2026
+DTSTAMP:20260816T120000Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261102
+SUMMARY:🧙 Hogwarts aan Zee — Halloween Boys Weekend 🎃
+LOCATION:Grand Villa\, El Rosario\, Marbella East\, Spanje
+DESCRIPTION:Je bent TOEGELATEN tot Hogwarts aan Zee\, Hogeschool voor He
+ kserij\, Hocus-Pocus & Hydratatie.\n\n29 okt – 1 nov 2026 (za 31 okt = HA
+ LLOWEEN-BAL)\nKasteel: https://www.airbnb.com/rooms/6299939\n\nVergeet je
+  bezem niet. Wij verwachten uw uil uiterlijk gisteren.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:🦉 Nog één week tot Hogwarts aan Zee — pak je koffer en je toverstaf!
+END:VALARM
+END:VEVENT
+END:VCALENDAR
