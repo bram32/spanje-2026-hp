@@ -3476,3 +3476,71 @@ section:not(.hero) {
 }
 .bal-bevel p + p { margin-top: 8px; }
 .bal-bevel em { color: var(--kaars-goud); font-style: normal; font-weight: 600; }
+
+/* De Lichtbak — grote fotoweergave voor Het Kasteel in Beeld */
+.lichtbak {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 10, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.lichtbak.open { display: flex; }
+.lichtbak-figuur {
+  max-width: min(92vw, 1100px);
+  max-height: 86vh;
+  margin: 0;
+  text-align: center;
+}
+.lichtbak-figuur img {
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 2px solid rgba(244, 208, 63, 0.45);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.7);
+}
+.lichtbak-figuur figcaption {
+  margin-top: 12px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.08rem;
+  color: var(--perkament);
+}
+.lichtbak-sluit,
+.lichtbak-vorige,
+.lichtbak-volgende {
+  position: fixed;
+  z-index: 10001;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid rgba(244, 208, 63, 0.5);
+  background: rgba(11, 10, 16, 0.75);
+  color: var(--kaars-goud);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.lichtbak-sluit:hover, .lichtbak-vorige:hover, .lichtbak-volgende:hover {
+  transform: scale(1.08);
+  background: rgba(244, 208, 63, 0.18);
+}
+.lichtbak-sluit { top: 18px; right: 18px; }
+.lichtbak-vorige { left: 14px; top: 50%; transform: translateY(-50%); }
+.lichtbak-volgende { right: 14px; top: 50%; transform: translateY(-50%); }
+.lichtbak-vorige:hover, .lichtbak-volgende:hover { transform: translateY(-50%) scale(1.08); }
+.gallery-item:hover img { transform: scale(1.03); transition: transform 0.3s ease; }
+@media (max-width: 480px) {
+  .lichtbak-vorige { left: 6px; }
+  .lichtbak-volgende { right: 6px; }
+  .lichtbak-figuur img { max-height: 66vh; }
+}

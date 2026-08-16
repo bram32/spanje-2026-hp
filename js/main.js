@@ -384,7 +384,7 @@
     { t: 19,  text: '29 oktober, 06:12, Schiphol. Acht tovenaars, één missie, nul ochtendmensen.' },
     { t: 22,  text: 'De Hogwarts Express vertrok stipt vanaf Platform 9¾ (in de praktijk: gate D14).' },
     { t: 25,  text: 'Derk probeerde door de muur te lopen. De muur won. Alweer een Ministerieel record.' },
-    { t: 28,  text: 'Boven Frankrijk: zware turbulentie. Of zoals Samuel het noemt: "gewoon Twents weer".' },
+    { t: 28,  text: 'Boven Frankrijk: zware turbulentie. Of zoals Samuel het noemt: "gewoon Gelders weer".' },
     { t: 31,  text: 'Málaga. De vliegende Ford Anglia stond klaar. Huurklasse: economy, maar mét vleugels.' },
     { t: 34,  text: 'Marc controleerde de borg driemaal. Gringotts-gewoonte. De automaat is nu bang voor hem.' },
     { t: 37,  text: 'El Rosario. Het kasteel. Privézwembad. Uitzicht op Gibraltar — wij zeggen: Azkaban.' },
@@ -395,7 +395,7 @@
     { t: 53,  text: '👻 En Jaap? JAAP GING MEE. De geest verliet zijn kasteel. Historici zijn er nog niet uit.' },
     { t: 56,  text: 'Zijn gitaarsolo om 02:00 werd in drie urbanisaties gehoord. Vier sterren op Tripadvisor.' },
     { t: 59,  text: 'David verloor een weddenschap en sprak een uur uitsluitend in Slytherin-citaten. Niemand merkte verschil.' },
-    { t: 62,  text: 'Samuel nam eigen pompoenen mee uit Twente. De douane had vragen. Samuel had antwoorden. Welke, weet niemand.' },
+    { t: 62,  text: 'Samuel nam eigen pompoenen mee uit Gelderland. De douane had vragen. Samuel had antwoorden. Welke, weet niemand.' },
     { t: 65,  text: 'Bram — De Jongen Die Boekte — kreeg zijn aanbetaling terug in respect. Uitsluitend in respect.' },
     { t: 68,  text: 'Treb deelde huispunten uit met de mildheid van een schoolhoofd en de precisie van een barman.' },
     { t: 72,  text: '31 oktober. HALLOWEEN. De Great Hall werd voorbereid. De kaarsen gingen vanzelf aan. Vanzelf.' },
@@ -1219,6 +1219,64 @@
         '&body=' + encodeURIComponent(brief);
     }, reducedMotion() ? 0 : 1400);
   }
+
+  /* ============================================================
+     DE LICHTBAK — klik een kasteelfoto en hij opent groot,
+     met onderschrift, pijltjes en Esc/tik-om-te-sluiten.
+     ============================================================ */
+  (function initLichtbak() {
+    var items = $$('.villa-gallery .gallery-item');
+    if (!items.length) return;
+
+    var huidig = 0;
+    var bak = document.createElement('div');
+    bak.className = 'lichtbak';
+    bak.setAttribute('role', 'dialog');
+    bak.setAttribute('aria-label', 'Fotoweergave');
+    bak.innerHTML =
+      '<button class="lichtbak-sluit" aria-label="Sluiten">✕</button>' +
+      '<button class="lichtbak-vorige" aria-label="Vorige foto">‹</button>' +
+      '<figure class="lichtbak-figuur"><img alt=""><figcaption></figcaption></figure>' +
+      '<button class="lichtbak-volgende" aria-label="Volgende foto">›</button>';
+    document.body.appendChild(bak);
+
+    var img = bak.querySelector('img');
+    var cap = bak.querySelector('figcaption');
+
+    function toon(i) {
+      huidig = (i + items.length) % items.length;
+      var bron = items[huidig].querySelector('img');
+      var tekst = items[huidig].querySelector('figcaption');
+      if (!bron) return;
+      img.src = bron.src;
+      img.alt = bron.alt || '';
+      cap.textContent = tekst ? tekst.textContent : '';
+    }
+
+    function open(i) { toon(i); bak.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function sluit() { bak.classList.remove('open'); document.body.style.overflow = ''; }
+
+    items.forEach(function (item, i) {
+      item.style.cursor = 'zoom-in';
+      item.setAttribute('tabindex', '0');
+      item.setAttribute('role', 'button');
+      item.addEventListener('click', function () { open(i); });
+      item.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(i); }
+      });
+    });
+
+    bak.querySelector('.lichtbak-sluit').addEventListener('click', sluit);
+    bak.querySelector('.lichtbak-vorige').addEventListener('click', function (e) { e.stopPropagation(); toon(huidig - 1); });
+    bak.querySelector('.lichtbak-volgende').addEventListener('click', function (e) { e.stopPropagation(); toon(huidig + 1); });
+    bak.addEventListener('click', function (e) { if (e.target === bak) sluit(); });
+    document.addEventListener('keydown', function (e) {
+      if (!bak.classList.contains('open')) return;
+      if (e.key === 'Escape') sluit();
+      if (e.key === 'ArrowLeft') toon(huidig - 1);
+      if (e.key === 'ArrowRight') toon(huidig + 1);
+    });
+  })();
 
   /* ============================================================
      GLOBALS — gebruikt door onclick-attributen in de HTML

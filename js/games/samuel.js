@@ -23,7 +23,7 @@
 
   const GRADES = [
     { min: 400, letter: 'U', word: 'Uitmuntend', punten: 100, rang: 'Sleutelbewaarder en Terreinknecht van Hogwarts' },
-    { min: 250, letter: 'B', word: 'Boven Verwachting', punten: 75, rang: 'Pompoenprins van Twente' },
+    { min: 250, letter: 'B', word: 'Boven Verwachting', punten: 75, rang: 'Pompoenprins van Gelderland' },
     { min: 150, letter: 'A', word: 'Acceptabel', punten: 50, rang: 'Gediplomeerd Kruidenkundige' },
     { min: 75, letter: 'Z', word: 'Zwak', punten: 25, rang: 'Boerenknecht (stagiair)' },
     { min: -Infinity, letter: 'T', word: 'Trol', punten: 0, rang: 'Trol met een troffel' }
@@ -36,7 +36,7 @@
     'Kiek an — pompoen van formaat!',
     'Die Spaanse stellen niks veur!',
     'Mooi wark, kearl!',
-    'Bijna zo groot as in Twente!'
+    'Bijna zo groot as in Gelderland!'
   ];
   const SPREUKEN_GIL = ['OORKLEPPEN, JONG!', 'Ik zei toch: oorkleppen!', 'Nee toch, niet weer...'];
   const SPREUKEN_GNOOM = ['Ontgnoomd as een prof!', 'Gooien dat ding!'];
