@@ -3462,3 +3462,17 @@ section:not(.hero) {
   margin: 26px 0 14px;
 }
 .marbella-section .golf-cards { margin-bottom: 6px; }
+
+/* Het inpak-bevel op de bal-kaart */
+.bal-bevel {
+  margin: 16px 0 10px;
+  padding: 14px 18px;
+  border: 2px dashed var(--pompoen);
+  border-radius: 14px;
+  background: rgba(255, 140, 46, 0.07);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--tekst);
+}
+.bal-bevel p + p { margin-top: 8px; }
+.bal-bevel em { color: var(--kaars-goud); font-style: normal; font-weight: 600; }
