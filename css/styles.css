@@ -3432,18 +3432,33 @@ section:not(.hero) {
 }
 
 
-/* Jaap's spookmodus: geen cirkel maar een hoge lijst — de volledige zwevende
-   geest (met mist onder zijn voeten) blijft zichtbaar. */
-.crew-jaap .crew-avatar { transition: width 0.45s ease, height 0.45s ease, border-radius 0.45s ease; }
-.crew-jaap.hp-mode .crew-avatar {
+/* Magische modus: de cirkel vouwt open tot een hoge portretlijst zodat de
+   volledige alter-ego-video zichtbaar is (Dumbledore's gewaad, Jaap's mist,
+   Marc's kluisdeur). Geldt voor alle deelnemers, incl. Treb's patronus-vorm. */
+.crew-member .crew-avatar { transition: width 0.45s ease, height 0.45s ease, border-radius 0.45s ease; }
+.crew-member.hp-mode .crew-avatar,
+.crew-member.patronus-mode .crew-avatar {
   width: 150px;
   height: 260px;
   border-radius: 18px;
 }
-.crew-jaap.hp-mode .crew-avatar video.active {
+.crew-member.hp-mode .crew-avatar video.active,
+.crew-member.patronus-mode .crew-avatar video.active {
   object-fit: contain;
   background: var(--inkt-zwart);
 }
 @media (max-width: 480px) {
-  .crew-jaap.hp-mode .crew-avatar { width: 128px; height: 222px; }
+  .crew-member.hp-mode .crew-avatar,
+  .crew-member.patronus-mode .crew-avatar { width: 128px; height: 222px; }
 }
+
+/* Marbella-gids: subkopjes tussen de kaart-rijen */
+.marbella-subkop {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--kaars-goud);
+  text-align: center;
+  letter-spacing: 0.06em;
+  margin: 26px 0 14px;
+}
+.marbella-section .golf-cards { margin-bottom: 6px; }
