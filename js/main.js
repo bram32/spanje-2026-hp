@@ -1116,6 +1116,13 @@
         window.setTimeout(function () { envelope.style.display = 'none'; }, 900);
       }
       if (letter) {
+        /* Het adres verhuist mee de brief in — het mag nooit verdwijnen. */
+        var adres = envelope ? envelope.querySelector('.envelope-address') : null;
+        if (adres && !letter.querySelector('.adres-naschrift')) {
+          var naschrift = adres.cloneNode(true);
+          naschrift.className = 'adres-naschrift';
+          letter.appendChild(naschrift);
+        }
         letter.classList.remove('folded');
         letter.classList.add('open');
       }
@@ -1141,7 +1148,7 @@
 
     letter.classList.add('folded');
     // Nooit content blokkeren: auto-open na 3,5s of bij eerste scroll.
-    window.setTimeout(openLetter, 3500);
+    window.setTimeout(openLetter, 5500);
     window.addEventListener('scroll', openLetter, { once: true, passive: true });
   })();
 

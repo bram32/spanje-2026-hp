@@ -600,9 +600,21 @@ section {
 
 .envelope-address {
   font-family: var(--font-script);
-  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-size: clamp(1.9rem, 5.5vw, 2.6rem);
   line-height: 1.5;
   color: var(--inkt-groen);
+}
+
+/* Na het openen verhuist het adres naar de voet van de brief */
+.adres-naschrift {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(244, 208, 63, 0.25);
+  font-family: var(--font-script);
+  font-size: clamp(1.35rem, 3.6vw, 1.8rem);
+  line-height: 1.5;
+  color: var(--kaars-goud);
+  opacity: 0.95;
 }
 
 /* Lakzegel met Z-crest */
