@@ -3268,7 +3268,7 @@ section:not(.hero) {
   .countdown-wrap { padding: 28px 18px; }
 
   .music-btn,
-  #musicBtn { width: 50px; height: 50px; font-size: 1.3rem; bottom: 18px; right: 18px; }
+  #musicBtn { width: 46px; height: 46px; font-size: 1.15rem; bottom: 92px; right: 12px; opacity: 0.85; }
 
   .puntenglas { padding: 20px 18px; }
   .puntenglas-total { font-size: 1.1rem; }
