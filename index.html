@@ -847,7 +847,8 @@
                 <button class="game-tab" data-game="pascal"><span class="tab-icon">🥫</span> <span class="tab-text">Pascals Blikkenlijn</span></button>
                 <button class="game-tab" data-game="marc"><span class="tab-icon">🏦</span> <span class="tab-text">Gringotts Fraudewacht</span></button>
                 <button class="game-tab" data-game="jaap"><span class="tab-icon">👻</span> <span class="tab-text">Spook op Locatie</span></button>
-                <button class="game-tab" data-game="treb"><span class="tab-icon">🍺</span> <span class="tab-text">Trebs Schuhplattler</span></button></div>
+                <button class="game-tab" data-game="treb"><span class="tab-icon">🍺</span> <span class="tab-text">Trebs Schuhplattler</span></button>
+                <button class="game-tab" data-game="david"><span class="tab-icon">🏛️</span> <span class="tab-text">Ontsnapping uit Florence</span></button></div>
     <!-- ════════ EXAMEN 5 · ⚡ VANG DE GOUDEN SNAAI (Quidditch — all-crew Zoeker-game) ════════ -->
 <div id="samuelGame" class="game-container active" style="display:block">
   <div class="samuel-kicker">Examen 1 · Kruidenkunde · Locatie: Landgoed Hengelo (Gld.)</div>
@@ -3084,6 +3085,441 @@
     </style>
 </div>
 
+      <div id="davidGame" class="game-container" style="display:none">
+    <div class="david-kicker">Examen 6 · Verweer tegen de Duistere Rijen · Solo-examen</div>
+    <h3 class="david-title">🏛️ Ontsnapping uit Florence</h3>
+    <p class="david-instructions">David zit voor werk vast in Florence — een openluchtmuseum op maximale capaciteit — terwijl het weekend donderdag begint. Hij zou ‘kijken of hij het kon inkorten’. Het Ministerie was duidelijk: <b>inkorten is geen optie, het is een opdracht.</b> Ren naar het vliegveld: <span class="david-chip">←</span> <span class="david-chip">→</span> of <span class="david-chip">A</span>/<span class="david-chip">D</span> wisselt van steegje (op mobiel: tik links of rechts). Ontwijk 🤳 ☂️ 🍦 en vooral DE RIJ — pak ☕ voor een sprint, 🎫 voor punten en speur naar 🧳 zijn verloren koffer.</p>
+
+    <div id="davidArea" tabindex="0" aria-label="Ontsnapping uit Florence — speelveld">
+
+        <!-- Toscaanse avondzon -->
+        <div class="david-sun" aria-hidden="true"></div>
+
+        <!-- Skyline: terracotta daken, Duomo, campanile, Palazzo-toren -->
+        <svg class="david-skyline" viewBox="0 0 600 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <!-- verre laag -->
+            <g fill="#a55f3d" opacity="0.55">
+                <rect x="0" y="72" width="70" height="48"/>
+                <rect x="60" y="60" width="50" height="60"/>
+                <rect x="360" y="66" width="70" height="54"/>
+                <rect x="500" y="58" width="60" height="62"/>
+                <rect x="548" y="70" width="52" height="50"/>
+                <polygon points="110,120 110,64 140,50 170,64 170,120"/>
+            </g>
+            <!-- nabije laag -->
+            <g fill="#7c3322">
+                <!-- campanile van Giotto -->
+                <rect x="180" y="40" width="22" height="80"/>
+                <rect x="177" y="34" width="28" height="9"/>
+                <rect x="184" y="48" width="3" height="10" fill="#5c2417"/>
+                <rect x="195" y="48" width="3" height="10" fill="#5c2417"/>
+                <!-- de Duomo -->
+                <path d="M252,120 v-16 q0,-38 48,-38 q48,0 48,38 v16 Z"/>
+                <path d="M262,112 q3,-34 38,-42 M338,112 q-3,-34 -38,-42" stroke="#5c2417" stroke-width="2" fill="none"/>
+                <rect x="295" y="56" width="10" height="14"/>
+                <rect x="291" y="52" width="18" height="5"/>
+                <line x1="300" y1="42" x2="300" y2="52" stroke="#7c3322" stroke-width="3"/>
+                <circle cx="300" cy="40" r="3.5"/>
+                <!-- Palazzo Vecchio-toren -->
+                <rect x="440" y="34" width="16" height="86"/>
+                <rect x="434" y="50" width="28" height="14"/>
+                <rect x="434" y="44" width="5" height="8"/>
+                <rect x="445" y="44" width="5" height="8"/>
+                <rect x="456" y="44" width="5" height="8"/>
+                <line x1="448" y1="18" x2="448" y2="34" stroke="#7c3322" stroke-width="3"/>
+                <!-- daken -->
+                <polygon points="0,120 0,86 30,74 62,86 62,120"/>
+                <polygon points="62,120 62,92 96,80 130,92 130,120"/>
+                <polygon points="130,120 130,96 160,86 190,96 190,120"/>
+                <polygon points="200,120 200,94 226,84 252,94 252,120"/>
+                <polygon points="348,120 348,94 376,84 404,94 404,120"/>
+                <polygon points="404,120 404,90 432,80 460,90 460,120"/>
+                <polygon points="460,120 460,96 492,84 524,96 524,120"/>
+                <polygon points="524,120 524,90 560,78 600,90 600,120"/>
+            </g>
+            <!-- dakpan-strookjes -->
+            <g stroke="#93402b" stroke-width="2" opacity="0.8">
+                <line x1="6" y1="92" x2="56" y2="92"/>
+                <line x1="70" y1="98" x2="122" y2="98"/>
+                <line x1="410" y1="96" x2="454" y2="96"/>
+                <line x1="530" y1="96" x2="594" y2="96"/>
+            </g>
+        </svg>
+
+        <!-- De straat: drie steegjes vol volk -->
+        <div id="davidStreet" aria-hidden="true">
+            <span class="david-lane-line david-ll-1"></span>
+            <span class="david-lane-line david-ll-2"></span>
+            <div class="david-boostfx"></div>
+            <div id="davidObs"></div>
+
+            <!-- David: platinablond achterovergekamd, trotse snor, Slytherin-sjaal, trolleykoffer -->
+            <div id="davidFig">
+                <svg id="davidFigSvg" viewBox="0 0 150 160" width="104" height="111">
+                    <ellipse cx="66" cy="150" rx="38" ry="6" fill="rgba(0,0,0,0.35)"/>
+                    <!-- trolleykoffer achter hem aan -->
+                    <g id="davidTrolley">
+                        <path d="M100,90 L121,113 M95,93 L116,116" stroke="#8a8f96" stroke-width="3.4" stroke-linecap="round"/>
+                        <rect x="104" y="112" width="34" height="30" rx="4" fill="#7a5230" stroke="#55351c" stroke-width="1.5"/>
+                        <line x1="113" y1="112" x2="113" y2="142" stroke="#55351c" stroke-width="2"/>
+                        <line x1="129" y1="112" x2="129" y2="142" stroke="#55351c" stroke-width="2"/>
+                        <circle cx="132" cy="120" r="5" fill="#f4d03f" stroke="#8a6d1c" stroke-width="1"/>
+                        <text x="132" y="122.2" text-anchor="middle" font-size="4" font-weight="bold" fill="#5c4a00" font-family="Montserrat,sans-serif">FLR</text>
+                        <circle cx="110" cy="145" r="4" fill="#22262b"/>
+                        <circle cx="132" cy="145" r="4" fill="#22262b"/>
+                    </g>
+                    <!-- benen: rennen -->
+                    <g id="davidLegL">
+                        <rect x="52" y="98" width="11" height="36" rx="4.5" fill="#3a3f4a"/>
+                        <ellipse cx="56" cy="137" rx="10" ry="5" fill="#4a2f1d" stroke="#2c1a0e" stroke-width="1"/>
+                    </g>
+                    <g id="davidLegR">
+                        <rect x="72" y="98" width="11" height="36" rx="4.5" fill="#3a3f4a"/>
+                        <ellipse cx="77" cy="137" rx="10" ry="5" fill="#4a2f1d" stroke="#2c1a0e" stroke-width="1"/>
+                    </g>
+                    <!-- linnen reisjasje + overhemd -->
+                    <rect x="46" y="56" width="44" height="46" rx="10" fill="#e3d6b8" stroke="#c9b990" stroke-width="1.2"/>
+                    <polygon points="60,58 76,58 68,76" fill="#f7f4ec"/>
+                    <path d="M60,58 L54,70 L60,78 Z" fill="#d3c29d"/>
+                    <path d="M76,58 L82,70 L76,78 Z" fill="#d3c29d"/>
+                    <circle cx="68" cy="82" r="1.6" fill="#8a744a"/>
+                    <circle cx="68" cy="90" r="1.6" fill="#8a744a"/>
+                    <!-- rechterarm pompt, linkerarm aan de trolley -->
+                    <g id="davidArmR">
+                        <rect x="37" y="59" width="10" height="31" rx="5" fill="#e3d6b8" stroke="#c9b990" stroke-width="1"/>
+                        <circle cx="42" cy="92" r="4.5" fill="#e8b88a"/>
+                    </g>
+                    <path d="M89,62 Q97,74 100,89" stroke="#e3d6b8" stroke-width="9" stroke-linecap="round" fill="none"/>
+                    <circle cx="100" cy="90" r="4.5" fill="#e8b88a"/>
+                    <!-- Slytherin-sjaal: groen met zilveren strepen, wapperend -->
+                    <g id="davidScarf">
+                        <path d="M52,54 q-17,5 -23,17 q-2,6 4,6 q11,-2 21,-15 Z" fill="#2e7d4f" stroke="#1d5636" stroke-width="1"/>
+                        <path d="M40,63 l8,-5 M34,70 l8,-5" stroke="#cfd6dd" stroke-width="2.4"/>
+                    </g>
+                    <rect x="52" y="50" width="32" height="9" rx="4.5" fill="#2e7d4f" stroke="#1d5636" stroke-width="1"/>
+                    <rect x="60" y="58" width="10" height="17" rx="3" fill="#2e7d4f" stroke="#1d5636" stroke-width="1"/>
+                    <path d="M60,63 h10 M60,69 h10" stroke="#cfd6dd" stroke-width="2"/>
+                    <!-- hoofd -->
+                    <g id="davidHead">
+                        <rect x="62" y="45" width="12" height="8" fill="#e8b88a"/>
+                        <ellipse cx="68" cy="32" rx="18" ry="17" fill="#e8b88a"/>
+                        <ellipse cx="50.5" cy="33" rx="3" ry="4" fill="#e0a878"/>
+                        <ellipse cx="85.5" cy="33" rx="3" ry="4" fill="#e0a878"/>
+                        <!-- platinablond, strak achterovergekamd -->
+                        <path d="M50,30 Q50,13 68,13 Q86,13 86,30 Q80,21 68,20 Q56,21 50,30 Z" fill="#ede0b8" stroke="#d9c78e" stroke-width="1"/>
+                        <path d="M57,17 Q68,13.5 80,17.5 M54,21 Q68,16 83,21.5" stroke="#f9f2da" stroke-width="1.2" fill="none"/>
+                        <!-- wenkbrauwen + ogen: vastberaden -->
+                        <path d="M58,27 l8,-1.5 M78,25.5 l-8,-1" stroke="#c9b06a" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="62" cy="31" r="1.9" fill="#2b2b33"/>
+                        <circle cx="74" cy="31" r="1.9" fill="#2b2b33"/>
+                        <path d="M68,32 q-1.5,4 0,6" stroke="#d09a6a" stroke-width="1.4" fill="none"/>
+                        <!-- de trotse snor -->
+                        <path d="M68,41 Q62,37 56,39.5 Q52,41 49,38.5 Q52,46 60,44.5 Q65,43.5 68,42 Q71,43.5 76,44.5 Q84,46 87,38.5 Q84,41 80,39.5 Q74,37 68,41 Z" fill="#e6d5a1" stroke="#bfa365" stroke-width="0.9"/>
+                        <!-- zweetdruppel: het is warm en de gate sluit -->
+                        <path d="M88,20 q3.4,4.6 0,6.8 q-3.4,-2.2 0,-6.8" fill="#8fd0f0"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Voortgang: Duomo → Ponte Vecchio → Stazione → AEROPORTO -->
+        <div id="davidProgress" aria-hidden="true">
+            <div class="david-prog-track">
+                <div id="davidProgFill"></div>
+                <div id="davidProgMarker"></div>
+            </div>
+            <div class="david-prog-labels">
+                <span>🏛️ Duomo</span><span>🌉 Ponte V.</span><span>🚉 Stazione</span><span class="david-prog-goal">✈️ AEROPORTO</span>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="davidPhase">🏛️ Duomo — max. capaciteit</div>
+        <div class="david-pill david-pill-timer">⏱️ <span id="davidTimer">45</span>s</div>
+        <div class="david-pill david-pill-score">Score: <span id="davidScore">0</span></div>
+        <div id="davidBoostPill">☕ SPRINT!</div>
+
+        <div id="davidFeedback" aria-live="polite"></div>
+        <div id="davidSplash"><span id="davidSplashText">SCUSI!</span></div>
+
+        <!-- Startscherm -->
+        <div id="davidStatus">
+            <div class="david-status-icon">🏛️</div>
+            <div class="david-status-main">Tik om te ontsnappen uit Florence!</div>
+            <div class="david-status-legend">⬅️➡️ of <b>A</b>/<b>D</b>: wissel van steegje · ☕ sprint · 🎫 +100 · 🧳 bonus</div>
+            <div class="david-status-sub">Achtduizend Amerikanen staan tussen David en de gate. De rij heeft een eigen rij.</div>
+        </div>
+
+        <!-- Eindrapport -->
+        <div id="davidResult" style="display:none">
+            <div class="david-result-kicker">O.W.L.-cijfer</div>
+            <div id="davidResultGrade">T</div>
+            <div id="davidResultTitle">Voor eeuwig in de rij</div>
+            <p id="davidResultText">…</p>
+            <div id="davidResultScore">…</div>
+            <p class="david-result-small">Officiële mededeling: aperol aan de gate kost bezemsteelprijzen. Declareren kan bij niemand.</p>
+            <button type="button" class="david-replay" onclick="window.davidGameStart()">🔄 Opnieuw rennen naar de gate</button>
+        </div>
+    </div>
+
+    <!-- Steegjesknoppen (mobiel + muis) -->
+    <div class="david-controls">
+        <button type="button" class="david-lane-btn" id="davidBtnLeft" data-key="left">
+            <span class="david-btn-label">⬅️ STEEGJE LINKS</span><span class="david-btn-key">A / ←</span>
+        </button>
+        <button type="button" class="david-lane-btn" id="davidBtnRight" data-key="right">
+            <span class="david-btn-label">STEEGJE RECHTS ➡️</span><span class="david-btn-key">D / →</span>
+        </button>
+    </div>
+    <p class="david-tip">💡 Reistip van het Ministerie: wie in Florence stilstaat, sluit juridisch gezien aan in een rij. Blijf rennen, groet niemand.</p>
+
+    <style>
+    /* ============ ONTSNAPPING UIT FLORENCE — scoped styles ============ */
+    #davidGame { max-width: 640px; margin: 0 auto; text-align: center; }
+    #davidGame .david-kicker { color: #b03a2e; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+    #davidGame .david-title { color: #b03a2e; margin-bottom: 10px; font-size: 1.5rem; }
+    #davidGame .david-instructions { color: #999; margin-bottom: 24px; font-size: 0.95rem; line-height: 1.6; }
+    #davidGame .david-instructions b { color: #d98e6a; }
+    #davidGame .david-chip { display: inline-block; padding: 0 7px; border-radius: 5px; border: 1.5px solid #b03a2e; color: #d98e6a; font-weight: 700; font-size: 0.85em; }
+
+    #davidGame #davidArea {
+        position: relative; width: 100%; height: 450px; border-radius: 20px;
+        overflow: hidden; border: 3px solid #b03a2e; outline: none;
+        background: linear-gradient(180deg, #f7c873 0%, #eda75c 14%, #d98747 22%, #8a4630 27%, #4a382d 30%, #3a2c23 100%);
+        cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+    }
+    #davidGame #davidArea.shake { animation: davidShake 0.4s ease; }
+    #davidGame #davidArea.boost { box-shadow: inset 0 0 70px rgba(244, 208, 63, 0.25); }
+
+    #davidGame .david-sun {
+        position: absolute; top: 8px; left: 12%; width: 54px; height: 54px; border-radius: 50%;
+        background: #ffe9b0; box-shadow: 0 0 46px 22px rgba(255, 220, 140, 0.55);
+        z-index: 1; pointer-events: none;
+    }
+    #davidGame .david-skyline { position: absolute; top: 0; left: 0; width: 100%; height: 120px; z-index: 1; pointer-events: none; }
+
+    /* De straat */
+    #davidGame #davidStreet {
+        position: absolute; left: 0; right: 0; top: 96px; bottom: 0; z-index: 3;
+        background:
+            repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.14) 0 2px, rgba(255, 255, 255, 0) 2px 30px),
+            repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 2px, rgba(255, 255, 255, 0) 2px 38px),
+            linear-gradient(180deg, #5a483c 0%, #4a3a30 45%, #3d2f27 100%);
+        box-shadow: inset 26px 0 34px rgba(15, 8, 4, 0.6), inset -26px 0 34px rgba(15, 8, 4, 0.6);
+    }
+    #davidGame #davidArea.running #davidStreet { animation: davidStreetScroll 0.7s linear infinite; }
+    #davidGame #davidArea.boost #davidStreet { animation-duration: 0.42s; }
+    #davidGame .david-lane-line { position: absolute; top: 0; bottom: 0; width: 2px; background: repeating-linear-gradient(180deg, rgba(240, 217, 194, 0.28) 0 16px, rgba(240, 217, 194, 0) 16px 34px); pointer-events: none; }
+    #davidGame .david-ll-1 { left: 33.33%; }
+    #davidGame .david-ll-2 { left: 66.66%; }
+    #davidGame .david-boostfx {
+        position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: repeating-linear-gradient(180deg, rgba(255, 244, 200, 0.16) 0 3px, rgba(255, 244, 200, 0) 3px 44px);
+        transition: opacity 0.2s;
+    }
+    #davidGame #davidArea.boost .david-boostfx { opacity: 1; animation: davidStreetScroll 0.3s linear infinite; }
+    #davidGame #davidObs { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+
+    /* Obstakels + pickups */
+    #davidGame .david-ob { position: absolute; top: 0; z-index: 4; pointer-events: none; will-change: transform; }
+    #davidGame .david-ob.bonk { filter: grayscale(0.7) brightness(0.65); opacity: 0.5; }
+    #davidGame .david-ob.got { opacity: 0; border-color: transparent; box-shadow: none; transition: opacity 0.32s ease, border-color 0.15s, box-shadow 0.15s; }
+    #davidGame .david-ob.got span { display: inline-block; animation: davidPickPop 0.35s ease-out forwards; }
+    #davidGame .david-ob-selfie { font-size: 2.1rem; line-height: 1; }
+    #davidGame .david-swing { display: inline-block; animation: davidSway 0.9s ease-in-out infinite; }
+    #davidGame .david-ob-tag {
+        display: block; margin-top: 2px; font-style: normal; font-family: Montserrat, sans-serif;
+        font-weight: 800; font-size: 0.5rem; letter-spacing: 0.5px; color: #fff;
+        background: #b03a2e; border-radius: 3px; padding: 1px 4px; transform: rotate(-4deg);
+    }
+    #davidGame .david-ob-gelato { width: 66px; }
+    #davidGame .david-ob-gelato b { display: block; font-size: 1.5rem; line-height: 1; margin-bottom: -2px; }
+    #davidGame .david-ob-gelato i {
+        display: block; font-style: normal; font-family: Montserrat, sans-serif; font-weight: 800;
+        font-size: 0.55rem; color: #7c241a; background: #f2e9dc; border: 2px solid #b03a2e; border-radius: 4px;
+        padding: 6px 3px 3px; position: relative; overflow: hidden;
+    }
+    #davidGame .david-ob-gelato i::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+        background: repeating-linear-gradient(90deg, #b03a2e 0 8px, #f2e9dc 8px 16px);
+    }
+    #davidGame .david-ob-guide { display: flex; flex-direction: column; align-items: center; line-height: 1.05; }
+    #davidGame .david-guide-um { font-size: 1.7rem; animation: davidSway 1.1s ease-in-out infinite; }
+    #davidGame .david-guide-t { font-size: 1.25rem; }
+    #davidGame .david-guide-t:nth-child(even) { transform: translateX(-7px); }
+    #davidGame .david-guide-t:nth-child(odd) { transform: translateX(7px); }
+    #davidGame .david-ob-wall { width: 58%; }
+    #davidGame .david-ob-wall i { display: block; font-style: normal; font-size: 1rem; letter-spacing: 3px; line-height: 1; margin-bottom: 1px; }
+    #davidGame .david-ob-wall b {
+        display: block; padding: 5px 6px; border: 2px solid #7c241a; border-radius: 6px;
+        background: repeating-linear-gradient(45deg, #b03a2e 0 14px, #f2e9dc 14px 28px);
+        color: #fff; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 0.7rem;
+        letter-spacing: 1.5px; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    }
+    #davidGame .david-ob-espresso, #davidGame .david-ob-pass, #davidGame .david-ob-koffer {
+        width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-size: 1.35rem; background: rgba(20, 14, 10, 0.78); border: 2.5px solid;
+    }
+    #davidGame .david-ob-espresso { border-color: #f4d03f; box-shadow: 0 0 12px rgba(244, 208, 63, 0.7); }
+    #davidGame .david-ob-pass { border-color: #2ecc71; box-shadow: 0 0 12px rgba(46, 204, 113, 0.6); }
+    #davidGame .david-ob-koffer { border-color: #f4d03f; box-shadow: 0 0 18px rgba(244, 208, 63, 0.95); animation: davidGlow 0.8s ease-in-out infinite alternate; }
+
+    /* David zelf */
+    #davidGame #davidFig {
+        position: absolute; bottom: 4px; left: 50%; margin-left: -52px; width: 104px; z-index: 5;
+        pointer-events: none; transition: left 0.16s ease-out;
+    }
+    #davidGame #davidFigSvg { transform-origin: 50% 100%; }
+    #davidGame #davidLegL, #davidGame #davidLegR { transform-box: fill-box; transform-origin: 50% 6%; }
+    #davidGame #davidArmR { transform-box: fill-box; transform-origin: 50% 8%; }
+    #davidGame #davidTrolley { transform-box: fill-box; transform-origin: 50% 90%; }
+    #davidGame #davidScarf { transform-box: fill-box; transform-origin: 95% 10%; }
+    #davidGame #davidArea.running #davidLegL { animation: davidRunA 0.34s linear infinite; }
+    #davidGame #davidArea.running #davidLegR { animation: davidRunB 0.34s linear infinite; }
+    #davidGame #davidArea.running #davidArmR { animation: davidPump 0.34s linear infinite; }
+    #davidGame #davidArea.running #davidTrolley { animation: davidTrolleyBob 0.34s linear infinite; }
+    #davidGame #davidArea.running #davidScarf { animation: davidScarfWave 0.6s ease-in-out infinite; }
+    #davidGame #davidArea.boost #davidFigSvg { transform: rotate(-5deg) translateY(-2px); }
+    #davidGame #davidFig.lean #davidFigSvg { transform: rotate(3deg); }
+    #davidGame #davidFig.stumble { animation: davidBlink 0.34s step-end 6; }
+    #davidGame #davidFig.stumble #davidFigSvg { animation: davidTrip 0.55s ease; }
+
+    /* Voortgangsbalk */
+    #davidGame #davidProgress { position: absolute; top: 46px; left: 12px; right: 12px; z-index: 6; pointer-events: none; }
+    #davidGame .david-prog-track { position: relative; height: 10px; border-radius: 6px; background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(255, 255, 255, 0.28); }
+    #davidGame #davidProgFill { height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, #e8a317, #f4d03f, #2ecc71); transition: width 0.2s linear; }
+    #davidGame #davidProgMarker {
+        position: absolute; top: 50%; left: 0; transform: translate(-50%, -50%); width: 16px; height: 16px;
+        border-radius: 50%; background: #b03a2e; border: 2.5px solid #fff;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.6); transition: left 0.2s linear;
+    }
+    #davidGame .david-prog-labels {
+        display: flex; justify-content: space-between; margin-top: 3px;
+        font-family: Montserrat, sans-serif; font-weight: 700; font-size: 0.56rem; letter-spacing: 0.4px;
+        color: #f0d9c2; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+    }
+    #davidGame .david-prog-goal { color: #f4d03f; }
+
+    /* HUD */
+    #davidGame .david-pill {
+        position: absolute; top: 10px; z-index: 6; padding: 7px 13px; border-radius: 20px;
+        background: rgba(0, 0, 0, 0.72); font-family: Montserrat, sans-serif; font-weight: 700; font-size: 0.88rem; pointer-events: none;
+    }
+    #davidGame .david-pill-timer { left: 50%; transform: translateX(-50%); color: #fff; }
+    #davidGame .david-pill-score { right: 12px; color: #f4d03f; }
+    #davidGame #davidPhase {
+        position: absolute; top: 12px; left: 12px; z-index: 6; padding: 5px 10px; border-radius: 12px;
+        background: rgba(176, 58, 46, 0.82); color: #ffe3d6; font-family: Montserrat, sans-serif;
+        font-weight: 700; font-size: 0.6rem; letter-spacing: 0.5px; pointer-events: none; max-width: 44%; text-align: left;
+    }
+    #davidGame #davidBoostPill {
+        position: absolute; top: 74px; right: 12px; z-index: 6; display: none;
+        padding: 5px 11px; border-radius: 14px; background: rgba(244, 208, 63, 0.92);
+        color: #4a2f00; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 0.78rem; pointer-events: none;
+    }
+
+    #davidGame #davidFeedback {
+        position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); z-index: 7;
+        font-family: Montserrat, sans-serif; font-weight: 800; font-size: 1.3rem; white-space: nowrap;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); opacity: 0; pointer-events: none;
+    }
+    #davidGame #davidSplash {
+        position: absolute; inset: 0; z-index: 8; display: none; align-items: center; justify-content: center;
+        background: radial-gradient(circle, rgba(176, 58, 46, 0.32), rgba(176, 58, 46, 0.06));
+        pointer-events: none;
+    }
+    #davidGame #davidSplash span {
+        color: #ff8a70; font-family: Montserrat, sans-serif; font-weight: 800; font-size: 1.7rem; font-style: italic;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9); letter-spacing: 1px; padding: 0 10px;
+    }
+
+    /* Startscherm + eindrapport */
+    #davidGame #davidStatus {
+        position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 10px;
+        background: rgba(14, 8, 5, 0.62); cursor: pointer;
+    }
+    #davidGame .david-status-icon { font-size: 3rem; }
+    #davidGame .david-status-main { color: #fff; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.25rem; }
+    #davidGame .david-status-legend { color: #ccc; font-size: 0.85rem; font-family: Montserrat, sans-serif; padding: 0 12px; }
+    #davidGame .david-status-legend b { color: #ff9a80; }
+    #davidGame .david-status-sub { color: #999; font-size: 0.75rem; font-style: italic; padding: 0 16px; }
+    #davidGame #davidResult {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 20;
+        min-width: 270px; max-width: 88%; padding: 24px 28px; border-radius: 18px;
+        background: rgba(16, 10, 8, 0.96); border: 2px solid #b03a2e; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    }
+    #davidGame .david-result-kicker { color: #999; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; font-family: Montserrat, sans-serif; }
+    #davidGame #davidResultGrade {
+        width: 66px; height: 66px; line-height: 60px; margin: 10px auto; border-radius: 50%;
+        border: 3px solid #b03a2e; color: #b03a2e; font-size: 2.2rem; font-weight: 800; font-family: Montserrat, sans-serif;
+    }
+    #davidGame #davidResultTitle { color: #fff; font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; font-family: Montserrat, sans-serif; }
+    #davidGame #davidResultText { color: #bbb; font-size: 0.9rem; line-height: 1.5; margin-bottom: 10px; }
+    #davidGame #davidResultScore { color: #f4d03f; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+    #davidGame .david-result-small { color: #666; font-size: 0.68rem; font-style: italic; margin-bottom: 14px; }
+    #davidGame .david-replay {
+        padding: 12px 30px; border: none; border-radius: 25px; background: #b03a2e; color: #fff;
+        font-weight: 700; font-size: 1rem; cursor: pointer; font-family: Montserrat, sans-serif;
+        transition: transform 0.15s ease; touch-action: manipulation;
+    }
+    #davidGame .david-replay:hover { transform: scale(1.05); }
+
+    /* Steegjesknoppen */
+    #davidGame .david-controls { margin-top: 18px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    #davidGame .david-lane-btn {
+        min-height: 64px; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 4px; border-radius: 14px;
+        border: 3px solid #b03a2e; background: rgba(176, 58, 46, 0.16); color: #ff9a80;
+        font-family: Montserrat, sans-serif; font-weight: 700; cursor: pointer;
+        touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent;
+        transition: transform 0.08s ease, filter 0.08s ease;
+    }
+    #davidGame .david-lane-btn.pressed { transform: scale(0.93); filter: brightness(1.5); }
+    #davidGame .david-btn-label { font-size: 0.92rem; }
+    #davidGame .david-btn-key { padding: 1px 9px; border: 1.5px solid currentColor; border-radius: 6px; font-size: 0.72rem; opacity: 0.85; }
+    #davidGame .david-tip { margin-top: 14px; color: #777; font-size: 0.8rem; font-style: italic; }
+
+    /* Keyframes (namespaced — geen botsingen met andere examens) */
+    @keyframes davidShake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
+    @keyframes davidStreetScroll { from { background-position: 0 0, 0 0, 0 0; } to { background-position: 0 30px, 0 0, 0 0; } }
+    @keyframes davidSway { 0%, 100% { transform: translateX(-9px) rotate(-8deg); } 50% { transform: translateX(9px) rotate(8deg); } }
+    @keyframes davidGlow { from { transform: scale(1); } to { transform: scale(1.12); } }
+    @keyframes davidPickPop { 40% { transform: scale(1.35); opacity: 1; } 100% { transform: scale(1.7); opacity: 0; } }
+    @keyframes davidRunA { 0%, 100% { transform: rotate(24deg); } 50% { transform: rotate(-24deg); } }
+    @keyframes davidRunB { 0%, 100% { transform: rotate(-24deg); } 50% { transform: rotate(24deg); } }
+    @keyframes davidPump { 0%, 100% { transform: rotate(-18deg); } 50% { transform: rotate(22deg); } }
+    @keyframes davidTrolleyBob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(2deg); } }
+    @keyframes davidScarfWave { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(9deg); } }
+    @keyframes davidTrip { 0% { transform: rotate(0); } 30% { transform: rotate(-14deg) translateY(6px); } 60% { transform: rotate(8deg) translateY(2px); } 100% { transform: rotate(0); } }
+    @keyframes davidBlink { 50% { opacity: 0.35; } }
+    @keyframes davidPop { 0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0; } 30% { transform: translate(-50%, -50%) scale(1.18); opacity: 1; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+    @keyframes davidFloatUp { from { opacity: 1; transform: translate(-50%, 0); } to { opacity: 0; transform: translate(-50%, -48px); } }
+    @keyframes davidShoutUp { 0% { opacity: 0; transform: translate(-50%, 8px) scale(0.7); } 20% { opacity: 1; transform: translate(-50%, 0) scale(1.12); } 80% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -30px) scale(1); } }
+    @keyframes davidSplashFlash { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
+
+    @media (max-width: 480px) {
+        #davidGame #davidArea { height: 400px; }
+        #davidGame #davidStreet { top: 84px; }
+        #davidGame .david-skyline { height: 104px; }
+        #davidGame #davidProgress { top: 42px; }
+        #davidGame .david-prog-labels { font-size: 0.5rem; }
+        #davidGame #davidFig { width: 88px; margin-left: -44px; }
+        #davidGame #davidFigSvg { width: 88px; height: 94px; }
+        #davidGame .david-pill { font-size: 0.72rem; padding: 6px 9px; }
+        #davidGame #davidPhase { font-size: 0.52rem; max-width: 40%; }
+        #davidGame #davidBoostPill { top: 66px; }
+        #davidGame .david-ob-wall b { font-size: 0.6rem; letter-spacing: 1px; }
+        #davidGame .david-lane-btn { min-height: 62px; }
+        #davidGame #davidFeedback { font-size: 1.05rem; }
+        #davidGame #davidSplash span { font-size: 1.25rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        #davidGame *, #davidGame *::before, #davidGame *::after { animation: none !important; }
+    }
+    </style>
+</div>
+
   </section>
 
   <!-- ============================================================
@@ -3277,6 +3713,7 @@
   <script src="./js/games/marc.js" defer></script>
   <script src="./js/games/jaap.js" defer></script>
   <script src="./js/games/treb.js" defer></script>
+  <script src="./js/games/david.js" defer></script>
 
   <!-- iPhone/mobiele performance-optimalisaties (erfstuk van de oude site) -->
   <script>

@@ -33,15 +33,15 @@
         { p: 0.66, label: '🚉 Stazione — de gate lonkt' }
     ];
 
-    // Obstakel- en pickup-types: h = halve botshoogte in px
+    // Obstakel- en pickup-types: h = halve botshoogte in px (y = middelpunt)
     var OB = {
-        selfie:   { harm: true,  h: 28, cls: 'david-ob-selfie' },
-        gelato:   { harm: true,  h: 32, cls: 'david-ob-gelato' },
-        guide:    { harm: true,  h: 84, cls: 'david-ob-guide' },
-        wall:     { harm: true,  h: 26, cls: 'david-ob-wall' },
+        selfie:   { harm: true,  h: 26, cls: 'david-ob-selfie' },
+        gelato:   { harm: true,  h: 30, cls: 'david-ob-gelato' },
+        guide:    { harm: true,  h: 55, cls: 'david-ob-guide' },
+        wall:     { harm: true,  h: 24, cls: 'david-ob-wall' },
         espresso: { harm: false, h: 22, cls: 'david-ob-espresso', pts: 50 },
         pass:     { harm: false, h: 22, cls: 'david-ob-pass',     pts: 100 },
-        koffer:   { harm: false, h: 24, cls: 'david-ob-koffer',   pts: 250 }
+        koffer:   { harm: false, h: 22, cls: 'david-ob-koffer',   pts: 250 }
     };
 
     var GRADE_COLORS = { U: '#f4d03f', B: '#2ecc71', A: '#5dade2', Z: '#e67e22', T: '#e74c3c' };
@@ -352,7 +352,7 @@
         for (var i = state.obs.length - 1; i >= 0; i--) {
             var ob = state.obs[i];
             ob.y += scroll * (dt / 1000);
-            ob.el.style.transform = 'translate(-50%,' + ob.y.toFixed(1) + 'px)';
+            ob.el.style.transform = 'translate(-50%,' + (ob.y - ob.h).toFixed(1) + 'px)';
             if (!ob.done) {
                 var dy = Math.abs(ob.y - davidY);
                 if (dy < ob.h + DAVID_HALF && ob.lanes.indexOf(state.lane) !== -1) {
@@ -414,10 +414,10 @@
     function obHTML(type) {
         if (type === 'selfie') return '<span class="david-swing">🤳</span><i class="david-ob-tag">I ❤ FIRENZE</i>';
         if (type === 'gelato') return '<b>🍦</b><i>GELATO · €12</i>';
-        if (type === 'guide') return '<span class="david-guide-um">☂️</span><span class="david-guide-t">🧢</span><span class="david-guide-t">📷</span><span class="david-guide-t">🎒</span>';
-        if (type === 'espresso') return '☕';
-        if (type === 'pass') return '🎫';
-        if (type === 'koffer') return '🧳';
+        if (type === 'guide') return '<span class="david-guide-um">☂️</span><span class="david-guide-t">🧢</span><span class="david-guide-t">📷</span><span class="david-guide-t">🎒</span><span class="david-guide-t">👒</span>';
+        if (type === 'espresso') return '<span>☕</span>';
+        if (type === 'pass') return '<span>🎫</span>';
+        if (type === 'koffer') return '<span>🧳</span>';
         return '';
     }
 
@@ -430,7 +430,7 @@
         el.style.left = LANE_X[lane] + '%';
         el.style.transform = 'translate(-50%,-' + (def.h * 2 + 40) + 'px)';
         obsWrap.appendChild(el);
-        state.obs.push({ el: el, type: type, lanes: [lane], y: -(def.h * 2 + 40), h: def.h, harm: def.harm, done: false });
+        state.obs.push({ el: el, type: type, lanes: [lane], y: -(def.h + 40), h: def.h, harm: def.harm, done: false });
         if (def.harm) state.recentHarm.push({ lane: lane, t: t });
     }
 
