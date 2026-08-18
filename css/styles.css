@@ -3556,3 +3556,35 @@ section:not(.hero) {
   .lichtbak-volgende { right: 6px; }
   .lichtbak-figuur img { max-height: 66vh; }
 }
+
+/* De Filmcanon — avondcolleges met embeds */
+.film-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.film-card {
+  background: var(--glas, rgba(255,255,255,0.05));
+  border: 1px solid rgba(244, 208, 63, 0.25);
+  border-radius: 16px;
+  padding: 14px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.film-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
+.film-card:last-child { grid-column: 1 / -1; max-width: 640px; justify-self: center; width: 100%; }
+.film-embed { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: #000; }
+.film-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.film-card h4 {
+  font-family: var(--font-display);
+  color: var(--kaars-goud);
+  font-size: 1.1rem;
+  margin: 12px 0 6px;
+}
+.film-jaar { color: var(--tekst-gedimd); font-size: 0.9rem; font-weight: 400; }
+.film-card p { font-size: 0.95rem; color: var(--tekst-zacht); line-height: 1.55; }
+@media (max-width: 700px) {
+  .film-grid { grid-template-columns: 1fr; }
+  .film-card:last-child { max-width: none; }
+}
