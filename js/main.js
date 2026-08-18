@@ -389,6 +389,7 @@
     { t: 34,  text: 'Marc controleerde de borg driemaal. Gringotts-gewoonte. De automaat is nu bang voor hem.' },
     { t: 37,  text: 'El Rosario. Het kasteel. Privézwembad. Uitzicht op Gibraltar — wij zeggen: Azkaban.' },
     { t: 40,  text: 'Op heldere dagen zie je Marokko. Op minder heldere dagen zie je Davids snor.' },
+    { t: 42,  text: '🏛️ Tussenbericht uit Florence: David staat in een rij. Waarvoor is onbekend. Voor de rij: ook een rij.' },
     { t: 44,  text: 'Dag 2: Quidditch voor Muggles, Santa Clara. Achttien holes. Verder geen details voor het dossier.' },
     { t: 47,  text: 'In Noord-Europa regende het die dag. Wij dronken overdag op het strand. Uit respect.' },
     { t: 50,  text: 'Peeg gaf Potions aan het zwembad. Eerste les: "Het is geen mixen. Het is wetenschap."' },

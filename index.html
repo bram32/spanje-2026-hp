@@ -161,7 +161,7 @@
     <p class="section-sub">🧙 Klik op een student voor zijn magische ware aard.</p>
     <div class="rsvp-status" role="list" aria-label="RSVP-status per student">
       <span class="rsvp-pil rsvp-pil-bevestigd" role="listitem">✅ Bevestigd: <strong>Bram, Derk, Marc &amp; Samuel</strong></span>
-      <span class="rsvp-pil rsvp-pil-onderweg" role="listitem">🦉 Uil onderweg: <strong>Treb, David, Peeg &amp; Jaap</strong></span>
+      <span class="rsvp-pil rsvp-pil-onderweg" role="listitem">🦉 Uil onderweg: <strong>Treb, David (per expresse-uil uit Florence), Peeg &amp; Jaap</strong></span>
     </div>
 
     <div class="crew-grid">
@@ -238,18 +238,18 @@
 
       <!-- David — Draco Malfoy, mét snor -->
       <div class="crew-member" data-state="normal">
-        <span class="stempel stempel-mini stempel-oranje">🦉 UIL ONDERWEG</span>
+        <span class="stempel stempel-mini stempel-oranje">🏛️ VAST IN FLORENCE (TOT VR)</span>
         <div class="crew-avatar clickable-avatar" onclick="toggleMagic(this)">
           <video class="vid-normal active" src="./assets/videos/crew-5.mp4" autoplay loop muted playsinline webkit-playsinline preload="metadata"></video>
           <video class="vid-hp" src="./assets/videos/hp-david.mp4" loop muted playsinline webkit-playsinline preload="none"></video>
           <div class="video-loader" aria-hidden="true">⏳</div>
         </div>
-        <h4 class="crew-name" tabindex="0" data-tooltip="Gaat een andere keer naar New York. Zijn vader zal hiervan horen.">David</h4>
+        <h4 class="crew-name" tabindex="0" data-tooltip="Zit tot vr 30 okt &lsquo;voor werk&rsquo; in Florence. Voor. Werk.">David</h4>
         <p class="crew-role">Draco Malfoy, mét snor</p>
-        <p class="crew-bio">Slytherin-blond, snor van een kampioen, smug-niveau: erfgenaam Landhuis Malfoy.</p>
+        <p class="crew-bio">Slytherin-blond, snor van een kampioen, smug-niveau: erfgenaam Landhuis Malfoy. Wordt tot vrijdag 30 oktober vastgehouden in Florence: een openluchtmuseum op maximale bezetting, achtduizend Amerikanen met zonneklep in de rij voor &eacute;&eacute;n standbeeld, aperol voor de prijs van een bezem &mdash; en nul beste vrienden. Hij &lsquo;gaat kijken of hij het kan inkorten&rsquo;. Het Ministerie heeft dit gecorrigeerd: <strong>inkorten is geen optie, het is een opdracht</strong> (Decreet 30-10, art. 1).</p>
         <details class="rita">
           <summary class="rita-toggle" aria-label="Roddel uit the Daily Prophet">📰</summary>
-          <p class="rita-roddel">&ldquo;&lsquo;Mijn vader zal hiervan horen,&rsquo; riep hij bij het inchecken. Zijn vader is niet mee.&rdquo; <span class="rita-sign">— R.S., the Daily Prophet</span></p>
+          <p class="rita-roddel">&ldquo;Gesignaleerd op een overvolle piazza, turend naar vluchten FLR&rarr;AGP. &lsquo;Vier eeuwen Renaissance en nog nergens een vrij terras,&rsquo; snikte een bron in een snor. Zijn vader zal hiervan horen. Florence ook.&rdquo; <span class="rita-sign">— R.S., the Daily Prophet</span></p>
         </details>
         <button type="button" class="uil-cta" onclick="stuurUil('David')">🦉 Stuur je uil</button>
       </div>
@@ -309,7 +309,7 @@
     </div>
 
     <p class="kleine-lettertjes">P. (Pascal) is voorwaardelijk vrijgesteld van toelating: rond de vertrekdatum wordt bij hem thuis een kleine tovenaar verwacht. Zijn uil houdt alle opties open. Zie Examen 2.</p>
-    <p class="dreuzel-disclaimer">Het Ministerie is niet aansprakelijk voor snorren (art. 3, lid David).</p>
+    <p class="dreuzel-disclaimer">Het Ministerie is niet aansprakelijk voor snorren (art. 3, lid David), noch voor steden die &lsquo;heel mooi schijnen te zijn&rsquo; maar vol staan met rijen, zonnekleppen en nul beste vrienden (art. 3a, lid Florence).</p>
   </section>
 
   <!-- ============================================================
@@ -361,6 +361,7 @@
           </symbol>
           <!-- Looppaadjes van de voetstappen -->
           <path id="pathSamuelTwente" d="M492 130 L438 128 C 350 200, 250 330, 172 408" fill="none"/>
+          <path id="pathFlorence" d="M600 295 C 470 370, 310 405, 172 408" fill="none"/>
           <!-- Reisroutes -->
           <path id="pathAms" d="M432 128 C 350 200, 250 330, 172 408" fill="none"/>
           <path id="pathParis" d="M352 218 C 290 300, 225 360, 172 408" fill="none"/>
@@ -401,6 +402,8 @@
         <use href="#pathHengelo" stroke="#2e5a8e" stroke-width="1.6" stroke-dasharray="4 5" opacity=".8"/>
         <use href="#pathWassenaar" stroke="#2e5a8e" stroke-width="1.6" stroke-dasharray="4 5" opacity=".8"/>
         <use href="#pathAnglia" stroke="#1d7c7e" stroke-width="2" stroke-dasharray="5 6" opacity=".85"/>
+        <use href="#pathFlorence" stroke="#8e1b1b" stroke-width="2" stroke-dasharray="4 7" opacity=".8"/>
+        <text x="430" y="392" fill="#8e1b1b" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="12" transform="rotate(-7 430 392)">Boetedoening: FLR→AGP, uiterlijk vr 30 okt</text>
         <text x="300" y="262" fill="#6b573a" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="13" transform="rotate(-38 300 262)">Uilenroute AMS→AGP</text>
         <text x="132" y="376" fill="#1d7c7e" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="12">vlieghoogte: laag, stijl: Weasley</text>
 
@@ -409,6 +412,9 @@
           <circle cx="432" cy="128" r="6" fill="#3b2f1e"><animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/></circle>
           <text x="432" y="112" text-anchor="middle" fill="#3b2f1e">Amsterdam</text>
           <circle cx="492" cy="130" r="4" fill="#2e5a8e"/>
+          <circle cx="600" cy="295" r="5" fill="#8e1b1b"><animate attributeName="r" values="4;6;4" dur="2.4s" repeatCount="indefinite"/></circle>
+          <text x="600" y="280" text-anchor="middle" fill="#8e1b1b" font-size="11">Florence 🏛️</text>
+          <text x="600" y="312" text-anchor="middle" fill="#8e1b1b" font-size="9" font-style="italic" font-weight="400">tijdelijke gijzeling</text>
           <text x="512" y="146" text-anchor="middle" fill="#2e5a8e" font-size="11">Hengelo</text>
           <circle cx="416" cy="152" r="4" fill="#2e5a8e"/>
           <text x="402" y="170" text-anchor="middle" fill="#2e5a8e" font-size="11">Wassenaar</text>
@@ -436,6 +442,7 @@
           <g opacity="0"><use href="#voetstap" width="14" height="10" x="-7" y="-5"/><text y="-8" text-anchor="middle" fill="#3b2f1e" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="11">Derk</text><animateMotion dur="11s" begin="3.5s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#pathAms"/></animateMotion><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.08;0.9;1" dur="11s" begin="3.5s" repeatCount="indefinite"/></g>
           <g opacity="0"><use href="#voetstap" width="14" height="10" x="-7" y="-5"/><text y="-8" text-anchor="middle" fill="#3b2f1e" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="11">Jaap 🎸</text><animateMotion dur="10.5s" begin="7s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#pathAms"/></animateMotion><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.08;0.9;1" dur="10.5s" begin="7s" repeatCount="indefinite"/></g>
           <g opacity="0"><use href="#voetstap" width="14" height="10" x="-7" y="-5"/><text y="-8" text-anchor="middle" fill="#3b2f1e" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="11">Samuel</text><animateMotion dur="13s" begin="1.5s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#pathSamuelTwente"/></animateMotion><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.08;0.9;1" dur="13s" begin="1.5s" repeatCount="indefinite"/></g>
+          <g opacity="0"><use href="#voetstap" width="14" height="10" x="-7" y="-5"/><text y="-8" text-anchor="middle" fill="#8e1b1b" font-family="'Cormorant Garamond', serif" font-style="italic" font-size="11">David 🏛️</text><animateMotion dur="12s" begin="5s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="linear"><mpath href="#pathFlorence"/></animateMotion><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.08;0.9;1" dur="12s" begin="5s" repeatCount="indefinite"/></g>
         </g>
       </svg>
 
@@ -445,6 +452,7 @@
         <div class="flight-card"><span class="flight-flag">🇫🇷</span><h4>Paris</h4><p>CDG → AGP</p><p class="flight-note">Uilenroute Zuid</p></div>
         <div class="flight-card"><span class="flight-flag">🇩🇪</span><h4>Munich</h4><p>MUC → AGP</p><p class="flight-note">Uilenroute Oost</p></div>
         <div class="flight-card flight-card-anglia"><span class="flight-flag">🚗</span><h4>Vliegende Ford Anglia</h4><p>AGP → El Rosario</p><p class="flight-note">vlieghoogte: laag, stijl: Weasley</p></div>
+        <div class="flight-card"><span class="flight-flag">🏛️</span><h4>Florence (strafroute)</h4><p>FLR → AGP — uiterlijk vr 30 okt</p><p class="flight-note">inkorten is geen optie, het is een opdracht</p></div>
       </div>
     </div>
 
@@ -763,6 +771,7 @@
           <li class="timeline-item"><time class="timeline-time">16:00</time><p class="timeline-event">&ldquo;Eerste duik in het Black Lake.&rdquo;</p></li>
           <li class="timeline-item"><time class="timeline-time">19:00</time><p class="timeline-event">&ldquo;Welkomstfeest in de Great Hall (BBQ).&rdquo;</p></li>
           <li class="timeline-item"><time class="timeline-time">21:00</time><p class="timeline-event">&ldquo;Eerste les Potions — docent: prof. Snape (Peeg). &lsquo;Het is geen mixen. Het is wetenschap.&rsquo;&rdquo;</p></li>
+          <li class="timeline-item"><time class="timeline-time">23:00</time><p class="timeline-event">&ldquo;Videoverbinding met Florence: David toont zijn hotelkamer met uitzicht op een rij. Wij tonen het zwembad. Educatief bedoeld.&rdquo;</p></li>
         </ul>
       </article>
 
@@ -772,6 +781,7 @@
           <li class="timeline-item"><time class="timeline-time">10:00</time><p class="timeline-event">&ldquo;Tee-off Santa Clara.&rdquo;</p></li>
           <li class="timeline-item"><time class="timeline-time">10:15</time><p class="timeline-event">&ldquo;Eerste contact met de bierkar.&rdquo;</p></li>
           <li class="timeline-item"><time class="timeline-time">13:00</time><p class="timeline-event">&ldquo;Halfway house = De Drie Bezemstelen.&rdquo;</p></li>
+          <li class="timeline-item"><time class="timeline-time">16:00</time><p class="timeline-event">&ldquo;Aankomst David, rechtstreeks uit Florence. Bij de poort: Renaissance-stof afkloppen, snor inspecteren, welkom bij je &eacute;chte vrienden. De opdracht was helder.&rdquo;</p></li>
           <li class="timeline-item"><time class="timeline-time">18:00</time><p class="timeline-event">&ldquo;Podiumceremonie bij het zwembad.&rdquo;</p></li>
           <li class="timeline-item"><time class="timeline-time">22:00</time><p class="timeline-event">&ldquo;Excursie Wegisweg-bij-avond (Puerto Banús). Portemonnee-bezwering aanbevolen.&rdquo;</p></li>
         </ul>
