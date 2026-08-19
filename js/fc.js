@@ -316,19 +316,31 @@
 
   /* ============================================================
      7. YOUTUBE-FACADES — iframe pas laden ná een tik.
-     Mobiel kreeg bij autoplay-embeds "confirm you're not a bot";
-     een user-gesture-play voorkomt dat én bespaart data.
+     Mobiel kreeg bij embeds "confirm you're not a bot" — dus op
+     touch-apparaten openen we de clip direct in de YouTube-app
+     (die kent geen botmuur). Desktop krijgt de inline speler op
+     www.youtube.com (niet nocookie: die triggert de check vaker).
      ============================================================ */
+  function isTouchApparaat() {
+    return (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+      ('ontouchstart' in window && navigator.maxTouchPoints > 0);
+  }
   function setupYtFacades() {
+    var mobiel = isTouchApparaat();
     $$('.yt-facade').forEach(function (facade) {
       var id = facade.dataset.yt;
       if (!id) return;
       facade.style.backgroundImage = 'url("https://i.ytimg.com/vi/' + id + '/hqdefault.jpg")';
       var laad = function () {
+        if (mobiel) {
+          /* opent de YouTube-app of m.youtube.com — speelt altijd af */
+          window.open('https://www.youtube.com/watch?v=' + id, '_blank', 'noopener');
+          return;
+        }
         if (facade.classList.contains('geladen')) return;
         facade.classList.add('geladen');
         var iframe = document.createElement('iframe');
-        iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+        iframe.src = 'https://www.youtube.com/embed/' + id +
           '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
         iframe.title = facade.getAttribute('aria-label') || 'Screening';
         iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
@@ -738,12 +750,11 @@
      ============================================================ */
   (function bewaarRealiteit() {
     try { localStorage.setItem('spanje_realiteit', 'fc'); } catch (e) {}
-    var terug = $('realiteitToggle');
-    if (terug) {
+    $$('#realiteitToggle, .naar-brief').forEach(function (terug) {
       terug.addEventListener('click', function () {
         try { localStorage.setItem('spanje_realiteit', 'hp'); } catch (e) {}
       });
-    }
+    });
   })();
 
   /* ============================================================

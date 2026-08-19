@@ -881,15 +881,33 @@ body[data-lang="nl"] .en { display: none !important; }
 
 .realiteit-toggle {
   position: fixed; right: 1rem; bottom: 1rem; z-index: 50;
-  display: flex; align-items: center; gap: .45rem;
-  background: var(--beton); border: 1px solid var(--rand);
-  color: var(--nicotine); text-decoration: none;
-  border-radius: 999px; padding: .5rem .9rem;
-  font-family: var(--font-typ); font-size: .8rem;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, .5);
-  transition: border-color .2s, transform .2s;
+  display: flex; align-items: center; gap: .55rem;
+  background: linear-gradient(160deg, #f4e8cc, #e2cf9f);
+  border: 2px solid #c9ae7d;
+  color: #3b2f1e; text-decoration: none;
+  border-radius: 999px; padding: .7rem 1.2rem;
+  font-family: var(--font-typ); font-size: .95rem; font-weight: 700;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .6), 0 0 22px rgba(244, 208, 63, .18);
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  animation: briefWenk 5s ease-in-out infinite;
 }
-.realiteit-toggle:hover { border-color: var(--gloei); transform: translateY(-2px); }
+.realiteit-toggle:hover { border-color: #f4d03f; transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0, 0, 0, .65), 0 0 32px rgba(244, 208, 63, .35); animation: none; }
+@keyframes briefWenk { 0%, 88%, 100% { transform: translateY(0); } 92% { transform: translateY(-4px); } 96% { transform: translateY(0); } }
+
+/* zichtbare brief-links in hero en footer */
+.brief-link {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-family: var(--font-typ); font-size: .88rem;
+  color: #3b2f1e; text-decoration: none;
+  background: linear-gradient(160deg, #f4e8cc, #e2cf9f);
+  border: 1.5px solid #c9ae7d; border-radius: 999px;
+  padding: .55rem 1.1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .45);
+  transition: transform .2s, box-shadow .2s;
+}
+.brief-link:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0, 0, 0, .55), 0 0 24px rgba(244, 208, 63, .3); }
+.brief-link-footer { margin-top: 2rem; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 640px) {
@@ -910,7 +928,8 @@ body[data-lang="nl"] .en { display: none !important; }
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   body.fc::before, .hero-gloeilamp, .scroll-zeepje, .zeep-hint,
-  .bal-strobos, .projector-beam, .loogkus-hand, .loogzeepje.trilt { animation: none !important; }
+  .bal-strobos, .projector-beam, .loogkus-hand, .loogzeepje.trilt,
+  .realiteit-toggle { animation: none !important; }
   .huisregels li { opacity: 1 !important; transform: none !important; animation: none !important; }
   .splice-frame { display: none; }
   html { scroll-behavior: auto; }
