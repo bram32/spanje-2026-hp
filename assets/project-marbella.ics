@@ -1,0 +1,26 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Paper Street Soap Company//Project Marbella 2026//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:project-marbella-2026@spanje-2026
+DTSTAMP:20260819T120000Z
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261102
+SUMMARY:🧼 PROJECT MARBELLA — do not talk about it 🎃
+LOCATION:The House\, El Rosario\, Marbella East\, Spain
+DESCRIPTION:The first rule of the Marbella weekend is: you do not talk
+  about the Marbella weekend.\n\n29 Oct – 1 Nov 2026 (Sat 31 Oct = THE
+  HALLOWEEN BALL)\nThe house: https://www.airbnb.com/rooms/6299939\n\nBring
+  a ridiculous costume. Your liver has been notified.\nThis calendar entry
+  will deny everything.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+TRIGGER:-P7D
+ACTION:DISPLAY
+DESCRIPTION:📟 One week until PROJECT MARBELLA — pack the costume. Tell no one.
+END:VALARM
+END:VEVENT
+END:VCALENDAR

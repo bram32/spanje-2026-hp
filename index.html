@@ -3782,6 +3782,116 @@
   <script src="./js/games/treb.js" defer></script>
   <script src="./js/games/david.js" defer></script>
 
+  <!-- ============================================================
+       DE POORT — kies je realiteit (brief of zeep)
+       Eén keer per sessie; de zeep leidt naar fightclub.html.
+       Zelfstandig blok: eigen stijl + script, raakt main.js niet.
+       ============================================================ -->
+  <div class="poort" id="realiteitPoort" hidden role="dialog" aria-modal="true" aria-label="Kies je realiteit">
+    <p class="poort-kop">ER ZIJN TWEE VERSIES VAN DIT WEEKEND</p>
+    <p class="poort-sub">Zelfde villa. Zelfde data. Zelfde acht man. Kies verstandig — of niet.</p>
+    <div class="poort-keuzes">
+      <button type="button" class="poort-kaart poort-brief" id="poortBrief">
+        <span class="poort-icoon" aria-hidden="true">
+          <svg viewBox="0 0 100 100" width="64" height="64">
+            <defs><radialGradient id="poortWax" cx="40%" cy="35%" r="75%"><stop offset="0%" stop-color="#b03030"/><stop offset="55%" stop-color="#8e1b1b"/><stop offset="100%" stop-color="#5e1010"/></radialGradient></defs>
+            <path d="M50 3 C63 6 72 2 80 10 C90 17 97 26 95 40 C99 52 96 64 88 73 C82 86 70 95 55 96 C42 99 28 95 19 86 C9 78 3 66 5 52 C2 40 7 27 15 19 C24 9 37 5 50 3 Z" fill="url(#poortWax)" stroke="#4a0d0d" stroke-width="2"/>
+            <circle cx="50" cy="50" r="30" fill="none" stroke="#c96a5a" stroke-width="1.5" opacity=".7"/>
+            <text x="50" y="63" text-anchor="middle" font-family="Cinzel, serif" font-size="36" font-weight="700" fill="#e8b9a8">Z</text>
+          </svg>
+        </span>
+        <span class="poort-titel">DE BRIEF</span>
+        <span class="poort-regel">Hogwarts aan Zee. De veilige keuze.<br>Je wordt wakker en gelooft wat je geloven wilt.</span>
+      </button>
+      <button type="button" class="poort-kaart poort-zeep" id="poortZeep">
+        <span class="poort-icoon" aria-hidden="true">
+          <svg viewBox="0 0 200 120" width="88" height="53">
+            <defs><linearGradient id="poortZeepGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff8fb4"/><stop offset="55%" stop-color="#ff2e6e"/><stop offset="100%" stop-color="#a11844"/></linearGradient></defs>
+            <rect x="10" y="14" width="180" height="92" rx="18" fill="url(#poortZeepGrad)" stroke="#7c0f36" stroke-width="4"/>
+            <rect x="24" y="28" width="152" height="64" rx="12" fill="none" stroke="rgba(255,255,255,.45)" stroke-width="2"/>
+            <text x="100" y="57" text-anchor="middle" font-family="Impact, 'Arial Narrow', sans-serif" font-size="19" fill="#ffe3ee" letter-spacing="2">PROJECT</text>
+            <text x="100" y="82" text-anchor="middle" font-family="Impact, 'Arial Narrow', sans-serif" font-size="19" fill="#ffe3ee" letter-spacing="2">MARBELLA</text>
+            <ellipse cx="52" cy="30" rx="16" ry="6" fill="rgba(255,255,255,.4)"/>
+          </svg>
+        </span>
+        <span class="poort-titel">DE ZEEP</span>
+        <span class="poort-regel">Project Marbella. Je ziet hoe diep<br>het konijnenhol gaat. Regel één geldt.</span>
+      </button>
+    </div>
+    <p class="poort-voetnoot">Je kunt altijd terug. Zeggen ze.</p>
+  </div>
+
+  <!-- Vast zeepje: overtreed regel één vanaf elke plek op de brief-site -->
+  <a class="zeep-sluippoort" id="zeepSluippoort" href="./fightclub.html" title="De andere realiteit — Project Marbella">🧼<span class="zeep-sluippoort-label">de zeep</span></a>
+
+  <style>
+    .poort{position:fixed;inset:0;z-index:1200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;
+      background:radial-gradient(ellipse 70% 50% at 50% 20%,#16131c 0%,#050308 70%);padding:1.5rem;text-align:center}
+    .poort[hidden]{display:none}
+    .poort-kop{font-family:Cinzel,serif;font-size:clamp(1.15rem,4.4vw,1.9rem);color:#f0e2c0;letter-spacing:.06em;margin:0}
+    .poort-sub{color:#9a94a8;font-size:.95rem;margin:0;max-width:34em}
+    .poort-keuzes{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;margin-top:1rem}
+    .poort-kaart{display:flex;flex-direction:column;align-items:center;gap:.55rem;width:min(280px,84vw);
+      padding:1.6rem 1.2rem;border-radius:14px;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease;
+      -webkit-tap-highlight-color:transparent}
+    .poort-kaart:hover{transform:translateY(-5px)}
+    .poort-icoon{font-size:2.6rem}
+    .poort-titel{font-family:Cinzel,serif;font-size:1.25rem;letter-spacing:.1em}
+    .poort-regel{font-size:.82rem;line-height:1.5;opacity:.85}
+    .poort-brief{background:linear-gradient(160deg,#f4e8cc,#e2cf9f);border:2px solid #c9ae7d;color:#3b2f1e}
+    .poort-brief:hover{box-shadow:0 16px 44px rgba(244,208,63,.28)}
+    .poort-zeep{background:linear-gradient(160deg,#ff5f92,#c21e52);border:2px solid #8e1440;color:#ffe3ee;font-family:inherit}
+    .poort-zeep .poort-titel{text-shadow:0 2px 0 rgba(140,12,60,.7)}
+    .poort-zeep:hover{box-shadow:0 16px 44px rgba(255,46,110,.4)}
+    .poort-voetnoot{color:#6d6879;font-size:.74rem;margin-top:1.2rem;font-style:italic}
+    .zeep-sluippoort{position:fixed;left:1rem;bottom:1rem;z-index:60;display:flex;align-items:center;gap:.45rem;
+      background:rgba(11,10,16,.85);border:1px solid rgba(255,46,110,.55);color:#f0e2c0;text-decoration:none;
+      border-radius:999px;padding:.5rem .9rem;font-size:.95rem;box-shadow:0 8px 22px rgba(0,0,0,.5);
+      transition:border-color .2s,transform .2s}
+    .zeep-sluippoort:hover{border-color:#ff2e6e;transform:translateY(-2px)}
+    .zeep-sluippoort-label{font-size:.78rem;font-style:italic;color:#c9c2d4}
+    @media (max-width:640px){.zeep-sluippoort-label{display:none}}
+  </style>
+  <script>
+    (function () {
+      'use strict';
+      var poort = document.getElementById('realiteitPoort');
+      var brief = document.getElementById('poortBrief');
+      var zeep = document.getElementById('poortZeep');
+      var sluippoort = document.getElementById('zeepSluippoort');
+      if (!poort || !brief || !zeep) return;
+
+      var gezien = false;
+      try { gezien = sessionStorage.getItem('realiteit_gezien') === '1'; } catch (e) {}
+      if (!gezien) {
+        poort.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+      }
+      function sluit(keuze) {
+        try {
+          sessionStorage.setItem('realiteit_gezien', '1');
+          localStorage.setItem('spanje_realiteit', keuze);
+        } catch (e) {}
+        if (keuze === 'fc') {
+          window.location.href = './fightclub.html';
+        } else {
+          poort.hidden = true;
+          document.documentElement.style.overflow = '';
+        }
+      }
+      brief.addEventListener('click', function () { sluit('hp'); });
+      zeep.addEventListener('click', function () { sluit('fc'); });
+      if (sluippoort) {
+        sluippoort.addEventListener('click', function () {
+          try {
+            sessionStorage.setItem('realiteit_gezien', '1');
+            localStorage.setItem('spanje_realiteit', 'fc');
+          } catch (e) {}
+        });
+      }
+    })();
+  </script>
+
   <!-- iPhone/mobiele performance-optimalisaties (erfstuk van de oude site) -->
   <script>
     (function () {
